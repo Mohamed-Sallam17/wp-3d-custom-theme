@@ -1,0 +1,11 @@
+/* Fixed Styles */
+:root{
+    --bg-color: #010008;
+}
+.gradient-text:hover{
+    background: linear-gradient(90deg, #2D75E6,#6A75DA,#BF71FF,#FFA0D0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}

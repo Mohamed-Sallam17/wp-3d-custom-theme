@@ -1,0 +1,17 @@
+body{
+    background-color: #010008;
+}
+
+/* Header */
+header nav{
+    background: linear-gradient(0deg, #0C0816BF, #301A46B2);
+    backdrop-filter: blur(24px);
+    border: 1px solid #7652D6B2;
+    box-shadow: 0 -1px 0 0px #ffffff8c, 0 2px 8px -2px #00A5DA1F inset, 0 8px 32px -8px #5E47E126 inset;
+    margin-top: 20px;
+}
+
+header .contact-us-btn {
+    background: linear-gradient(45deg,#5999FF,#A55CFF,#F25DEA);
+}
+
