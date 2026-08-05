@@ -10,10 +10,16 @@ function fileTheme(){
 
 add_action("wp_enqueue_scripts", "fileTheme");
 
-function titleTag(){
+function supportTheme(){
     add_theme_support("title-tag");
 }
+function theme_regestration_nav_menu(){
+    register_nav_menu("HeaderLocation", "Header");
+    register_nav_menu("footerLocation", "Footer");
+    register_nav_menu("mobileLocation", "Mobile");
+}
 
-add_action("after_setup_theme","titleTag")
+add_action("after_setup_theme","supportTheme");
+add_action("after_setup_theme","theme_regestration_nav_menu");
   
 ?>

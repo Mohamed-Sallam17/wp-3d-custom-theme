@@ -18,19 +18,24 @@
       </a>
     </div>
     <div class="flex lg:hidden">
-      <button type="button" command="show-modal" commandfor="mobile-menu" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400">
+      <button type="button" command="show-modal" commandfor="mobile-menu" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400 cursor-pointer">
         <span class="sr-only">Open main menu</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6">
           <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </button>
     </div>
-    <el-popover-group class="hidden lg:flex lg:gap-x-12">
-      <a href="#" class="text-2xl font-bold text-white gradient-text">الرئيسية</a>
+    <el-popover-group class="hidden lg:flex lg:gap-x-12 main-menu">
+      <?php 
+        wp_nav_menu(array(
+          "theme_location" => "HeaderLocation"
+        ))
+      ?>
+      <!-- <a href="#" class="text-2xl font-bold text-white gradient-text">الرئيسية</a>
       <a href="#" class="text-2xl font-bold text-white gradient-text">خدماتنا</a>
       <a href="#" class="text-2xl font-bold text-white gradient-text">من نحن</a>
       <a href="#" class="text-2xl font-bold text-white gradient-text">المدونة</a>
-      <a href="#" class="text-2xl font-bold text-white gradient-text">تواصل معنا</a>
+      <a href="#" class="text-2xl font-bold text-white gradient-text">تواصل معنا</a> -->
     </el-popover-group>
     <div class="hidden lg:block contact-us-btn w-23.75 p-2 rounded-4xl text-center ">
       <a href="#" class="text-sm font-bold text-white"> تواصل معنا </a>

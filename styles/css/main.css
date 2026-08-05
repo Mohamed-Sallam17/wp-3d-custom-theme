@@ -1,8 +1,20 @@
 body{
     background-color: #010008;
+    color: #fff;
 }
 
 /* Header */
+#menu-header-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+#menu-header-menu li {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 10px 0;
+}
 header nav{
     background: linear-gradient(0deg, #0C0816BF, #301A46B2);
     backdrop-filter: blur(24px);
