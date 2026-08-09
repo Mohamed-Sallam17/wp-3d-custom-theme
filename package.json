@@ -3,9 +3,30 @@
     "dev": "tailwindcss -i ./styles/css/tailwind.css -o ./styles/css/index.css --watch"
   },
   "devDependencies": {
-    "tailwindcss": "^4.3.3"
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.0.5",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.2.1"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.3.3"
-  }
+    "@tailwindcss/cli": "^4.3.3",
+    "gsap": "^3.15.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "name": "wameedcustomtheme",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mohamed-Sallam17/wp-3d-custom-theme.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mohamed-Sallam17/wp-3d-custom-theme/issues"
+  },
+  "homepage": "https://github.com/Mohamed-Sallam17/wp-3d-custom-theme#readme"
 }

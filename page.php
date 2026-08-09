@@ -2,9 +2,9 @@
 
 <?php while(have_posts()){
     the_post();?>
-    <h1><?php the_title(); ?></h1>
+    <!-- <h1><?php the_title(); ?></h1>
 
-    <h2><?php echo wp_get_post_parent_id(get_the_id()); ?></h2>
+    <h2><?php echo wp_get_post_parent_id(get_the_id()); ?></h2> -->
 
     <?php 
     if(wp_get_post_parent_id(get_the_id())){ ?>

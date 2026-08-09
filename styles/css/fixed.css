@@ -1,13 +1,26 @@
+@import "tailwindcss";
+
 /* Fixed Styles */
+@theme {
+  --color-brand-bg: var(--color-bg-main);
+  --color-brand-primary: var(--color-primary);
+  --font-sans: var(--font-main);
+}
 :root{
     --bg-color: #010008;
 }
-.gradient-text,
-ul#menu-header-menu .current_page_item,
-ul#menu-header-menu .menu-item:hover{
+.gradient-text, 
+ul#menu-header-menu .current_page_item, 
+ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
     background: linear-gradient(90deg, #2D75E6,#6A75DA,#BF71FF,#FFA0D0);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
+}
+.gradient-bg{
+    background: linear-gradient(0deg, #0C0816BF, #301A46B2);
+    backdrop-filter: blur(24px);
+    border: 1px solid #7652D6B2;
+    box-shadow: 0 -1px 0 0px #ffffff8c, 0 2px 8px -2px #00A5DA1F inset, 0 8px 32px -8px #5E47E126 inset;
 }

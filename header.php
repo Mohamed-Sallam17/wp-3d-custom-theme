@@ -9,10 +9,10 @@
 <body>
 
 
-<header class="sticky top-0 px-4">
+<header class="sticky top-0 px-4 z-20">
   <nav aria-label="Global" class="mx-auto flex max-w-6xl items-center justify-between py-2 px-4 lg:px-8 bg-gray-900 rounded-[40rem] h-20">
     <div class="flex">
-      <a href="#" class="-m-1.5 p-1.5">
+      <a href="/" class="-m-1.5 p-1.5">
         <span class="sr-only">Your Company</span>
         <img src="<?php echo get_theme_file_uri("./assets/logo.png") ?>" alt="" class="h-14 w-auto" />
       </a>
@@ -26,11 +26,13 @@
       </button>
     </div>
     <el-popover-group class="hidden lg:flex lg:gap-x-12 main-menu">
-      <?php 
-        wp_nav_menu(array(
-          "theme_location" => "HeaderLocation"
-        ))
-      ?>
+        <?php 
+            wp_nav_menu(array(
+              'theme_location' => 'HeaderLocation',
+              'container'      => false, // إلغاء الـ div الملتف حول القائمة
+              'menu_class'     => 'flex items-center gap-6 list-none m-0 p-0', // تنسيق القائمة الرئيسية
+            ));
+        ?>
       <!-- <a href="#" class="text-2xl font-bold text-white gradient-text">الرئيسية</a>
       <a href="#" class="text-2xl font-bold text-white gradient-text">خدماتنا</a>
       <a href="#" class="text-2xl font-bold text-white gradient-text">من نحن</a>
