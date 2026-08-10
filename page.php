@@ -2,9 +2,6 @@
 
 <?php while(have_posts()){
     the_post();?>
-    <!-- <h1><?php the_title(); ?></h1>
-
-    <h2><?php echo wp_get_post_parent_id(get_the_id()); ?></h2> -->
 
     <?php 
     if(wp_get_post_parent_id(get_the_id())){ ?>
@@ -25,6 +22,17 @@
     
     ?>
     <div><?php the_content(); ?></div>
+    <main class="site-main">
+<h2>page.php</h2>
+    <!-- مكان ظهور السلايدر المخصص -->
+    <div id="react-horizontal-slider-root">
+        <!-- هيكل تحميل مؤقت ينتهي فور اشتغال React -->
+        <div class="animate-pulse flex space-x-4 p-4">
+            <div class="rounded-lg bg-gray-200 h-48 w-full"></div>
+        </div>
+    </div>
+
+</main>
 
 <?php }
 

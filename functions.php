@@ -18,9 +18,10 @@ require_once WAMEED_DIR . '/inc/customizer.php';
 // require_once WAMEED_DIR . '/inc/react-shortcodes.php';
 
 
+require_once get_template_directory() . '/inc/page-router.php';
 require_once get_template_directory() . '/inc/shortcodes.php';
-
-
+require_once get_template_directory() . '/inc/shortcodes.php';
+require_once get_template_directory() . '/inc/scripts.php';
 
   
 

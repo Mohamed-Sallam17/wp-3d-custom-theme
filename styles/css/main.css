@@ -27,9 +27,6 @@ header nav{
     margin-top: 20px;
 }
 
-header .contact-us-btn {
-    background: linear-gradient(45deg,#5999FF,#A55CFF,#F25DEA);
-}
 .menu-item-has-children {
     position: relative; 
 }
@@ -38,7 +35,7 @@ header .contact-us-btn {
     padding-right: 10px !important;
 }
 .menu-item-has-children > .sub-menu {
-    display: none;
+    display: none;  
     position: absolute;
     top: 100%;
     right: 0; 
@@ -64,7 +61,7 @@ header .contact-us-btn {
 /* Footer */
 footer{
     position: relative;
-    background-image: url(../../assets/gemini-svg.svg);
+    /* background-image: url(../../assets/gemini-svg.svg); */
     background-repeat: no-repeat;
     background-position: center bottom;
     background-size: cover;

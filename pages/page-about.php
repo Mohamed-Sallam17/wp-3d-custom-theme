@@ -5,6 +5,11 @@ get_header();
 
 <h2> about-page.php </h2>
 
+<?php 
+// عرض سلايدر React بداخل القالب المباشر
+echo do_shortcode('[wameed_slider]'); 
+?>
+
 <?php  
 while(have_posts()){
     the_post(); ?> 
@@ -16,6 +21,5 @@ while(have_posts()){
 <?php } 
 
 ?>
-
 
 <?php get_footer() ?>

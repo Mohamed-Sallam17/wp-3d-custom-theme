@@ -39,7 +39,7 @@
       <a href="#" class="text-2xl font-bold text-white gradient-text">المدونة</a>
       <a href="#" class="text-2xl font-bold text-white gradient-text">تواصل معنا</a> -->
     </el-popover-group>
-    <div class="hidden lg:block contact-us-btn w-23.75 p-2 rounded-4xl text-center ">
+    <div class="hidden lg:block contact-us-btn gradient-btn w-23.75 p-2 rounded-4xl text-center ">
       <a href="#" class="text-sm font-bold text-white"> تواصل معنا </a>
     </div>
   </nav>
