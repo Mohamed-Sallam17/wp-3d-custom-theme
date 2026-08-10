@@ -1,4 +1,11 @@
 <? get_header(); ?>
+
+<div class="loader">
+    <div class="page-transition"></div>
+</div>
+
+<main data-barba="container" data-barba-namespace="<?php echo sanitize_title(get_post_field('post_name')); ?>">
+
 <?php  
 while(have_posts()){
     the_post(); ?> 
@@ -7,5 +14,8 @@ while(have_posts()){
 <?php } 
 
 ?>
+
+</main>
+
 
 <?php get_footer(); ?>

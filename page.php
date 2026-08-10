@@ -1,5 +1,17 @@
 <? get_header(); ?>
 
+<div class="loader">
+    <div class="page-transition"></div>
+</div>
+
+<main data-barba="container" data-barba-namespace="<?php echo sanitize_title(get_post_field('post_name')); ?>">
+
+
+<?php
+// استدعاء الشورت كود مباشرة داخل الهوم بيدج
+echo do_shortcode('[horizintal_slider title="خدمات تسويقية ذكية"]');
+?>
+
 <?php while(have_posts()){
     the_post();?>
 
@@ -22,20 +34,15 @@
     
     ?>
     <div><?php the_content(); ?></div>
-    <main class="site-main">
-<h2>page.php</h2>
-    <!-- مكان ظهور السلايدر المخصص -->
-    <div id="react-horizontal-slider-root">
-        <!-- هيكل تحميل مؤقت ينتهي فور اشتغال React -->
-        <div class="animate-pulse flex space-x-4 p-4">
-            <div class="rounded-lg bg-gray-200 h-48 w-full"></div>
-        </div>
-    </div>
 
-</main>
+
+
+
 
 <?php }
 
 ?>
+
+</main>
 
 <?php get_footer(); ?>

@@ -30,8 +30,8 @@ const CustomCursor = () => {
         transform: `translate3d(${position.x}px, ${position.y}px, 0) translate(-50%, -50%)`,
       }}
     >
-      <div class="cursor-outer-circle"></div>
-      <div class="cursor-inner-dot"></div>
+      <div className="cursor-outer-circle"></div>
+      <div className="cursor-inner-dot"></div>
     </div>
   );
 };

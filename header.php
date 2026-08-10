@@ -6,8 +6,7 @@
     <?php wp_head(); ?>
     <title>Document</title>
 </head>
-<body>
-
+<body <?php body_class(); ?> data-barba="wrapper">
 
 <header class="sticky top-0 px-4 z-20">
   <nav aria-label="Global" class="mx-auto flex max-w-6xl items-center justify-between py-2 px-4 lg:px-8 bg-gray-900 rounded-[40rem] h-20">
@@ -29,15 +28,10 @@
         <?php 
             wp_nav_menu(array(
               'theme_location' => 'HeaderLocation',
-              'container'      => false, // إلغاء الـ div الملتف حول القائمة
-              'menu_class'     => 'flex items-center gap-6 list-none m-0 p-0', // تنسيق القائمة الرئيسية
+              'container'      => false, 
+              'menu_class'     => 'flex items-center gap-6 list-none m-0 p-0', 
             ));
         ?>
-      <!-- <a href="#" class="text-2xl font-bold text-white gradient-text">الرئيسية</a>
-      <a href="#" class="text-2xl font-bold text-white gradient-text">خدماتنا</a>
-      <a href="#" class="text-2xl font-bold text-white gradient-text">من نحن</a>
-      <a href="#" class="text-2xl font-bold text-white gradient-text">المدونة</a>
-      <a href="#" class="text-2xl font-bold text-white gradient-text">تواصل معنا</a> -->
     </el-popover-group>
     <div class="hidden lg:block contact-us-btn gradient-btn w-23.75 p-2 rounded-4xl text-center ">
       <a href="#" class="text-sm font-bold text-white"> تواصل معنا </a>

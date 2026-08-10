@@ -1,23 +1,26 @@
 <?php
-// 1. شورت كود السلايدر
-function wameed_slider_shortcode() {
-    return '
-    <div id="react-horizontal-slider">
-        <div class="animate-pulse flex space-x-4 p-4">
-            <div class="rounded-lg bg-gray-200 h-48 w-full"></div>
-        </div>
-    </div>';
-}
-add_shortcode( 'react_slider', 'wameed_slider_shortcode' );
+/**
+ * Shortcodes Registration File
+ */
 
-// 2. شورت كود صفحة About
-function wameed_about_shortcode() {
-    return '<div id="react-about-section"></div>';
-}
-add_shortcode( 'react_about', 'wameed_about_shortcode' );
 
-// 3. شورت كود صفحة Services
-function wameed_services_shortcode() {
-    return '<div id="react-services-section"></div>';
+function wameed_slider_shortcode( $atts ) {
+    
+    $atts = shortcode_atts( array(
+        'title'    => 'خدمات تسويقية ذكية',
+        'limit'    => '10',
+        'category' => 'all',
+    ), $atts, 'horizintal_slider' );
+
+    return sprintf(
+        '<div id="react-horizontal-slider" data-title="%s" data-limit="%s" data-category="%s">
+            <div class="animate-pulse flex space-x-4 p-4">
+                <div class="rounded-lg bg-gray-900 h-96 w-full"></div>
+            </div>
+        </div>',
+        esc_attr( $atts['title'] ),
+        esc_attr( $atts['limit'] ),
+        esc_attr( $atts['category'] )
+    );
 }
-add_shortcode( 'react_services', 'wameed_services_shortcode' );
+add_shortcode( 'horizintal_slider', 'wameed_slider_shortcode' );

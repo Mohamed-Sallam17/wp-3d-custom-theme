@@ -1,25 +1,15 @@
-<?php
+<?php get_header(); ?>
 
-get_header();
-?>
+<div class="loader">
+    <div class="page-transition"></div>
+</div>
 
-<h2> about-page.php </h2>
+<main data-barba="container" data-barba-namespace="<?php echo sanitize_title(get_post_field('post_name')); ?>">
 
-<?php 
-// عرض سلايدر React بداخل القالب المباشر
-echo do_shortcode('[wameed_slider]'); 
-?>
+<h2><?php the_title(); ?></h2>
 
-<?php  
-while(have_posts()){
-    the_post(); ?> 
-    <a href="<?php the_permalink(); ?>">
-        <h1> <?php the_title(); ?> </h1>
-    </a>
-    <div> <?php the_content(); ?> </div>
-    <hr>
-<?php } 
 
-?>
+</main>
+
 
 <?php get_footer() ?>
