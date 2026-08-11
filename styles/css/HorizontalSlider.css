@@ -1,246 +1,210 @@
 .horizontal-slider {
-    position: relative;
+  position: relative;
 
-    width: 100vw;
-    max-width: 100vw;
+  width: 100vw;
+  max-width: 100vw;
 
-    /*
-     * مهم جداً:
-     * يخرج الـsection من أي container في WordPress
-     */
-    margin-inline-start: calc(50% - 50vw);
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 
-    height: 650px;
+  overflow: hidden;
 
-    overflow: hidden;
+  direction: ltr;
 
-    box-sizing: border-box;
+  cursor: grab;
 
-    cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
 
-    user-select: none;
-
-    touch-action: pan-y;
-
-    isolation: isolate;
+  overscroll-behavior-x: contain;
 }
-
-
-/*
-|--------------------------------------------------------------------------
-| Dragging
-|--------------------------------------------------------------------------
-*/
 
 .horizontal-slider.is-dragging {
-    cursor: grabbing;
-}
-
-body.horizontal-slider-dragging {
-    cursor: grabbing !important;
+  cursor: grabbing;
 }
 
 
-/*
-|--------------------------------------------------------------------------
-| Viewport
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   TRACK
+   ========================================================= */
 
-.horizontal-slider-viewport {
-    position: relative;
+.horizontal-slider__track {
+  display: flex;
 
-    width: 100%;
-    height: 100%;
+  width: max-content;
 
-    overflow: hidden;
+  will-change: transform;
+
+  transform: translate3d(0, 0, 0);
 }
 
 
-/*
-|--------------------------------------------------------------------------
-| Card
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   SET
+   ========================================================= */
 
-.horizontal-slider-card {
-    position: absolute;
+.horizontal-slider__set {
+  display: flex;
+  flex-shrink: 0;
 
-    top: 50%;
-    left: 0;
+  gap: 24px;
 
-    height: 90%;
-
-    border-radius: 28px;
-
-    overflow: hidden;
-
-    background: #111;
-
-    box-sizing: border-box;
-
-    will-change: transform;
-
-    flex-shrink: 0;
-
-    /*
-     * مهم:
-     * الـJS هو اللي بيتحكم في X
-     */
-    transition: none;
+  width: max-content;
 }
 
 
-/*
-|--------------------------------------------------------------------------
-| Image
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   CARD
+   ========================================================= */
 
-.horizontal-slider-image {
-    position: absolute;
+.horizontal-slider__card {
+  position: relative;
 
-    inset: 0;
+  flex: 0 0 calc(
+    (100vw - 48px - 48px) / 3
+  );
 
-    width: 100%;
-    height: 100%;
+  width: calc(
+    (100vw - 48px - 48px) / 3
+  );
 
-    overflow: hidden;
+  aspect-ratio: 1 / 1;
 
-    border-radius: inherit;
+  overflow: hidden;
+
+  border-radius: 24px;
+
+  background: #111;
+
+  user-select: none;
 }
 
 
-.horizontal-slider-image img {
-    display: block;
+/* =========================================================
+   IMAGE
+   ========================================================= */
 
-    width: 100%;
-    height: 100%;
+.horizontal-slider__image-wrapper {
+  position: absolute;
 
-    /*
-     * زي ما طلبت
-     */
-    object-fit: contain;
+  inset: 0;
 
-    object-position: center;
+  width: 100%;
+  height: 100%;
+}
 
-    pointer-events: none;
+.horizontal-slider__image-wrapper img {
+  display: block;
 
-    user-select: none;
+  width: 100%;
+  height: 100%;
 
-    -webkit-user-drag: none;
+  object-fit: contain;
+
+  pointer-events: none;
+
+  user-select: none;
 }
 
 
-/*
-|--------------------------------------------------------------------------
-| Overlay
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   OVERLAY
+   ========================================================= */
 
-.horizontal-slider-overlay {
-    position: absolute;
+.horizontal-slider__overlay {
+  position: absolute;
 
-    inset: 0;
+  inset: 0;
 
-    display: flex;
+  display: flex;
 
-    align-items: flex-end;
+  align-items: flex-end;
+  justify-content: flex-end;
 
-    justify-content: center;
+  padding: 30px;
 
-    padding: 35px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.75),
+    transparent 45%
+  );
 
-    box-sizing: border-box;
+  opacity: 0;
 
-    background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.8),
-        rgba(0, 0, 0, 0.15) 45%,
-        transparent 70%
-    );
+  transition:
+    opacity 0.35s ease;
+}
 
-    opacity: 0;
-
-    transition: opacity 0.35s ease;
-
-    pointer-events: none;
+.horizontal-slider__card:hover
+.horizontal-slider__overlay {
+  opacity: 1;
 }
 
 
-.horizontal-slider-card:hover .horizontal-slider-overlay {
-    opacity: 1;
+.horizontal-slider__overlay h3 {
+  margin: 0;
+
+  color: #fff;
+
+  font-size: clamp(20px, 2vw, 34px);
+
+  font-weight: 600;
+
+  text-align: right;
 }
 
 
-.horizontal-slider-overlay h3 {
-    margin: 0;
-
-    color: #fff;
-
-    font-size: 32px;
-
-    font-weight: 700;
-
-    line-height: 1.2;
-
-    text-align: center;
-
-    direction: rtl;
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| Tablet
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   TABLET
+   ========================================================= */
 
 @media (max-width: 1024px) {
 
-    .horizontal-slider {
-        height: 560px;
-    }
+  .horizontal-slider__set {
+    gap: 20px;
+  }
 
-    .horizontal-slider-card {
-        height: 88%;
-    }
+  .horizontal-slider__card {
+    flex-basis: calc(
+      (100vw - 40px - 40px) / 2
+    );
 
-    .horizontal-slider-overlay {
-        opacity: 1;
-    }
-
-    .horizontal-slider-overlay h3 {
-        font-size: 26px;
-    }
+    width: calc(
+      (100vw - 40px - 40px) / 2
+    );
+  }
 
 }
 
 
-/*
-|--------------------------------------------------------------------------
-| Mobile
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
-@media (max-width: 767px) {
+@media (max-width: 640px) {
 
-    .horizontal-slider {
-        height: 480px;
-    }
+  .horizontal-slider__set {
+    gap: 16px;
+  }
 
-    .horizontal-slider-card {
-        height: 90%;
-    }
+  .horizontal-slider__card {
+    flex-basis: calc(
+      (100vw - 16px - 16px) / 1.25
+    );
 
-    .horizontal-slider-overlay {
-        opacity: 1;
+    width: calc(
+      (100vw - 16px - 16px) / 1.25
+    );
 
-        padding: 25px;
-    }
+    border-radius: 18px;
+  }
 
-    .horizontal-slider-overlay h3 {
-        font-size: 22px;
-    }
+  .horizontal-slider__overlay {
+    padding: 20px;
+  }
+
+  .horizontal-slider__overlay h3 {
+    font-size: 22px;
+  }
 
 }

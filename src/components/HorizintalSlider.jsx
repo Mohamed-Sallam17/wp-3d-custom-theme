@@ -1,300 +1,271 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
-
+import React, { useEffect, useRef } from 'react';
 import { horizontalSliderData } from '../data/horizontalSliderData';
 import '../../styles/css/HorizontalSlider.css';
 
 const HorizintalSlider = () => {
-    const sliderRef = useRef(null);
+  const sliderRef = useRef(null);
+  const trackRef = useRef(null);
 
-    const [cardsPerView, setCardsPerView] = useState(3);
-    const [containerWidth, setContainerWidth] = useState(0);
+  const currentX = useRef(0);
+  const targetX = useRef(0);
 
-    const positionRef = useRef(0);
-    const isDraggingRef = useRef(false);
-    const startXRef = useRef(0);
-    const startPositionRef = useRef(0);
-    const animationFrameRef = useRef(null);
-    const targetPositionRef = useRef(0);
-    const isWheelAnimatingRef = useRef(false);
-    const wheelPositionRef = useRef({ value: 0 });
-    const wheelTweenRef = useRef(null);
+  const setWidth = useRef(0);
 
-    const [, forceRender] = useState(0);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const dragStartX = useRef(0);
 
-    /*
-    |--------------------------------------------------------------------------
-    | Responsive Cards Per View
-    |--------------------------------------------------------------------------
-    */
+  const animationFrame = useRef(null);
 
-    const updateDimensions = () => {
-        if (!sliderRef.current) return;
+  /*
+  |--------------------------------------------------------------------------
+  | Measure one complete set
+  |--------------------------------------------------------------------------
+  */
 
-        const width = sliderRef.current.offsetWidth;
+  const measureSlider = () => {
+    if (!trackRef.current) return;
 
-        setContainerWidth(width);
+    const firstSet = trackRef.current.querySelector(
+      '.horizontal-slider__set'
+    );
 
-        if (width <= 767) {
-            setCardsPerView(1);
-        } else if (width <= 1024) {
-            setCardsPerView(2);
-        } else {
-            setCardsPerView(3);
-        }
-    };
+    if (!firstSet) return;
 
-    useEffect(() => {
-        updateDimensions();
-
-        window.addEventListener('resize', updateDimensions);
-
-        return () => {
-            window.removeEventListener('resize', updateDimensions);
-        };
-    }, []);
+    setWidth.current = firstSet.offsetWidth;
 
     /*
-    |--------------------------------------------------------------------------
-    | Card Dimensions
-    |--------------------------------------------------------------------------
-    */
+     * Start from the middle copy.
+     * This gives us content before and after the viewport.
+     */
 
-    const GAP = 24;
+    if (currentX.current === 0) {
+      currentX.current = -setWidth.current;
+      targetX.current = -setWidth.current;
+    }
+  };
 
-    const cardWidth =
-        cardsPerView > 0
-            ? (containerWidth - GAP * (cardsPerView - 1)) / cardsPerView
-            : 0;
+  /*
+  |--------------------------------------------------------------------------
+  | Infinite Loop
+  |--------------------------------------------------------------------------
+  */
 
-    const step = cardWidth + GAP;
+  const normalizePosition = () => {
+    const width = setWidth.current;
 
-    /*
-    |--------------------------------------------------------------------------
-    | Infinite Positioning
-    |--------------------------------------------------------------------------
-    */
-
-    const getCardPosition = (index) => {
-        if (!containerWidth || !cardWidth) {
-            return 0;
-        }
-
-        let x = index * step - positionRef.current;
-
-        const totalWidth = horizontalSliderData.length * step;
-
-        /*
-         * Wrap card to the right
-         */
-        while (x < -step) {
-            x += totalWidth;
-        }
-
-        /*
-         * Wrap card to the left
-         */
-        while (x > containerWidth) {
-            x -= totalWidth;
-        }
-
-        return x;
-    };
+    if (!width) return;
 
     /*
-    |--------------------------------------------------------------------------
-    | Mouse Drag
-    |--------------------------------------------------------------------------
-    */
-const handlePointerDown = (e) => {
+     * We have 3 copies:
+     *
+     * [SET 1] [SET 2] [SET 3]
+     *
+     * We normally live inside SET 2.
+     */
 
-    if (wheelTweenRef.current) {
-        wheelTweenRef.current.kill();
-        wheelTweenRef.current = null;
+    while (targetX.current <= -width * 2) {
+      targetX.current += width;
+      currentX.current += width;
     }
 
-    wheelPositionRef.current.value =
-        positionRef.current;
+    while (targetX.current >= 0) {
+      targetX.current -= width;
+      currentX.current -= width;
+    }
+  };
 
-    isDraggingRef.current = true;
+  /*
+  |--------------------------------------------------------------------------
+  | Smooth Animation
+  |--------------------------------------------------------------------------
+  */
 
-    startXRef.current = e.clientX;
+  const animate = () => {
+    const track = trackRef.current;
 
-    startPositionRef.current =
-        positionRef.current;
-
-    sliderRef.current?.setPointerCapture?.(
-        e.pointerId
-    );
-
-    document.body.classList.add(
-        'horizontal-slider-dragging'
-    );
-};
-
-    const handlePointerMove = (e) => {
-        if (!isDraggingRef.current) return;
-
-        const delta = e.clientX - startXRef.current;
-
-        positionRef.current = startPositionRef.current - delta;
-
-        forceRender((value) => value + 1);
-    };
-
-    const handlePointerUp = () => {
-        if (!isDraggingRef.current) return;
-
-        isDraggingRef.current = false;
-
-        document.body.classList.remove('horizontal-slider-dragging');
-    };
-
-/*
-|--------------------------------------------------------------------------
-| Smooth Slide-by-Slide Wheel
-|--------------------------------------------------------------------------
-*/
-
-useEffect(() => {
-    const slider = sliderRef.current;
-
-    if (!slider) return;
-
-    let wheelLocked = false;
-
-    const handleWheel = (e) => {
-        e.preventDefault();
-
-        if (wheelLocked) return;
-
-        const delta =
-            Math.abs(e.deltaX) > Math.abs(e.deltaY)
-                ? e.deltaX
-                : e.deltaY;
-
-        if (!delta) return;
-
-        const direction = delta > 0 ? 1 : -1;
-
-        const currentPosition =
-            positionRef.current;
-
-        /*
-         * أقرب Slide فعلية
-         */
-        const currentSlide =
-            Math.round(currentPosition / step);
-
-        /*
-         * Slide واحدة في الاتجاه المطلوب
-         */
-        const targetPosition =
-            (currentSlide + direction) * step;
-
-        wheelLocked = true;
-
-        if (wheelTweenRef.current) {
-            wheelTweenRef.current.kill();
-        }
-
-        wheelPositionRef.current.value =
-            currentPosition;
-
-        wheelTweenRef.current = gsap.to(
-            wheelPositionRef.current,
-            {
-                value: targetPosition,
-
-                duration: 0.8,
-
-                ease: 'power3.inOut',
-
-                onUpdate: () => {
-                    positionRef.current =
-                        wheelPositionRef.current.value;
-
-                    forceRender((value) => value + 1);
-                },
-
-                onComplete: () => {
-                    positionRef.current =
-                        targetPosition;
-
-                    forceRender((value) => value + 1);
-
-                    wheelLocked = false;
-
-                    wheelTweenRef.current = null;
-                },
-            }
-        );
-    };
-
-    slider.addEventListener('wheel', handleWheel, {
-        passive: false,
-    });
-
-    return () => {
-        slider.removeEventListener('wheel', handleWheel);
-
-        if (wheelTweenRef.current) {
-            wheelTweenRef.current.kill();
-        }
-    };
-}, [step]);
+    if (!track) return;
 
     /*
-    |--------------------------------------------------------------------------
-    | Render
-    |--------------------------------------------------------------------------
-    */
+     * Lower value = smoother/slower.
+     * This gives the slider the smooth feeling
+     * instead of instantly jumping to wheel position.
+     */
 
-    return (
-        <section
-            ref={sliderRef}
-            className={`horizontal-slider ${
-                isDraggingRef.current ? 'is-dragging' : ''
-            }`}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            onPointerCancel={handlePointerUp}
-            onPointerLeave={handlePointerUp}
-        >
-            <div className="horizontal-slider-viewport">
+    currentX.current +=
+      (targetX.current - currentX.current) * 0.085;
 
-                {horizontalSliderData.map((item, index) => {
+    track.style.transform = `translate3d(${currentX.current}px, 0, 0)`;
 
-                    const x = getCardPosition(index);
+    animationFrame.current = requestAnimationFrame(animate);
+  };
 
-                    return (
-                        <article
-                            key={`${item.title}-${index}`}
-                            className="horizontal-slider-card"
-                            style={{
-                                width: `${cardWidth}px`,
-                                transform: `translate3d(${x}px, -50%, 0)`,
-                            }}
-                        >
-                            <div className="horizontal-slider-image">
-                                <img
-                                    src={item.image}
-                                    alt={item.title}
-                                    draggable="false"
-                                />
-                            </div>
+  /*
+  |--------------------------------------------------------------------------
+  | Mouse Wheel
+  |--------------------------------------------------------------------------
+  */
 
-                            <div className="horizontal-slider-overlay">
-                                <h3>{item.title}</h3>
-                            </div>
-                        </article>
-                    );
-                })}
+  const handleWheel = (event) => {
+    /*
+     * Convert vertical mouse wheel movement
+     * into horizontal movement.
+     */
 
-            </div>
-        </section>
-    );
+    const delta = event.deltaY || event.deltaX;
+
+    if (!delta) return;
+
+    event.preventDefault();
+
+    /*
+     * Speed of horizontal movement.
+     *
+     * Increase to make it faster.
+     * Decrease to make it slower.
+     */
+
+    targetX.current -= delta * 1.05;
+
+    normalizePosition();
+  };
+
+  /*
+  |--------------------------------------------------------------------------
+  | Mouse Drag
+  |--------------------------------------------------------------------------
+  */
+
+  const handlePointerDown = (event) => {
+    isDragging.current = true;
+
+    startX.current = event.clientX;
+    dragStartX.current = targetX.current;
+
+    sliderRef.current?.setPointerCapture?.(event.pointerId);
+
+    sliderRef.current?.classList.add('is-dragging');
+  };
+
+  const handlePointerMove = (event) => {
+    if (!isDragging.current) return;
+
+    const distance = event.clientX - startX.current;
+
+    targetX.current = dragStartX.current + distance;
+
+    normalizePosition();
+  };
+
+  const handlePointerUp = (event) => {
+    if (!isDragging.current) return;
+
+    isDragging.current = false;
+
+    sliderRef.current?.releasePointerCapture?.(event.pointerId);
+
+    sliderRef.current?.classList.remove('is-dragging');
+  };
+
+  /*
+  |--------------------------------------------------------------------------
+  | Resize
+  |--------------------------------------------------------------------------
+  */
+
+  useEffect(() => {
+    measureSlider();
+
+    const handleResize = () => {
+      /*
+       * Recalculate the width after responsive changes.
+       */
+
+      const oldWidth = setWidth.current;
+
+      measureSlider();
+
+      const newWidth = setWidth.current;
+
+      if (!oldWidth || !newWidth) return;
+
+      /*
+       * Keep us inside the middle copy after resize.
+       */
+
+      const ratio = newWidth / oldWidth;
+
+      currentX.current *= ratio;
+      targetX.current *= ratio;
+
+      normalizePosition();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    /*
+     * Start animation loop.
+     */
+
+    animationFrame.current = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+
+      if (animationFrame.current) {
+        cancelAnimationFrame(animationFrame.current);
+      }
+    };
+  }, []);
+
+  /*
+  |--------------------------------------------------------------------------
+  | Render
+  |--------------------------------------------------------------------------
+  */
+
+  return (
+    <section
+      ref={sliderRef}
+      className="horizontal-slider"
+      onWheel={handleWheel}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={handlePointerUp}
+    >
+      <div
+        ref={trackRef}
+        className="horizontal-slider__track"
+      >
+        {[0, 1, 2].map((setIndex) => (
+          <div
+            className="horizontal-slider__set"
+            key={setIndex}
+          >
+            {horizontalSliderData.map((item, index) => (
+              <article
+                className="horizontal-slider__card"
+                key={`${setIndex}-${index}`}
+              >
+                <div className="horizontal-slider__image-wrapper">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    draggable="false"
+                  />
+                </div>
+
+                <div className="horizontal-slider__overlay">
+                  <h3>{item.title}</h3>
+                </div>
+              </article>
+            ))}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 };
 
 export default HorizintalSlider;
