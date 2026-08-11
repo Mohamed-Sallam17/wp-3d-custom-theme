@@ -419,7 +419,7 @@ const HorizintalSlider = () => {
   return (
     <section
       ref={sliderRef}
-      className="horizontal-slider"
+      className="horizontal-slider "
 
       /*
        * Wheel intentionally disabled.
@@ -444,7 +444,7 @@ const HorizintalSlider = () => {
 
       <div
         ref={trackRef}
-        className="horizontal-slider__track"
+        className="horizontal-slider__track py-6" 
       >
 
         {/*
