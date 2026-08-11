@@ -1,90 +1,300 @@
-import React, { useRef, useEffect } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
 
-// استيراد الصور
-import seoImg from '../../assets/cards-slider/seo.webp';
-import mobileAppImg from '../../assets/cards-slider/mobile-app.webp';
-import socialImg from '../../assets/cards-slider/social-media.webp';
-import buildWebsiteImg from '../../assets/cards-slider/build-website.webp';
-import uiImg from '../../assets/cards-slider/ui-ux.webp';
-import croImg from '../../assets/cards-slider/cro.webp';
-import brandingImg from '../../assets/cards-slider/branding.webp';
-import motionImg from '../../assets/cards-slider/mobile-app.webp';
-import mediaBayerImg from '../../assets/cards-slider/media-baying.webp';
-import contentImg from '../../assets/cards-slider/content-writing.webp';
-
+import { horizontalSliderData } from '../data/horizontalSliderData';
 import '../../styles/css/HorizontalSlider.css';
 
+const HorizintalSlider = () => {
+    const sliderRef = useRef(null);
 
-gsap.registerPlugin(ScrollTrigger);
+    const [cardsPerView, setCardsPerView] = useState(3);
+    const [containerWidth, setContainerWidth] = useState(0);
 
-function HorizintalSlider({ title = "خدمات تسويقية ذكية" }) {
-  const sectionRef = useRef(null);
-  const trackRef = useRef(null);
+    const positionRef = useRef(0);
+    const isDraggingRef = useRef(false);
+    const startXRef = useRef(0);
+    const startPositionRef = useRef(0);
+    const animationFrameRef = useRef(null);
+    const targetPositionRef = useRef(0);
+    const isWheelAnimatingRef = useRef(false);
+    const wheelPositionRef = useRef({ value: 0 });
+    const wheelTweenRef = useRef(null);
 
-  const cardsData = [
-    { id: 1, title: 'SEO', img: seoImg },
-    { id: 2, title: 'Mobile App', img: mobileAppImg },
-    { id: 3, title: 'CRO', img: croImg },
-    { id: 4, title: 'Social Media', img: socialImg },
-    { id: 5, title: 'Build Website', img: buildWebsiteImg },
-    { id: 6, title: 'UI / UX', img: uiImg },
-    { id: 7, title: 'Branding', img: brandingImg },
-    { id: 8, title: 'Motion Graphics', img: motionImg },
-    { id: 9, title: 'Media Buying', img: mediaBayerImg },
-    { id: 10, title: 'Content Writing', img: contentImg },
-  ];
+    const [, forceRender] = useState(0);
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    const track = trackRef.current;
+    /*
+    |--------------------------------------------------------------------------
+    | Responsive Cards Per View
+    |--------------------------------------------------------------------------
+    */
 
-    if (!section || !track) return;
+    const updateDimensions = () => {
+        if (!sliderRef.current) return;
 
-    const ctx = gsap.context(() => {
-      // حساب مسافة التمرير بحيث يتم إخفاء المسافة الزائدة فقط
-      const getScrollAmount = () => track.scrollWidth - track.parentElement.clientWidth;
+        const width = sliderRef.current.offsetWidth;
 
-      gsap.to(track, {
-        x: () => -getScrollAmount(),
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: () => `+=${getScrollAmount()}`,
-          pin: true,        // تثبيت السكشن مؤقتاً لحين استكمال التمرير بين الكروت
-          scrub: 1,         // تحريك بسلاسة مثل Swiper
-          invalidateOnRefresh: true,
+        setContainerWidth(width);
+
+        if (width <= 767) {
+            setCardsPerView(1);
+        } else if (width <= 1024) {
+            setCardsPerView(2);
+        } else {
+            setCardsPerView(3);
         }
-      });
-    }, sectionRef);
+    };
 
-    return () => ctx.revert();
-  }, []);
+    useEffect(() => {
+        updateDimensions();
 
-  return (
-    <section className="curved-slider-section" ref={sectionRef}>
-      <div className="slider-header">
-        <h2>{title}</h2>
-      </div>
+        window.addEventListener('resize', updateDimensions);
 
-      <div className="cards-perspective-container">
-        <div className="curved-cards-track" ref={trackRef}>
-          {cardsData.map((card) => (
-            <div className="curved-card" key={card.id}>
-              <div className="card-image-wrapper">
-                <img src={card.img} alt={card.title} />
-                <a href="#" className="action-btn">
-                  <span>ابدأ الآن</span>
-                </a>
-              </div>
+        return () => {
+            window.removeEventListener('resize', updateDimensions);
+        };
+    }, []);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Card Dimensions
+    |--------------------------------------------------------------------------
+    */
+
+    const GAP = 24;
+
+    const cardWidth =
+        cardsPerView > 0
+            ? (containerWidth - GAP * (cardsPerView - 1)) / cardsPerView
+            : 0;
+
+    const step = cardWidth + GAP;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Infinite Positioning
+    |--------------------------------------------------------------------------
+    */
+
+    const getCardPosition = (index) => {
+        if (!containerWidth || !cardWidth) {
+            return 0;
+        }
+
+        let x = index * step - positionRef.current;
+
+        const totalWidth = horizontalSliderData.length * step;
+
+        /*
+         * Wrap card to the right
+         */
+        while (x < -step) {
+            x += totalWidth;
+        }
+
+        /*
+         * Wrap card to the left
+         */
+        while (x > containerWidth) {
+            x -= totalWidth;
+        }
+
+        return x;
+    };
+
+    /*
+    |--------------------------------------------------------------------------
+    | Mouse Drag
+    |--------------------------------------------------------------------------
+    */
+const handlePointerDown = (e) => {
+
+    if (wheelTweenRef.current) {
+        wheelTweenRef.current.kill();
+        wheelTweenRef.current = null;
+    }
+
+    wheelPositionRef.current.value =
+        positionRef.current;
+
+    isDraggingRef.current = true;
+
+    startXRef.current = e.clientX;
+
+    startPositionRef.current =
+        positionRef.current;
+
+    sliderRef.current?.setPointerCapture?.(
+        e.pointerId
+    );
+
+    document.body.classList.add(
+        'horizontal-slider-dragging'
+    );
+};
+
+    const handlePointerMove = (e) => {
+        if (!isDraggingRef.current) return;
+
+        const delta = e.clientX - startXRef.current;
+
+        positionRef.current = startPositionRef.current - delta;
+
+        forceRender((value) => value + 1);
+    };
+
+    const handlePointerUp = () => {
+        if (!isDraggingRef.current) return;
+
+        isDraggingRef.current = false;
+
+        document.body.classList.remove('horizontal-slider-dragging');
+    };
+
+/*
+|--------------------------------------------------------------------------
+| Smooth Slide-by-Slide Wheel
+|--------------------------------------------------------------------------
+*/
+
+useEffect(() => {
+    const slider = sliderRef.current;
+
+    if (!slider) return;
+
+    let wheelLocked = false;
+
+    const handleWheel = (e) => {
+        e.preventDefault();
+
+        if (wheelLocked) return;
+
+        const delta =
+            Math.abs(e.deltaX) > Math.abs(e.deltaY)
+                ? e.deltaX
+                : e.deltaY;
+
+        if (!delta) return;
+
+        const direction = delta > 0 ? 1 : -1;
+
+        const currentPosition =
+            positionRef.current;
+
+        /*
+         * أقرب Slide فعلية
+         */
+        const currentSlide =
+            Math.round(currentPosition / step);
+
+        /*
+         * Slide واحدة في الاتجاه المطلوب
+         */
+        const targetPosition =
+            (currentSlide + direction) * step;
+
+        wheelLocked = true;
+
+        if (wheelTweenRef.current) {
+            wheelTweenRef.current.kill();
+        }
+
+        wheelPositionRef.current.value =
+            currentPosition;
+
+        wheelTweenRef.current = gsap.to(
+            wheelPositionRef.current,
+            {
+                value: targetPosition,
+
+                duration: 0.8,
+
+                ease: 'power3.inOut',
+
+                onUpdate: () => {
+                    positionRef.current =
+                        wheelPositionRef.current.value;
+
+                    forceRender((value) => value + 1);
+                },
+
+                onComplete: () => {
+                    positionRef.current =
+                        targetPosition;
+
+                    forceRender((value) => value + 1);
+
+                    wheelLocked = false;
+
+                    wheelTweenRef.current = null;
+                },
+            }
+        );
+    };
+
+    slider.addEventListener('wheel', handleWheel, {
+        passive: false,
+    });
+
+    return () => {
+        slider.removeEventListener('wheel', handleWheel);
+
+        if (wheelTweenRef.current) {
+            wheelTweenRef.current.kill();
+        }
+    };
+}, [step]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Render
+    |--------------------------------------------------------------------------
+    */
+
+    return (
+        <section
+            ref={sliderRef}
+            className={`horizontal-slider ${
+                isDraggingRef.current ? 'is-dragging' : ''
+            }`}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+            onPointerLeave={handlePointerUp}
+        >
+            <div className="horizontal-slider-viewport">
+
+                {horizontalSliderData.map((item, index) => {
+
+                    const x = getCardPosition(index);
+
+                    return (
+                        <article
+                            key={`${item.title}-${index}`}
+                            className="horizontal-slider-card"
+                            style={{
+                                width: `${cardWidth}px`,
+                                transform: `translate3d(${x}px, -50%, 0)`,
+                            }}
+                        >
+                            <div className="horizontal-slider-image">
+                                <img
+                                    src={item.image}
+                                    alt={item.title}
+                                    draggable="false"
+                                />
+                            </div>
+
+                            <div className="horizontal-slider-overlay">
+                                <h3>{item.title}</h3>
+                            </div>
+                        </article>
+                    );
+                })}
+
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
+        </section>
+    );
+};
 
 export default HorizintalSlider;

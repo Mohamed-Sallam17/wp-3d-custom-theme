@@ -13,6 +13,7 @@ $blog_content = get_post_field('post_content', $blog_page_id);
     <div class="page-transition"></div>
 </div>
 
+<div data-barba="wrapper">
 <main data-barba="container" data-barba-namespace="<?php echo sanitize_title(get_post_field('post_name')); ?>">
 
 <div class="blog-page-wrapper py-12 px-4 max-w-7xl mx-auto">
@@ -120,5 +121,6 @@ $blog_content = get_post_field('post_content', $blog_page_id);
 </div>
 
 </main>
+</div>
 
 <?php get_footer(); ?>

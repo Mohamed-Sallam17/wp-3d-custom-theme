@@ -4,13 +4,11 @@
     <div class="page-transition"></div>
 </div>
 
+<div data-barba="wrapper">
 <main data-barba="container" data-barba-namespace="<?php echo sanitize_title(get_post_field('post_name')); ?>">
 
 
-<?php
-// استدعاء الشورت كود مباشرة داخل الهوم بيدج
-echo do_shortcode('[horizintal_slider title="خدمات تسويقية ذكية"]');
-?>
+<div id="react-horizontal-slider"></div>
 
 <?php while(have_posts()){
     the_post();?>
@@ -44,5 +42,6 @@ echo do_shortcode('[horizintal_slider title="خدمات تسويقية ذكية"
 ?>
 
 </main>
+
 
 <?php get_footer(); ?>

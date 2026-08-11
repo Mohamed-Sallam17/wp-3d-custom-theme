@@ -1,74 +1,158 @@
 import barba from '@barba/core';
 import { gsap } from 'gsap';
+import '../../styles/css/pageTransition.css'
+// =====================================================
+// Update Active Menu
+// =====================================================
 
-// دالة تحديث كلاس النشاط للهيدر بدون Re-render
 const updateActiveMenu = () => {
-  const currentPath = window.location.pathname.replace(/\/$/, '');
-  const menuItems = document.querySelectorAll('#menu-header-menu li');
 
-  menuItems.forEach((item) => {
-    const link = item.querySelector('a');
-    if (!link) return;
+    const currentPath = window.location.pathname.replace(/\/$/, '');
 
-    const linkPath = new URL(link.href, window.location.origin).pathname.replace(/\/$/, '');
-    item.classList.remove('current-menu-item', 'current_page_item', 'active');
+    const menuItems = document.querySelectorAll('#menu-header-menu li');
 
-    if (linkPath === currentPath) {
-      item.classList.add('current-menu-item', 'current_page_item', 'active');
-    }
-  });
+    menuItems.forEach((item) => {
+
+        const link = item.querySelector('a');
+
+        if (!link) return;
+
+        const linkPath = new URL(
+            link.href,
+            window.location.origin
+        ).pathname.replace(/\/$/, '');
+
+        item.classList.remove(
+            'current-menu-item',
+            'current_page_item',
+            'active'
+        );
+
+        if (linkPath === currentPath) {
+
+            item.classList.add(
+                'current-menu-item',
+                'current_page_item',
+                'active'
+            );
+
+        }
+
+    });
+
 };
 
+
+// =====================================================
+// Page Transitions
+// =====================================================
+
 export const initPageTransitions = () => {
-  const wrapper = document.querySelector('[data-barba="wrapper"]');
-  if (!wrapper) return;
 
-  barba.init({
-    sync: false,
-    prevent: ({ el }) => {
-      const href = el.getAttribute('href');
-      return (
-        el.classList.contains('no-barba') ||
-        !href ||
-        href.includes('wp-admin') ||
-        href.includes('wp-login') ||
-        href.startsWith('#') ||
-        href.startsWith('mailto:') ||
-        href.startsWith('tel:')
-      );
-    },
-    transitions: [
-      {
-        name: 'clean-transition',
-        async leave() {
-          const done = this.async();
-          gsap.to(".page-transition", {
-            duration: 0.6,
-            yPercent: -100,
-            ease: "power3.inOut",
-            onComplete: () => {
-              window.scrollTo(0, 0);
-              done();
-            }
-          });
-        },
-        async enter() {
-          // تحديث رابط القائمة النشط والستارة مغلقة تماماً
-          updateActiveMenu();
-          
-          window.dispatchEvent(new Event('barba:page-changed'));
+    const wrapper = document.querySelector(
+        '[data-barba="wrapper"]'
+    );
 
-          gsap.to(".page-transition", {
-            duration: 0.6,
-            yPercent: -200,
-            ease: "power3.inOut",
-            onComplete: () => {
-              gsap.set(".page-transition", { yPercent: 100 });
-              if (typeof mainAnimation === 'function') mainAnimation();
+    if (!wrapper) return;
+
+
+    // =================================================
+    // Barba Debug Hooks
+    // =================================================
+
+    barba.hooks.before(() => {
+        console.log('BARBA BEFORE');
+    });
+
+    barba.hooks.after(() => {
+        console.log('BARBA AFTER');
+    });
+
+
+    // =================================================
+    // Barba Init
+    // =================================================
+
+    barba.init({
+
+        sync: false,
+
+        transitions: [
+
+            {
+                name: 'clean-transition',
+
+
+                // =========================================
+                // LEAVE
+                // =========================================
+
+              async leave() {
+
+                  const transition = document.querySelector('.page-transition');
+
+                  if (!transition) return;
+
+
+                  await gsap.to(transition, {
+
+                      duration: 0.6,
+
+                      yPercent: -100,
+
+                      ease: 'power3.inOut',
+
+                  });
+
+
+                  window.scrollTo(0, 0);
+              },
+
+                // =========================================
+                // ENTER
+                // =========================================
+
+              async enter() {
+
+                  const transition = document.querySelector('.page-transition');
+
+                  if (!transition) return;
+
+
+                  updateActiveMenu();
+
+
+                  window.dispatchEvent(
+                      new Event('barba:page-changed')
+                  );
+
+
+                  await gsap.to(transition, {
+
+                      duration: 0.6,
+
+                      yPercent: -200,
+
+                      ease: 'power3.inOut',
+
+                  });
+
+                  // رجوع للوضع الابتدائي
+                  gsap.set(transition, {
+                      yPercent: 100
+                  });
+
+
+                  if (typeof window.mainAnimation === 'function') {
+                      window.mainAnimation();
+                  }
+
+              }
+
             }
-          });
-        }
-      }
-    ]
-  });
+
+        ]
+
+    });
+
 };

@@ -1,104 +1,246 @@
-.curved-slider-section {
-  width: 100%;
-  height: 100vh;
-  background-color: #080511;
-  color: #ffffff;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  direction: rtl;
+.horizontal-slider {
+    position: relative;
+
+    width: 100vw;
+    max-width: 100vw;
+
+    /*
+     * مهم جداً:
+     * يخرج الـsection من أي container في WordPress
+     */
+    margin-inline-start: calc(50% - 50vw);
+
+    height: 650px;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+
+    cursor: grab;
+
+    user-select: none;
+
+    touch-action: pan-y;
+
+    isolation: isolate;
 }
 
-.slider-header {
-  padding: 0 8%;
-  margin-bottom: 40px;
+
+/*
+|--------------------------------------------------------------------------
+| Dragging
+|--------------------------------------------------------------------------
+*/
+
+.horizontal-slider.is-dragging {
+    cursor: grabbing;
 }
 
-.slider-header h2 {
-  font-size: 2.5rem;
-  font-weight: bold;
+body.horizontal-slider-dragging {
+    cursor: grabbing !important;
 }
 
-.cards-perspective-container {
-  width: 100%;
-  padding: 0 8%;
-  overflow: hidden;
+
+/*
+|--------------------------------------------------------------------------
+| Viewport
+|--------------------------------------------------------------------------
+*/
+
+.horizontal-slider-viewport {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
 }
 
-.curved-cards-track {
-  display: flex;
-  gap: 24px;
-  width: max-content;
-  will-change: transform;
+
+/*
+|--------------------------------------------------------------------------
+| Card
+|--------------------------------------------------------------------------
+*/
+
+.horizontal-slider-card {
+    position: absolute;
+
+    top: 50%;
+    left: 0;
+
+    height: 90%;
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    background: #111;
+
+    box-sizing: border-box;
+
+    will-change: transform;
+
+    flex-shrink: 0;
+
+    /*
+     * مهم:
+     * الـJS هو اللي بيتحكم في X
+     */
+    transition: none;
 }
 
-/* ضبط عرض الكارت ليعرض 3 كروت فقط في الـ Container */
-.curved-card {
-  width: calc((100vw - 16% - 48px) / 3); /* يظهر 3 كروت تماماً داخل العرض المستهدف */
-  height: 420px;
-  flex-shrink: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-  background-color: #120b22;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: transform 0.3s ease, border-color 0.3s ease;
+
+/*
+|--------------------------------------------------------------------------
+| Image
+|--------------------------------------------------------------------------
+*/
+
+.horizontal-slider-image {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    border-radius: inherit;
 }
 
-.curved-card:hover {
-  transform: translateY(-10px);
-  border-color: rgba(168, 85, 247, 0.5);
+
+.horizontal-slider-image img {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    /*
+     * زي ما طلبت
+     */
+    object-fit: contain;
+
+    object-position: center;
+
+    pointer-events: none;
+
+    user-select: none;
+
+    -webkit-user-drag: none;
 }
 
-.card-image-wrapper {
-  width: 100%;
-  height: 100%;
-  position: relative;
+
+/*
+|--------------------------------------------------------------------------
+| Overlay
+|--------------------------------------------------------------------------
+*/
+
+.horizontal-slider-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: center;
+
+    padding: 35px;
+
+    box-sizing: border-box;
+
+    background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.8),
+        rgba(0, 0, 0, 0.15) 45%,
+        transparent 70%
+    );
+
+    opacity: 0;
+
+    transition: opacity 0.35s ease;
+
+    pointer-events: none;
 }
 
-.card-image-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+
+.horizontal-slider-card:hover .horizontal-slider-overlay {
+    opacity: 1;
 }
 
-/* زر الحركة عند الهوفر */
-.action-btn {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  width: 80px;
-  height: 80px;
-  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.85rem;
-  font-weight: bold;
-  opacity: 0;
-  transition: all 0.3s ease;
+
+.horizontal-slider-overlay h3 {
+    margin: 0;
+
+    color: #fff;
+
+    font-size: 32px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    text-align: center;
+
+    direction: rtl;
 }
 
-.curved-card:hover .action-btn {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
 
-/* تجاوب الشاشات ليكون كارتين في التابلت وكارت واحد في الموبايل */
+/*
+|--------------------------------------------------------------------------
+| Tablet
+|--------------------------------------------------------------------------
+*/
+
 @media (max-width: 1024px) {
-  .curved-card {
-    width: calc((100vw - 16% - 24px) / 2);
-  }
+
+    .horizontal-slider {
+        height: 560px;
+    }
+
+    .horizontal-slider-card {
+        height: 88%;
+    }
+
+    .horizontal-slider-overlay {
+        opacity: 1;
+    }
+
+    .horizontal-slider-overlay h3 {
+        font-size: 26px;
+    }
+
 }
 
-@media (max-width: 640px) {
-  .curved-card {
-    width: calc(100vw - 16%);
-  }
+
+/*
+|--------------------------------------------------------------------------
+| Mobile
+|--------------------------------------------------------------------------
+*/
+
+@media (max-width: 767px) {
+
+    .horizontal-slider {
+        height: 480px;
+    }
+
+    .horizontal-slider-card {
+        height: 90%;
+    }
+
+    .horizontal-slider-overlay {
+        opacity: 1;
+
+        padding: 25px;
+    }
+
+    .horizontal-slider-overlay h3 {
+        font-size: 22px;
+    }
+
 }

@@ -6,6 +6,11 @@
     <?php wp_head(); ?>
     <title>Document</title>
 </head>
+<script>
+    window.wameedTheme = {
+        themeUrl: "<?php echo esc_url(get_theme_file_uri()); ?>"
+    };
+</script>
 <body <?php body_class(); ?> data-barba="wrapper">
 
 <header class="sticky top-0 px-4 z-20">
@@ -13,7 +18,7 @@
     <div class="flex">
       <a href="/" class="-m-1.5 p-1.5">
         <span class="sr-only">Your Company</span>
-        <img src="<?php echo get_theme_file_uri("./assets/logo.png") ?>" alt="" class="h-14 w-auto" />
+        <img src="<?php echo get_theme_file_uri("/assets/logo.png") ?>" alt="" class="h-14 w-auto" />
       </a>
     </div>
     <div class="flex lg:hidden">
