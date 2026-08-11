@@ -14,6 +14,11 @@
   cursor: grab;
 
   user-select: none;
+
+  /*
+   * Allow normal vertical page scrolling
+   * while supporting horizontal dragging.
+   */
   touch-action: pan-y;
 
   overscroll-behavior-x: contain;
@@ -26,7 +31,7 @@
 
 /* =========================================================
    TRACK
-   ========================================================= */
+========================================================= */
 
 .horizontal-slider__track {
   display: flex;
@@ -41,10 +46,11 @@
 
 /* =========================================================
    SET
-   ========================================================= */
+========================================================= */
 
 .horizontal-slider__set {
   display: flex;
+
   flex-shrink: 0;
 
   gap: 24px;
@@ -55,7 +61,7 @@
 
 /* =========================================================
    CARD
-   ========================================================= */
+========================================================= */
 
 .horizontal-slider__card {
   position: relative;
@@ -74,15 +80,13 @@
 
   border-radius: 24px;
 
-  background: #111;
-
   user-select: none;
 }
 
 
 /* =========================================================
    IMAGE
-   ========================================================= */
+========================================================= */
 
 .horizontal-slider__image-wrapper {
   position: absolute;
@@ -109,7 +113,7 @@
 
 /* =========================================================
    OVERLAY
-   ========================================================= */
+========================================================= */
 
 .horizontal-slider__overlay {
   position: absolute;
@@ -131,15 +135,13 @@
 
   opacity: 0;
 
-  transition:
-    opacity 0.35s ease;
+  transition: opacity 0.35s ease;
 }
 
 .horizontal-slider__card:hover
 .horizontal-slider__overlay {
   opacity: 1;
 }
-
 
 .horizontal-slider__overlay h3 {
   margin: 0;
@@ -156,7 +158,7 @@
 
 /* =========================================================
    TABLET
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 1024px) {
 
@@ -165,7 +167,7 @@
   }
 
   .horizontal-slider__card {
-    flex-basis: calc(
+    flex: 0 0 calc(
       (100vw - 40px - 40px) / 2
     );
 
@@ -173,28 +175,40 @@
       (100vw - 40px - 40px) / 2
     );
   }
-
 }
 
 
 /* =========================================================
    MOBILE
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 640px) {
+
+  .horizontal-slider {
+    width: 100vw;
+    max-width: 100vw;
+
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+
+    touch-action: pan-y;
+  }
 
   .horizontal-slider__set {
     gap: 16px;
   }
 
   .horizontal-slider__card {
-    flex-basis: calc(
-      (100vw - 16px - 16px) / 1.25
-    );
+    /*
+     * Mobile card width
+     *
+     * Shows one card with part
+     * of the next card.
+     */
 
-    width: calc(
-      (100vw - 16px - 16px) / 1.25
-    );
+    flex: 0 0 80vw;
+
+    width: 80vw;
 
     border-radius: 18px;
   }
@@ -206,5 +220,4 @@
   .horizontal-slider__overlay h3 {
     font-size: 22px;
   }
-
 }

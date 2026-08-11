@@ -6,264 +6,503 @@ const HorizintalSlider = () => {
   const sliderRef = useRef(null);
   const trackRef = useRef(null);
 
+  /*
+  |--------------------------------------------------------------------------
+  | Slider Position
+  |--------------------------------------------------------------------------
+  */
+
   const currentX = useRef(0);
   const targetX = useRef(0);
 
+  /*
+  |--------------------------------------------------------------------------
+  | Width of one complete set
+  |--------------------------------------------------------------------------
+  */
+
   const setWidth = useRef(0);
-
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const dragStartX = useRef(0);
-
-  const animationFrame = useRef(null);
 
   /*
   |--------------------------------------------------------------------------
-  | Measure one complete set
+  | Drag
   |--------------------------------------------------------------------------
   */
+
+  const isDragging = useRef(false);
+  const isHorizontalDrag = useRef(false);
+
+  const startX = useRef(0);
+  const startY = useRef(0);
+
+  const dragStartX = useRef(0);
+
+  /*
+  |--------------------------------------------------------------------------
+  | Animation
+  |--------------------------------------------------------------------------
+  */
+
+  const animationFrame = useRef(null);
+
+
+  /* =========================================================
+     Measure Slider
+  ========================================================= */
 
   const measureSlider = () => {
     if (!trackRef.current) return;
 
-    const firstSet = trackRef.current.querySelector(
-      '.horizontal-slider__set'
-    );
+    const firstSet =
+      trackRef.current.querySelector(
+        '.horizontal-slider__set'
+      );
 
     if (!firstSet) return;
 
-    setWidth.current = firstSet.offsetWidth;
+    setWidth.current =
+      firstSet.offsetWidth;
 
     /*
      * Start from the middle copy.
-     * This gives us content before and after the viewport.
+     *
+     * [ SET 1 ][ SET 2 ][ SET 3 ]
      */
 
-    if (currentX.current === 0) {
-      currentX.current = -setWidth.current;
-      targetX.current = -setWidth.current;
+    if (
+      currentX.current === 0 &&
+      targetX.current === 0
+    ) {
+      currentX.current =
+        -setWidth.current;
+
+      targetX.current =
+        -setWidth.current;
     }
   };
 
-  /*
-  |--------------------------------------------------------------------------
-  | Infinite Loop
-  |--------------------------------------------------------------------------
-  */
 
-  const normalizePosition = () => {
+  /* =========================================================
+     Convert unlimited position
+     to visual position
+  ========================================================= */
+
+  const getVisualPosition = (position) => {
     const width = setWidth.current;
 
-    if (!width) return;
+    if (!width) {
+      return position;
+    }
 
     /*
-     * We have 3 copies:
+     * Keep the visual position inside
+     * the middle copy range.
      *
-     * [SET 1] [SET 2] [SET 3]
-     *
-     * We normally live inside SET 2.
+     * The actual position is never reset.
      */
 
-    while (targetX.current <= -width * 2) {
-      targetX.current += width;
-      currentX.current += width;
-    }
+    const normalized =
+      ((position + width) % width + width) %
+      width;
 
-    while (targetX.current >= 0) {
-      targetX.current -= width;
-      currentX.current -= width;
-    }
+    return -width - normalized;
   };
 
-  /*
-  |--------------------------------------------------------------------------
-  | Smooth Animation
-  |--------------------------------------------------------------------------
-  */
+
+  /* =========================================================
+     Smooth Animation
+  ========================================================= */
 
   const animate = () => {
-    const track = trackRef.current;
-
-    if (!track) return;
+    if (!trackRef.current) return;
 
     /*
-     * Lower value = smoother/slower.
-     * This gives the slider the smooth feeling
-     * instead of instantly jumping to wheel position.
+     * Smooth movement
      */
 
     currentX.current +=
-      (targetX.current - currentX.current) * 0.085;
+      (targetX.current - currentX.current) * 0.12;
 
-    track.style.transform = `translate3d(${currentX.current}px, 0, 0)`;
 
-    animationFrame.current = requestAnimationFrame(animate);
-  };
-
-  /*
-  |--------------------------------------------------------------------------
-  | Mouse Wheel
-  |--------------------------------------------------------------------------
-  */
-
-  const handleWheel = (event) => {
     /*
-     * Convert vertical mouse wheel movement
-     * into horizontal movement.
+     * Calculate only the visual position.
+     *
+     * We NEVER reset currentX or targetX.
      */
 
-    const delta = event.deltaY || event.deltaX;
+    const visualX =
+      getVisualPosition(
+        currentX.current
+      );
 
-    if (!delta) return;
+
+    /*
+     * Apply transform
+     */
+
+    trackRef.current.style.transform =
+      `translate3d(${visualX}px, 0, 0)`;
+
+
+    /*
+     * Continue animation
+     */
+
+    animationFrame.current =
+      requestAnimationFrame(
+        animate
+      );
+  };
+
+
+  /* =========================================================
+     Pointer Down
+  ========================================================= */
+
+  const handlePointerDown = (event) => {
+
+    isDragging.current = true;
+    isHorizontalDrag.current = false;
+
+
+    startX.current =
+      event.clientX;
+
+    startY.current =
+      event.clientY;
+
+
+    /*
+     * Start dragging from current position
+     */
+
+    dragStartX.current =
+      targetX.current;
+
+
+    /*
+     * Capture pointer
+     */
+
+    sliderRef.current?.setPointerCapture?.(
+      event.pointerId
+    );
+
+
+    sliderRef.current?.classList.add(
+      'is-dragging'
+    );
+  };
+
+
+  /* =========================================================
+     Pointer Move
+  ========================================================= */
+
+  const handlePointerMove = (event) => {
+
+    if (!isDragging.current) {
+      return;
+    }
+
+
+    const deltaX =
+      event.clientX -
+      startX.current;
+
+
+    const deltaY =
+      event.clientY -
+      startY.current;
+
+
+    /*
+     * Determine horizontal / vertical gesture
+     */
+
+    if (!isHorizontalDrag.current) {
+
+      /*
+       * Ignore tiny movement
+       */
+
+      if (
+        Math.abs(deltaX) < 8 &&
+        Math.abs(deltaY) < 8
+      ) {
+        return;
+      }
+
+
+      /*
+       * Vertical movement
+       *
+       * Let the page scroll normally.
+       */
+
+      if (
+        Math.abs(deltaY) >
+        Math.abs(deltaX)
+      ) {
+
+        isDragging.current = false;
+
+
+        sliderRef.current?.releasePointerCapture?.(
+          event.pointerId
+        );
+
+
+        sliderRef.current?.classList.remove(
+          'is-dragging'
+        );
+
+
+        return;
+      }
+
+
+      /*
+       * Horizontal movement
+       */
+
+      isHorizontalDrag.current = true;
+    }
+
+
+    /*
+     * Prevent browser behavior
+     * during horizontal dragging.
+     */
 
     event.preventDefault();
 
+
     /*
-     * Speed of horizontal movement.
+     * IMPORTANT:
      *
-     * Increase to make it faster.
-     * Decrease to make it slower.
+     * No normalize.
+     * No reset.
+     *
+     * Drag direction:
+     *
+     * Mouse → Right
+     * Cards → Right
+     *
+     * Mouse ← Left
+     * Cards ← Left
      */
 
-    targetX.current -= delta * 1.05;
-
-    normalizePosition();
+    const DRAG_SPEED = 2.5;
+    targetX.current = dragStartX.current - deltaX * DRAG_SPEED;
   };
 
-  /*
-  |--------------------------------------------------------------------------
-  | Mouse Drag
-  |--------------------------------------------------------------------------
-  */
 
-  const handlePointerDown = (event) => {
-    isDragging.current = true;
-
-    startX.current = event.clientX;
-    dragStartX.current = targetX.current;
-
-    sliderRef.current?.setPointerCapture?.(event.pointerId);
-
-    sliderRef.current?.classList.add('is-dragging');
-  };
-
-  const handlePointerMove = (event) => {
-    if (!isDragging.current) return;
-
-    const distance = event.clientX - startX.current;
-
-    targetX.current = dragStartX.current + distance;
-
-    normalizePosition();
-  };
+  /* =========================================================
+     Pointer Up
+  ========================================================= */
 
   const handlePointerUp = (event) => {
-    if (!isDragging.current) return;
+
+    if (!isDragging.current) {
+      return;
+    }
+
 
     isDragging.current = false;
+    isHorizontalDrag.current = false;
 
-    sliderRef.current?.releasePointerCapture?.(event.pointerId);
 
-    sliderRef.current?.classList.remove('is-dragging');
+    /*
+     * Release pointer
+     */
+
+    sliderRef.current?.releasePointerCapture?.(
+      event.pointerId
+    );
+
+
+    sliderRef.current?.classList.remove(
+      'is-dragging'
+    );
   };
 
-  /*
-  |--------------------------------------------------------------------------
-  | Resize
-  |--------------------------------------------------------------------------
-  */
+
+  /* =========================================================
+     Resize
+  ========================================================= */
 
   useEffect(() => {
+
     measureSlider();
 
-    const handleResize = () => {
-      /*
-       * Recalculate the width after responsive changes.
-       */
 
-      const oldWidth = setWidth.current;
+    const handleResize = () => {
+
+      const oldWidth =
+        setWidth.current;
+
 
       measureSlider();
 
-      const newWidth = setWidth.current;
 
-      if (!oldWidth || !newWidth) return;
+      const newWidth =
+        setWidth.current;
+
 
       /*
-       * Keep us inside the middle copy after resize.
+       * Keep position proportional
+       * after resize.
        */
 
-      const ratio = newWidth / oldWidth;
+      if (
+        oldWidth &&
+        newWidth &&
+        oldWidth !== newWidth
+      ) {
 
-      currentX.current *= ratio;
-      targetX.current *= ratio;
+        const widthRatio =
+          newWidth / oldWidth;
 
-      normalizePosition();
-    };
 
-    window.addEventListener('resize', handleResize);
+        currentX.current *=
+          widthRatio;
 
-    /*
-     * Start animation loop.
-     */
 
-    animationFrame.current = requestAnimationFrame(animate);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-
-      if (animationFrame.current) {
-        cancelAnimationFrame(animationFrame.current);
+        targetX.current *=
+          widthRatio;
       }
     };
+
+
+    window.addEventListener(
+      'resize',
+      handleResize
+    );
+
+
+    /*
+     * Start animation
+     */
+
+    animationFrame.current =
+      requestAnimationFrame(
+        animate
+      );
+
+
+    return () => {
+
+      window.removeEventListener(
+        'resize',
+        handleResize
+      );
+
+
+      if (
+        animationFrame.current
+      ) {
+
+        cancelAnimationFrame(
+          animationFrame.current
+        );
+      }
+    };
+
   }, []);
 
-  /*
-  |--------------------------------------------------------------------------
-  | Render
-  |--------------------------------------------------------------------------
-  */
+
+  /* =========================================================
+     Render
+  ========================================================= */
 
   return (
     <section
       ref={sliderRef}
       className="horizontal-slider"
-      onWheel={handleWheel}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerUp}
+
+      /*
+       * Wheel intentionally disabled.
+       */
+
+      onPointerDown={
+        handlePointerDown
+      }
+
+      onPointerMove={
+        handlePointerMove
+      }
+
+      onPointerUp={
+        handlePointerUp
+      }
+
+      onPointerCancel={
+        handlePointerUp
+      }
     >
+
       <div
         ref={trackRef}
         className="horizontal-slider__track"
       >
-        {[0, 1, 2].map((setIndex) => (
-          <div
-            className="horizontal-slider__set"
-            key={setIndex}
-          >
-            {horizontalSliderData.map((item, index) => (
-              <article
-                className="horizontal-slider__card"
-                key={`${setIndex}-${index}`}
-              >
-                <div className="horizontal-slider__image-wrapper">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    draggable="false"
-                  />
-                </div>
 
-                <div className="horizontal-slider__overlay">
-                  <h3>{item.title}</h3>
-                </div>
-              </article>
-            ))}
-          </div>
-        ))}
+        {/*
+         * Three copies for
+         * infinite visual loop.
+         */}
+
+        {[0, 1, 2].map(
+          (setIndex) => (
+
+            <div
+              className="horizontal-slider__set"
+              key={setIndex}
+            >
+
+              {horizontalSliderData.map(
+                (item, index) => (
+
+                  <article
+                    className="horizontal-slider__card"
+                    key={`${setIndex}-${index}`}
+                  >
+
+                    <div
+                      className="horizontal-slider__image-wrapper"
+                    >
+                      <a href={item.link}>
+
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          draggable="false"
+                        />
+                      </a>
+
+                    </div>
+
+
+                    <div
+                      className="horizontal-slider__overlay"
+                    >
+
+                      <h3>
+                        {item.title}
+                      </h3>
+
+                    </div>
+
+                  </article>
+                )
+              )}
+
+            </div>
+          )
+        )}
+
       </div>
+
     </section>
   );
 };
