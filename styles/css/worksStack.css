@@ -1,0 +1,12 @@
+.works-stack__cards {
+  position: relative;
+}
+
+.work-stacks__wrapper {
+  position: relative;
+}
+
+.works-card {
+  position: sticky;
+  top: 150px;
+}

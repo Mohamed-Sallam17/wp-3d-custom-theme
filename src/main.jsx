@@ -15,6 +15,7 @@ import '../styles/css/index.css';
 
 const componentsRegistry = {
   'react-horizontal-slider': lazyComponent('HorizintalSlider'),
+  'react-works-stack': lazyComponent('WorksStack'),
 };
 
 

@@ -7,9 +7,19 @@
 }
 :root{
     --bg-color: #010008;
+    --description-color: #A3A2B7;
+    --border-color: #F8F7FF1F;
 }
 body{
     height: 100dvh;
+    overflow-x: hidden;
+}
+main{
+  height: 10000vh;
+}
+.container{
+  padding: 0 1rem;
+  margin: auto;
 }
 .gradient-text, 
 ul#menu-header-menu .current_page_item, 
@@ -30,11 +40,9 @@ ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
     background: linear-gradient(45deg, #5999FF, #A55CFF, #F25DEA);
 }
 
-/* Cursor */
-
-body, a, button {
-  cursor: none !important;
-}
+/*
+   Custom Cursor
+*/
 
 .custom-cursor-wrapper {
   position: fixed;
@@ -43,12 +51,14 @@ body, a, button {
   width: 40px;
   height: 40px;
   pointer-events: none;
-  z-index: 99999;
+  z-index: 999999;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  will-change: transform, opacity;
+  transition: opacity 0.15s ease;
+  contain: layout style paint;
 }
 
 .custom-cursor-wrapper.active {
@@ -57,17 +67,57 @@ body, a, button {
 
 .cursor-outer-circle {
   position: absolute;
+
   width: 100%;
   height: 100%;
+
   border: 1px solid #A55CFFB2;
+
   border-radius: 50%;
+
   box-sizing: border-box;
 }
 
 .cursor-inner-dot {
   position: absolute;
+
   width: 8px;
   height: 8px;
-  background: linear-gradient(45deg, #5999FF, #A55CFF, #F25DEA);
+
   border-radius: 50%;
+
+  background: linear-gradient(
+    45deg,
+    #5999FF,
+    #A55CFF,
+    #F25DEA
+  );
+}
+
+
+/* =========================================
+   Hide native cursor ONLY when
+   custom cursor is supported
+========================================= */
+
+@media (hover: hover) and (pointer: fine) {
+  body.custom-cursor-enabled,
+  body.custom-cursor-enabled a,
+  body.custom-cursor-enabled button,
+  body.custom-cursor-enabled input,
+  body.custom-cursor-enabled textarea,
+  body.custom-cursor-enabled select {
+    cursor: none !important;
+  }
+}
+
+
+/* =========================================
+   Touch devices
+========================================= */
+
+@media (hover: none), (pointer: coarse) {
+  .custom-cursor-wrapper {
+    display: none;
+  }
 }
