@@ -70,7 +70,7 @@ function WorksStack() {
 
           scrub: 3,
 
-          markers: true,
+        //   markers: true,
 
           invalidateOnRefresh: true,
         },
@@ -107,7 +107,7 @@ function WorksStack() {
     >
       <div className="works-stack__container container">
 
-        <h2 className="works-stack__title lg:text-5xl font-bold mb-8">
+        <h2 className="block__title text-3xl lg:text-5xl font-bold mb-8">
           أعمالنا
         </h2>
 
@@ -117,12 +117,12 @@ function WorksStack() {
             {cardsData.map((card) => (
               <article
                 key={card.number}
-                className="works-card lg:px-12 py-4 bg-[#1B1428] rounded-2xl flex justify-between items-center lg:h-[200px]"
+                className="works-card px-4 lg:px-12 py-4 bg-[#1B1428] rounded-2xl flex justify-between items-start lg:items-center flex-col lg:flex-row gap-4 lg:h-[200px]"
               >
 
                 <div className="works-card__right flex justify-center items-center gap-4">
 
-                  <div className="works-card__icon lg:w-[56px] lg:h-[56px] bg-linear-to-br from-[#5999FF] via-[#A55CFF] to-[#F25DEA] rounded-full flex justify-center items-center text-3xl">
+                  <div className="works-card__icon w-[56px] h-[56px] bg-linear-to-br from-[#5999FF] via-[#A55CFF] to-[#F25DEA] rounded-full flex justify-center items-center text-3xl">
                     {card.icon}
                   </div>
 
@@ -144,7 +144,7 @@ function WorksStack() {
 
                 </div>
 
-                <div className="works-card__cta lg:w-[96px] lg:h-[96px] rounded-full flex justify-center items-center border-1 border-[#A55CFF66] hover:bg-[#7C3AED]">
+                <div className="works-card__cta w-[100px] h-[40px] lg:w-[96px] lg:h-[96px] rounded-full flex justify-center items-center border-1 border-[#A55CFF66] hover:bg-[#7C3AED]">
                   {card.cta}
                 </div>
 

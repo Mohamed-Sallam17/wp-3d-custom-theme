@@ -419,7 +419,7 @@ const HorizintalSlider = () => {
   return (
     <section
       ref={sliderRef}
-      className="horizontal-slider "
+      className="horizontal-slider mt-8 "
 
       /*
        * Wheel intentionally disabled.
@@ -441,6 +441,14 @@ const HorizintalSlider = () => {
         handlePointerUp
       }
     >
+
+
+      <div className="horizontal-slider__header container mb-4">
+        <h2 className="block__title text-3xl lg:text-5xl font-bold mb-8 text-end">
+          خدمات تسويقية ذكية
+        </h2>
+      </div>
+
 
       <div
         ref={trackRef}

@@ -24,6 +24,7 @@
   overscroll-behavior-x: contain;
 }
 
+
 .horizontal-slider.is-dragging {
   cursor: grabbing;
 }
@@ -41,6 +42,11 @@
   will-change: transform;
 
   transform: translate3d(0, 0, 0);
+}
+
+.horizontal-slider__track,
+.horizontal-slider__set {
+  direction: ltr;
 }
 
 
