@@ -8,7 +8,7 @@
 <main data-barba="container" data-barba-namespace="<?php echo sanitize_title(get_post_field('post_name')); ?>">
 
 
-<div id="react-horizontal-slider"></div>
+<div id="react-horizontal-slider" class=""></div>
 <div id="react-works-stack"></div>
 <!-- <div class="next-section-end bg-red-500 h-50"></div> -->
 

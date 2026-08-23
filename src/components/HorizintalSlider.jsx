@@ -419,7 +419,7 @@ const HorizintalSlider = () => {
   return (
     <section
       ref={sliderRef}
-      className="horizontal-slider mt-8 "
+      className="horizontal-slider"
 
       /*
        * Wheel intentionally disabled.

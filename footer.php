@@ -1,5 +1,4 @@
 
-/* barba wrapper close*/
 </div> 
 
 <footer class=" rounded-base mt-2 ">

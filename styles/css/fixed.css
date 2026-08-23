@@ -42,7 +42,7 @@ ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
     background: linear-gradient(135deg, #5999FF, #A55CFF, #F25DEA);
 }
 .gradient-btn{
-  padding: 8px 36px;
+  padding:14px 36px;
   border-radius: 36px;
   font-size: 24px;
   font-weight: bold;
@@ -52,7 +52,7 @@ ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
 .dark-btn{
   background-color: var(--dark-btn-color);
   border: 1px solid #F8F7FF1F;
-  padding: 8px 36px;
+  padding: 14px 36px;
   border-radius: 36px;
   font-size: 20px;
   font-weight: bold;
@@ -139,5 +139,14 @@ ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
 @media (hover: none), (pointer: coarse) {
   .custom-cursor-wrapper {
     display: none;
+  }
+}
+
+
+
+
+@media(max-width:80rem){
+  .gradient-btn{
+    font-size: 16px;
   }
 }

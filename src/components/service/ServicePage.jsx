@@ -1,4 +1,6 @@
 import ServiceHero from "./ServiceHero";
+import ServiceIntro from "./ServiceIntro";
+
 
 import { services } from "../../data/services";
 
@@ -15,6 +17,7 @@ const ServicePage = ({ serviceSlug }) => {
   return (
     <main className="service-page">
       <ServiceHero data={data.hero} />
+      <ServiceIntro data={data.intro}/>
     </main>
   );
 };

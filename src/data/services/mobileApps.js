@@ -1,3 +1,6 @@
+import themeUrl from '../../utils/themeUrl';
+
+
 const mobileApps = {
   slug: "mobile-apps",
 
@@ -7,14 +10,14 @@ const mobileApps = {
   hero: {
     title: "Mobile Apps",
     subtitle: "تطبيقات الجوال",
-    image: "/assets/servicePage/mobileApp.webp",
+    image: `${themeUrl}/assets/servicePage/mobileApp.webp`,
   },
 
   intro: {
-    title: "نبذة عن تطبيقات الجوال",
+    title: "تطبيقات الجوال",
     description:
-      "نقدم حلولًا متكاملة لتصميم وتطوير تطبيقات الجوال بما يتناسب مع احتياجات العملاء وتجربة المستخدم.",
-    image: "/assets/images/services/mobile-apps/intro.webp",
+      " برامج حاسوبية مصممة للعمل على الأجهزة الذكية مثل الهواتف والأجهزة اللوحية. تشمل أنواعها الرئيسية: تطبيقات التواصل الاجتماعي، تطبيقات الألعاب، والخدمات المصرفية. تتميز بسهولة التحميل من المتاجر الرقمية وتقديم خدمات سريعة ومباشرة للمستخدمين",
+    image:`${themeUrl}/assets/servicePage/mobileApp.webp`,
   },
 
   features: {
