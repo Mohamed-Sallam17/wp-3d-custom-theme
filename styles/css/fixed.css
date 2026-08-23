@@ -44,7 +44,7 @@ ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
 .gradient-btn{
   padding:14px 36px;
   border-radius: 36px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
   box-shadow: 0 0 60px -10px #A55CFF99;
 }
@@ -146,7 +146,8 @@ ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
 
 
 @media(max-width:80rem){
-  .gradient-btn{
+  .gradient-btn,
+  .dark-btn{
     font-size: 16px;
   }
 }

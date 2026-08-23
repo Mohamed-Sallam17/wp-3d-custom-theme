@@ -1,7 +1,7 @@
 const ServiceIntro = ({ data }) => {
 
   return (
-    <section className="service-intro">
+    <section className="service-intro py-8 mt-8 lg:mt-16">
 
       <div className="service-intro__image">
         <img

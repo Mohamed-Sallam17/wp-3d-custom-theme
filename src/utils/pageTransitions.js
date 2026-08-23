@@ -70,124 +70,60 @@ export const initPageTransitions = (onPageChanged) => {
 
         sync: false,
 
-        transitions: [
+transitions: [
+    {
+        name: 'clean-transition',
 
-            {
+        async leave() {
 
-                name: 'clean-transition',
+            const transition = document.querySelector(
+                '.page-transition'
+            );
 
+            if (!transition) return;
 
-                // =========================================
-                // LEAVE
-                // =========================================
+            await gsap.to(transition, {
+                duration: 0.6,
+                yPercent: 0,
+                ease: 'power3.inOut',
+            });
 
-                async leave() {
+        },
 
-                    const transition = document.querySelector(
-                        '.page-transition'
-                    );
+        async enter(data) {
 
-                    if (!transition) return;
+            // الصفحة الجديدة أصبحت موجودة
+            // وهي مغطاة بالكامل بالـ transition
 
-                    await gsap.to(transition, {
+            updateActiveMenu();
 
-                        duration: 0.6,
-
-                        yPercent: -100,
-
-                        ease: 'power3.inOut',
-
-                    });
-
-
-                    window.scrollTo(0, 0);
-
-                },
-
-
-                // =========================================
-                // ENTER
-                // =========================================
-
-                async enter(data) {
-
-                    const transition = document.querySelector(
-                        '.page-transition'
-                    );
-
-
-                    // =====================================
-                    // Update Active Menu
-                    // =====================================
-
-                    updateActiveMenu();
-
-
-                    // =====================================
-                    // Mount React Components
-                    // =====================================
-
-                    if (
-                        typeof onPageChanged === 'function'
-                    ) {
-
-                        onPageChanged(
-                            data.next.container
-                        );
-
-                    }
-
-
-                    // =====================================
-                    // No Transition Element
-                    // =====================================
-
-                    if (!transition) return;
-
-
-                    // =====================================
-                    // Page Transition Animation
-                    // =====================================
-
-                    await gsap.to(transition, {
-
-                        duration: 0.6,
-
-                        yPercent: -200,
-
-                        ease: 'power3.inOut',
-
-                    });
-
-
-                    // =====================================
-                    // Reset Transition
-                    // =====================================
-
-                    gsap.set(transition, {
-
-                        yPercent: 100
-
-                    });
-
-
-                    // =====================================
-                    // Main Animation
-                    // =====================================
-
-                    if (
-                        typeof window.mainAnimation === 'function'
-                    ) {
-
-                        window.mainAnimation();
-
-                    }
-
-                }
-
+            if (typeof onPageChanged === 'function') {
+                onPageChanged(data.next.container);
             }
 
-        ]
+            // بعد الـ mount
+            await new Promise(requestAnimationFrame);
+
+            // نكشف الصفحة الجديدة
+            const transition = document.querySelector(
+                '.page-transition'
+            );
+
+            if (!transition) return;
+
+            await gsap.to(transition, {
+                duration: 0.6,
+                yPercent: -100,
+                ease: 'power3.inOut',
+            });
+
+            gsap.set(transition, {
+                yPercent: 100
+            });
+
+        }
+    }
+]
 
     });
 
