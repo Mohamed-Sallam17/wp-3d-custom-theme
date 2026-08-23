@@ -9,14 +9,15 @@
     --bg-color: #010008;
     --description-color: #A3A2B7;
     --border-color: #F8F7FF1F;
+    --dark-btn-color: #0D08238C;
 }
 body{
     height: 100dvh;
     overflow-x: hidden;
 }
-main{
+/* main{
   height: 10000vh;
-}
+} */
 .container{
   padding: 0 1rem;
   margin: auto;
@@ -24,7 +25,7 @@ main{
 .gradient-text, 
 ul#menu-header-menu .current_page_item, 
 ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
-    background: linear-gradient(90deg, #2D75E6,#6A75DA,#BF71FF,#FFA0D0);
+    background: linear-gradient(45deg, #2D75E6,#6A75DA,#BF71FF,#FFA0D0);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -36,9 +37,28 @@ ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
     border: 1px solid #7652D6B2;
     box-shadow: 0 -1px 0 0px #ffffff8c, 0 2px 8px -2px #00A5DA1F inset, 0 8px 32px -8px #5E47E126 inset;
 }
-.gradient-btn{
-    background: linear-gradient(45deg, #5999FF, #A55CFF, #F25DEA);
+.gradient-btn,
+.gradient-cta{
+    background: linear-gradient(135deg, #5999FF, #A55CFF, #F25DEA);
 }
+.gradient-btn{
+  padding: 8px 36px;
+  border-radius: 36px;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 0 60px -10px #A55CFF99;
+}
+
+.dark-btn{
+  background-color: var(--dark-btn-color);
+  border: 1px solid #F8F7FF1F;
+  padding: 8px 36px;
+  border-radius: 36px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
 
 /*
    Custom Cursor

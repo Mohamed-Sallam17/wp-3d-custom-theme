@@ -2,9 +2,10 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import CustomCursor from './components/CustomCursor.jsx';
-
 import lazyComponent from './utils/lazyComponent.js';
 import { initPageTransitions } from './utils/pageTransitions.js';
+
+import ServicePage from './components/service/ServicePage.jsx';
 
 import '../styles/css/index.css';
 
@@ -16,6 +17,7 @@ import '../styles/css/index.css';
 const componentsRegistry = {
   'react-horizontal-slider': lazyComponent('HorizintalSlider'),
   'react-works-stack': lazyComponent('WorksStack'),
+  'react-service-page': ServicePage,
 };
 
 
@@ -23,32 +25,49 @@ const componentsRegistry = {
 // Mount React Components
 // =====================================================
 
-const mountComponents = () => {
+const mountComponents = (root = document) => {
+
+  console.log('=================================');
+  console.log('MOUNT COMPONENTS');
+  console.log('ROOT:', root);
 
   Object.entries(componentsRegistry).forEach(([id, Component]) => {
 
-    const container = document.getElementById(id);
+    const container =
+      root?.querySelector?.(`#${id}`) ||
+      (root?.id === id ? root : null);
 
-    // التأكد إن العنصر موجود
-    // وإن الـComponent لم يتم عمل mount له مسبقًا
-    if (container && !container.dataset.reactMounted) {
-
-      container.dataset.reactMounted = 'true';
-
-      // تحويل data-* attributes إلى Props
-      const props = { ...container.dataset };
-
-      // حذف الخاصية الداخلية
-      delete props.reactMounted;
-
-      ReactDOM.createRoot(container).render(
-        <React.StrictMode>
-             <Suspense fallback={null}>
-                <Component {...props} />
-            </Suspense>
-        </React.StrictMode>
-    );
+    if (!container) {
+      console.log(`❌ ${id} NOT FOUND`);
+      return;
     }
+
+    console.log(`✅ ${id} FOUND`);
+
+    // Prevent mounting the same element twice
+    if (container.dataset.reactMounted === 'true') {
+      console.log(`⚠️ ${id} ALREADY MOUNTED`);
+      return;
+    }
+
+    // Mark as mounted
+    container.dataset.reactMounted = 'true';
+
+    // Convert data-* attributes to props
+    const props = { ...container.dataset };
+
+    delete props.reactMounted;
+
+    console.log(`🚀 MOUNTING ${id}`, props);
+
+    ReactDOM.createRoot(container).render(
+      <React.StrictMode>
+        <Suspense fallback={null}>
+          <Component {...props} />
+        </Suspense>
+      </React.StrictMode>
+    );
+
   });
 };
 
@@ -58,6 +77,16 @@ const mountComponents = () => {
 // =====================================================
 
 document.addEventListener('DOMContentLoaded', () => {
+
+  console.log('DOM READY');
+
+
+  // ---------------------------------------------------
+  // Initial React Components
+  // ---------------------------------------------------
+
+  mountComponents(document);
+
 
   // ---------------------------------------------------
   // Global Custom Cursor
@@ -83,24 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Page Transitions
   // ---------------------------------------------------
 
-  initPageTransitions();
-
-
-  // ---------------------------------------------------
-  // Page Components
-  // ---------------------------------------------------
-
-  mountComponents();
-
-});
-
-
-// =====================================================
-// Barba Page Transition
-// =====================================================
-
-window.addEventListener('barba:page-changed', () => {
-
-  mountComponents();
+  initPageTransitions(mountComponents);
 
 });

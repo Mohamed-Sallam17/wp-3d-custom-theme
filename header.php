@@ -38,7 +38,7 @@
             ));
         ?>
     </el-popover-group>
-    <div class="hidden lg:block contact-us-btn gradient-btn w-23.75 p-2 rounded-4xl text-center ">
+    <div class="hidden lg:block contact-us-btn gradient-cta w-23.75 p-2 rounded-4xl text-center ">
       <a href="#" class="text-sm font-bold text-white"> تواصل معنا </a>
     </div>
   </nav>

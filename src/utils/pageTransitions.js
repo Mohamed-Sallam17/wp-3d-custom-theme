@@ -1,6 +1,10 @@
 import barba from '@barba/core';
+
 import { gsap } from 'gsap';
-import '../../styles/css/pageTransition.css'
+
+import '../../styles/css/pageTransition.css';
+
+
 // =====================================================
 // Update Active Menu
 // =====================================================
@@ -9,7 +13,9 @@ const updateActiveMenu = () => {
 
     const currentPath = window.location.pathname.replace(/\/$/, '');
 
-    const menuItems = document.querySelectorAll('#menu-header-menu li');
+    const menuItems = document.querySelectorAll(
+        '#menu-header-menu li'
+    );
 
     menuItems.forEach((item) => {
 
@@ -47,26 +53,13 @@ const updateActiveMenu = () => {
 // Page Transitions
 // =====================================================
 
-export const initPageTransitions = () => {
+export const initPageTransitions = (onPageChanged) => {
 
     const wrapper = document.querySelector(
         '[data-barba="wrapper"]'
     );
 
     if (!wrapper) return;
-
-
-    // =================================================
-    // Barba Debug Hooks
-    // =================================================
-
-    barba.hooks.before(() => {
-        console.log('BARBA BEFORE');
-    });
-
-    barba.hooks.after(() => {
-        console.log('BARBA AFTER');
-    });
 
 
     // =================================================
@@ -80,6 +73,7 @@ export const initPageTransitions = () => {
         transitions: [
 
             {
+
                 name: 'clean-transition',
 
 
@@ -87,67 +81,109 @@ export const initPageTransitions = () => {
                 // LEAVE
                 // =========================================
 
-              async leave() {
+                async leave() {
 
-                  const transition = document.querySelector('.page-transition');
+                    const transition = document.querySelector(
+                        '.page-transition'
+                    );
 
-                  if (!transition) return;
+                    if (!transition) return;
+
+                    await gsap.to(transition, {
+
+                        duration: 0.6,
+
+                        yPercent: -100,
+
+                        ease: 'power3.inOut',
+
+                    });
 
 
-                  await gsap.to(transition, {
+                    window.scrollTo(0, 0);
 
-                      duration: 0.6,
+                },
 
-                      yPercent: -100,
-
-                      ease: 'power3.inOut',
-
-                  });
-
-
-                  window.scrollTo(0, 0);
-              },
 
                 // =========================================
                 // ENTER
                 // =========================================
 
-              async enter() {
+                async enter(data) {
 
-                  const transition = document.querySelector('.page-transition');
-
-                  if (!transition) return;
-
-
-                  updateActiveMenu();
+                    const transition = document.querySelector(
+                        '.page-transition'
+                    );
 
 
-                  window.dispatchEvent(
-                      new Event('barba:page-changed')
-                  );
+                    // =====================================
+                    // Update Active Menu
+                    // =====================================
+
+                    updateActiveMenu();
 
 
-                  await gsap.to(transition, {
+                    // =====================================
+                    // Mount React Components
+                    // =====================================
 
-                      duration: 0.6,
+                    if (
+                        typeof onPageChanged === 'function'
+                    ) {
 
-                      yPercent: -200,
+                        onPageChanged(
+                            data.next.container
+                        );
 
-                      ease: 'power3.inOut',
-
-                  });
-
-                  // رجوع للوضع الابتدائي
-                  gsap.set(transition, {
-                      yPercent: 100
-                  });
+                    }
 
 
-                  if (typeof window.mainAnimation === 'function') {
-                      window.mainAnimation();
-                  }
+                    // =====================================
+                    // No Transition Element
+                    // =====================================
 
-              }
+                    if (!transition) return;
+
+
+                    // =====================================
+                    // Page Transition Animation
+                    // =====================================
+
+                    await gsap.to(transition, {
+
+                        duration: 0.6,
+
+                        yPercent: -200,
+
+                        ease: 'power3.inOut',
+
+                    });
+
+
+                    // =====================================
+                    // Reset Transition
+                    // =====================================
+
+                    gsap.set(transition, {
+
+                        yPercent: 100
+
+                    });
+
+
+                    // =====================================
+                    // Main Animation
+                    // =====================================
+
+                    if (
+                        typeof window.mainAnimation === 'function'
+                    ) {
+
+                        window.mainAnimation();
+
+                    }
+
+                }
 
             }
 

@@ -10,7 +10,7 @@
 
 <div id="react-horizontal-slider"></div>
 <div id="react-works-stack"></div>
-<div class="next-section-end bg-red-500 h-50"></div>
+<!-- <div class="next-section-end bg-red-500 h-50"></div> -->
 
 <?php while(have_posts()){
     the_post();?>

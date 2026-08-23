@@ -5,11 +5,9 @@ const mobileApps = {
   subtitle: "Mobile Apps",
 
   hero: {
-    title: "تطبيقات الجوال",
-    subtitle: "Mobile Apps",
-    description:
-      "نص تجريبي لوصف خدمة تطبيقات الجوال بشكل مختصر وواضح.",
-    image: "/assets/images/services/mobile-apps/hero.webp",
+    title: "Mobile Apps",
+    subtitle: "تطبيقات الجوال",
+    image: "/assets/servicePage/mobileApp.webp",
   },
 
   intro: {

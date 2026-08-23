@@ -1,6 +1,13 @@
 import ServiceHero from "./ServiceHero";
 
-const ServicePage = ({ data }) => {
+import { services } from "../../data/services";
+
+import "../../../styles/css/servicePage.css"
+
+const ServicePage = ({ serviceSlug }) => {
+
+  const data = services[serviceSlug];
+
   if (!data) {
     return null;
   }
