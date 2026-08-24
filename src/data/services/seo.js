@@ -10,14 +10,14 @@ const seo = {
   hero: {
     title: "seo",
     subtitle: "تحسين محركات البحث",
-    image: `${themeUrl}/assets/servicePage/mobileApp.webp`,
+    image: `${themeUrl}/assets/servicePage/seo/hero.webp`,
   },
 
   intro: {
     title: "تطبيقات الجوال",
     description:
       " برامج حاسوبية مصممة للعمل على الأجهزة الذكية مثل الهواتف والأجهزة اللوحية. تشمل أنواعها الرئيسية: تطبيقات التواصل الاجتماعي، تطبيقات الألعاب، والخدمات المصرفية. تتميز بسهولة التحميل من المتاجر الرقمية وتقديم خدمات سريعة ومباشرة للمستخدمين",
-    image:`${themeUrl}/assets/servicePage/mobileApp.webp`,
+    image:`${themeUrl}/assets/servicePage/seo/intro.webp`,
   },
 
   features: {

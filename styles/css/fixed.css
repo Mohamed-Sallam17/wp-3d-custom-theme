@@ -145,9 +145,3 @@ ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
 
 
 
-@media(max-width:80rem){
-  .gradient-btn,
-  .dark-btn{
-    font-size: 16px;
-  }
-}
