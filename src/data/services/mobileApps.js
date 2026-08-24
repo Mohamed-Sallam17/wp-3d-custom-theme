@@ -24,24 +24,20 @@ const mobileApps = {
     title: "المميزات",
     items: [
       {
-        title: "تصميم احترافي",
-        description: "تصميم واجهات عصرية ومتوافقة مع هوية المشروع.",
-        icon: "/assets/images/services/mobile-apps/feature-1.webp",
+        title: " بناء واجهات مستخدم تفاعلية وسلسة  ",
+        icon: `${themeUrl}/assets/servicePage/mobileapp/features/feature-1.webp`,
       },
       {
-        title: "تجربة مستخدم",
-        description: "تجربة استخدام سهلة وسلسة للمستخدم.",
-        icon: "/assets/images/services/mobile-apps/feature-2.webp",
+        title: " ربط التطبيق بقواعد البيانات السحابية وخدمات الـ API ",
+        icon: `${themeUrl}/assets/servicePage/mobileapp/features/feature-2.webp`,
       },
       {
-        title: "أداء عالي",
-        description: "تطبيقات سريعة ومستقرة.",
-        icon: "/assets/images/services/mobile-apps/feature-3.webp",
+        title: " إرسال الإشعارات التنبيهية للمستخدمين بانتظام ",
+        icon: `${themeUrl}/assets/servicePage/mobileapp/features/feature-3.webp`,
       },
       {
-        title: "متوافقة مع الأجهزة",
-        description: "دعم مختلف أحجام وأنواع الأجهزة.",
-        icon: "/assets/images/services/mobile-apps/feature-4.webp",
+        title: " فحص الأخطاء البرمجية وإصدار التحديثات للصيانة ",
+        icon: `${themeUrl}/assets/servicePage/mobileapp/features/feature-4.webp`,
       },
     ],
   },

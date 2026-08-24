@@ -1,3 +1,13 @@
+/* Features */
+.service-feature__item{
+    background-color: var(--second-bg-color);
+    border: 1px solid var(--second-border-color);
+    box-shadow: 0 0.62px 0 0.62px #FFFFFFB2 inset, 
+    0 1.24px 4.98px -1.24px #00A5DA1F,
+    0 4.98px 19.9px -4.98px #5E47E126;
+    backdrop-filter: blur(15px);
+}
+
 
 @media(max-width:1023px){
     .gradient-btn,
