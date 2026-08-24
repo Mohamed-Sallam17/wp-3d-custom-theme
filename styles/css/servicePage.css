@@ -1,3 +1,4 @@
+
 @media(max-width:1023px){
     .gradient-btn,
     .dark-btn{
@@ -8,5 +9,19 @@
     .gradient-btn,
     .dark-btn{
         padding: 16px 24px;
+    }
+}
+@media(min-width:768px){
+    .service-intro .container{
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+}
+
+@media (max-width:767px){
+    .service-intro_content p{
+        background-color: var(--second-bg-color) !important;
+        border: 1px solid var(--second-border-color);
+        border-radius: 24px;
     }
 }

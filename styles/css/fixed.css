@@ -7,8 +7,10 @@
 }
 :root{
     --bg-color: #010008;
+    --second-bg-color:#1B1428;
     --description-color: #A3A2B7;
     --border-color: #F8F7FF1F;
+    --second-border-color: #7652D6B2;
     --dark-btn-color: #0D08238C;
 }
 body{
@@ -25,7 +27,7 @@ body{
 .gradient-text, 
 ul#menu-header-menu .current_page_item, 
 ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
-    background: linear-gradient(45deg, #2D75E6,#6A75DA,#BF71FF,#FFA0D0);
+    background: linear-gradient(45deg, #2D75E6,#6A75DA,#F25DEA,#FFA0D0);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
