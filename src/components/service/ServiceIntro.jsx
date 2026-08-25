@@ -19,7 +19,7 @@ const ServiceIntro = ({ data }) => {
                 <span className="gradient-text text-3xl lg:text-5xl xl:text-6xl">{data.title}</span>
               </h2>
               <p className="p-5 md:p-2 leading-normal lg:text-2xl">{data.description}</p>
-              <img src={`${themeUrl}/assets/star.webp`} alt="star icon" width="50" height="50" decoding="async" loading="lazy"/>
+              <img src={`${themeUrl}/assets/star.webp`} alt="star icon" width="40" height="40" decoding="async" loading="lazy" className='star-icon absolute left-0 top-[-10%]'/>
             </div>
           </div>
         </div>

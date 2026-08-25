@@ -43,11 +43,14 @@ const mobileApps = {
   },
 
   showcase: {
-    title: "تطبيقاتنا المميزة",
+    title: {
+      highlighted: "تطبيقاتنا ",
+      normal: "الـممـيـزة"
+    },
     images: [
-      "/assets/images/services/mobile-apps/showcase-1.webp",
-      "/assets/images/services/mobile-apps/showcase-2.webp",
-      "/assets/images/services/mobile-apps/showcase-3.webp",
+      `${themeUrl}/assets/servicePage/mobileapp/showcase/showcase-1.webp`,
+      `${themeUrl}/assets/servicePage/mobileapp/showcase/showcase-2.webp`,
+      `${themeUrl}/assets/servicePage/mobileapp/showcase/showcase-3.webp`,
     ],
   },
 

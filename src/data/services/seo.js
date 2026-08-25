@@ -21,37 +21,36 @@ const seo = {
   },
 
   features: {
-    title: "المميزات",
+    title: "الـمهـام",
     items: [
       {
-        title: "تصميم احترافي",
-        description: "تصميم واجهات عصرية ومتوافقة مع هوية المشروع.",
-        icon: "/assets/images/services/mobile-apps/feature-1.webp",
+        title: " تحليل كلمات مفتاحية",
+        icon: `${themeUrl}/assets/servicePage/seo/features/feature-1.webp`,
       },
       {
-        title: "تجربة مستخدم",
-        description: "تجربة استخدام سهلة وسلسة للمستخدم.",
-        icon: "/assets/images/services/mobile-apps/feature-2.webp",
+        title: " تحسين هيكـــل الـموقع",
+        icon: `${themeUrl}/assets/servicePage/seo/features/feature-2.webp`,
       },
       {
-        title: "أداء عالي",
-        description: "تطبيقات سريعة ومستقرة.",
-        icon: "/assets/images/services/mobile-apps/feature-3.webp",
+        title: " تقارير ترتيــــب الـموقع",
+        icon: `${themeUrl}/assets/servicePage/seo/features/feature-3.webp`,
       },
       {
-        title: "متوافقة مع الأجهزة",
-        description: "دعم مختلف أحجام وأنواع الأجهزة.",
-        icon: "/assets/images/services/mobile-apps/feature-4.webp",
+        title: " التقارير والتحليلات ",
+        icon: `${themeUrl}/assets/servicePage/seo/features/feature-4.webp`,
       },
     ],
   },
 
   showcase: {
-    title: "تطبيقاتنا المميزة",
+    title: {
+      highlighted: "أرقام ",
+      normal: "تتحدث عنا"
+    },
     images: [
-      "/assets/images/services/mobile-apps/showcase-1.webp",
-      "/assets/images/services/mobile-apps/showcase-2.webp",
-      "/assets/images/services/mobile-apps/showcase-3.webp",
+      "${themeUrl}/assets/servicePage/seo/showcase/showcase-1.webp",
+      "${themeUrl}/assets/servicePage/seo/showcase/showcase-2.webp",
+      "${themeUrl}/assets/servicePage/seo/showcase/showcase-3.webp",
     ],
   },
 

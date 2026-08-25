@@ -1,6 +1,7 @@
 import ServiceHero from "./ServiceHero";
 import ServiceIntro from "./ServiceIntro";
 import ServiceFeatures from "./ServiceFeatures";
+import ServiceShowcase from "./ServiceShowcase";
 
 
 import { services } from "../../data/services";
@@ -20,6 +21,7 @@ const ServicePage = ({ serviceSlug }) => {
       <ServiceHero data={data.hero} />
       <ServiceIntro data={data.intro}/>
       <ServiceFeatures data={data.features}/>
+      <ServiceShowcase data={data.showcase}/>
     </main>
   );
 };
