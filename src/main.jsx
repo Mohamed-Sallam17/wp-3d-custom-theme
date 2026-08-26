@@ -6,6 +6,7 @@ import lazyComponent from './utils/lazyComponent.js';
 import { initPageTransitions } from './utils/pageTransitions.js';
 
 import ServicePage from './components/service/ServicePage.jsx';
+import MovingStar from './components/MovingStar.jsx';
 
 import '../styles/css/index.css';
 
@@ -15,9 +16,10 @@ import '../styles/css/index.css';
 // =====================================================
 
 const componentsRegistry = {
-  'react-horizontal-slider': lazyComponent('HorizintalSlider'),
-  'react-works-stack': lazyComponent('WorksStack'),
-  'react-service-page': ServicePage,
+  'horizontal-slider': lazyComponent('HorizintalSlider'),
+  'works-stack': lazyComponent('WorksStack'),
+  'moving-star': MovingStar,
+  'service-page': ServicePage,
 };
 
 

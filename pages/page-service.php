@@ -22,7 +22,7 @@ $service_slug = get_post_field(
 
 <main data-barba="container" data-barba-namespace="<?php echo sanitize_title(get_post_field('post_name')); ?>">
 
-    <div id="react-service-page" data-service-slug="<?php echo esc_attr( $service_slug ); ?>"></div>
+    <div id="service-page" data-service-slug="<?php echo esc_attr( $service_slug ); ?>"></div>
 
 </main>
 

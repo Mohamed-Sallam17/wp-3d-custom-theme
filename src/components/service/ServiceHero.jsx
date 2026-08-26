@@ -7,7 +7,7 @@ const ServiceHero = ({ data }) => {
             <div className="w-full flex justify-center items-center flex-col gap-6 lg:gap-0 sm:max-w-[85%] md:max-w-full">
               <div className="service-hero__content text-center">
                 <h2 className="text-3xl md:text-4xl lg:text-6xl  font-bold leading-normal gradient-text ">{data.title}</h2>
-                <span className="text-3xl md:text-4xl lg:text-6xl font-bold leading-normal ">{data.subtitle}</span>
+                <span className="text-3xl md:text-4xl lg:text-6xl font-bold leading-normal">{data.subtitle}</span>
               </div>
               <div className="w-full overflow-hidden flex md:hidden ">
                 <img src={data.image} alt={data.title} width="600px" height="500px" decoding="async" className="object-contain w-full h-full block m-auto"/>

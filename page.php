@@ -8,8 +8,9 @@
 <main data-barba="container" data-barba-namespace="<?php echo sanitize_title(get_post_field('post_name')); ?>">
 
 
-<div id="react-horizontal-slider" class=""></div>
-<div id="react-works-stack"></div>
+<section id="moving-star" class="md:mt-20 lg:mt-0"></section>
+<section id="horizontal-slider" class="py-8 mt-16"></section>
+<section id="works-stack" class="py-8"></section>
 <!-- <div class="next-section-end bg-red-500 h-50"></div> -->
 
 <?php while(have_posts()){

@@ -13,7 +13,7 @@
 </script>
 <body <?php body_class(); ?> data-barba="wrapper">
 
-<header class="sticky top-0 px-4 z-20">
+<header class="fixed w-full top-0 px-4 z-20">
   <nav aria-label="Global" class="mx-auto flex max-w-6xl items-center justify-between py-2 px-4 lg:px-8 bg-gray-900 rounded-[40rem] h-20">
     <div class="flex">
       <a href="/" class="-m-1.5 p-1.5">

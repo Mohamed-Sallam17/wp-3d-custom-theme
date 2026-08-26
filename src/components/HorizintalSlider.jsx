@@ -417,7 +417,7 @@ const HorizintalSlider = () => {
   ========================================================= */
 
   return (
-    <section
+    <div
       ref={sliderRef}
       className="horizontal-slider"
 
@@ -511,7 +511,7 @@ const HorizintalSlider = () => {
 
       </div>
 
-    </section>
+    </div>
   );
 };
 

@@ -102,7 +102,7 @@ function WorksStack() {
 
   return (
     <section
-      className="works-stack mt-[8rem]"
+      className="works-stack"
       ref={sectionRef}
     >
       <div className="works-stack__container container">
