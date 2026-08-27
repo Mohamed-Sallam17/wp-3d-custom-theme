@@ -40,7 +40,7 @@ export default function HeroParticles() {
   return (
     <div 
       id="hero-particles-canvas" 
-      className="absolute inset-0 z-0 w-full h-screen pointer-events-none"
+      className="absolute inset-0 z-0 w-full  pointer-events-none"
     />
   );
 }
