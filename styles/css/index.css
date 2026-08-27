@@ -341,11 +341,17 @@
   .me-4 {
     margin-inline-end: calc(var(--spacing) * 4);
   }
+  .mt-0 {
+    margin-top: 0px;
+  }
   .mt-2 {
     margin-top: calc(var(--spacing) * 2);
   }
   .mt-3 {
     margin-top: calc(var(--spacing) * 3);
+  }
+  .mt-4 {
+    margin-top: calc(var(--spacing) * 4);
   }
   .mt-6 {
     margin-top: calc(var(--spacing) * 6);
@@ -462,6 +468,12 @@
   }
   .h-screen {
     height: 100vh;
+  }
+  .max-h-0 {
+    max-height: 0px;
+  }
+  .max-h-40 {
+    max-height: calc(var(--spacing) * 40);
   }
   .min-h-screen {
     min-height: 100vh;
@@ -884,6 +896,9 @@
   }
   .text-\(--description-color\) {
     color: var(--description-color);
+  }
+  .text-\[\#8B5CF6\] {
+    color: #8B5CF6;
   }
   .text-\[var\(--description-color\)\] {
     color: var(--description-color);
