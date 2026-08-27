@@ -1,20 +1,16 @@
 import themeUrl from '../utils/themeUrl';
-import { useRef, useLayoutEffect, useEffect } from 'react';
+import { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { tsParticles } from "@tsparticles/engine";
-import { loadSlim } from "@tsparticles/slim";
-import particlesConfig from '../../assets/particlesjs-config.json';
+import HeroParticles from './HeroParticles';
 
 gsap.registerPlugin(ScrollTrigger);
 
 function MovingStar() {
   const mainRef = useRef(null);
-  const starWrapperRef = useRef(null);
+  const starWrapperRef = useRef(null); // تحريك الـ Wrapper بدلاً من الـ video المباشر
   const targetRef = useRef(null);
 
-
-  // أنيميشن GSAP
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
@@ -39,7 +35,7 @@ function MovingStar() {
             trigger: mainRef.current,
             start: 'top top',
             end: 'bottom bottom',
-            scrub: 0.5,
+            scrub: 0.5, // تقليل القيمة لـ 0.5 بيخلي الاستجابة أسرع وأخف على المعالج
             onRefresh: () => {
               const coords = getCoordinates();
               x = coords.x;
@@ -48,12 +44,13 @@ function MovingStar() {
           }
         });
 
+        // تحريك الـ Wrapper المعزول
         tl.to(starWrapperRef.current, {
           x: () => x,
           y: () => y,
           rotation: 360,
           ease: 'none',
-          force3D: true
+          force3D: true // إجبار التقديم عبر كارت الشاشة GPU
         });
       });
     }, mainRef);
@@ -63,18 +60,15 @@ function MovingStar() {
 
   return (
     <div ref={mainRef} className="container">
-      
       <div className="flex justify-center items-center md:flex-col">
-        
         {/* Section 1 */}
-        <div className="relative lg:min-h-screen w-full sm:max-w-[85%] md:max-w-full flex items-center justify-center flex-col md:flex-row gap-8 overflow-hidden">
-
-
-          {/* الحاوية المعزولة للفيديو */}
-          <div className="relative flex flex-2 justify-center items-center z-[-1]">
+          <HeroParticles />
+        <div className="relative lg:min-h-screen w-full sm:max-w-[85%] md:max-w-full flex items-center justify-center flex-col md:flex-row gap-8">
+          {/* الحاوية (Wrapper) المعزولة لمنع ثقل الفيديو */}
+          <div className="relative flex flex-2 justify-center items-center">
             <div 
               ref={starWrapperRef} 
-              className="will-change-transform flex justify-center items-center max-w-[80%] xl:max-w-[85%] py-4"
+              className="will-change-transform flex justify-center items-center z-[-1] max-w-[80%] xl:max-w-[85%] py-4"
             >
               <video
                 src={`${themeUrl}/assets/Hero-star.webm`}
@@ -87,7 +81,7 @@ function MovingStar() {
             </div>
           </div>
 
-          <div className="flex flex-3 justify-center items-center flex-col gap-6 text-center z-10">
+          <div className="flex flex-3 justify-center items-center flex-col gap-6 text-center">
             <div className="content space-y-6 max-w-[85%]">
               <h1 className="font-bold text-4xl lg:text-6xl xl:text-8xl leading-normal">
                 وميض الفكرة <br />
@@ -130,7 +124,6 @@ function MovingStar() {
             />
           </div>
         </div>
-
       </div>
     </div>
   );

@@ -18,8 +18,10 @@ import '../styles/css/index.css';
 const componentsRegistry = {
   'horizontal-slider': lazyComponent('HorizintalSlider'),
   'works-stack': lazyComponent('WorksStack'),
+  'faq': lazyComponent('Faq'),
   'moving-star': MovingStar,
   'service-page': ServicePage,
+  // 'hero-particles': lazyComponent('HeroParticles'),
 };
 
 

@@ -55,7 +55,14 @@ header nav{
     right: 100%; 
 }
 
-
+/* Faq */
+.faq__item{
+    border: 1px solid var(--second-border-color);
+    box-shadow: 0 1px 0 1px #FFFFFFB2 inset,
+    0 2px 8px -2px #00A5DA1F,
+    0 8px 32px -8px #5E47E126;
+    backdrop-filter: blur(24px);
+}
 
 
 /* Footer */
