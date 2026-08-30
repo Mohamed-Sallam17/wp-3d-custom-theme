@@ -20,6 +20,7 @@ const componentsRegistry = {
   'works-stack': lazyComponent('WorksStack'),
   'faq': lazyComponent('Faq'),
   'moving-star': MovingStar,
+  'countries-list': lazyComponent('CountriesList'),
   'service-page': ServicePage,
   // 'hero-particles': lazyComponent('HeroParticles'),
 };
