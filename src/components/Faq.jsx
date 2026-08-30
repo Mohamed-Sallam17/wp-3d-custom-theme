@@ -4,6 +4,7 @@ import { useState } from 'react';
 import '../../styles/css/main.css'
 
 import faqOpen from '../../assets/faq-open.svg'
+import faqClose from '../../assets/faq-close.svg'
 
 
 function Faq() {
@@ -24,8 +25,8 @@ function Faq() {
                                 <div className="faq__title w-full flex justify-between items-center">
                                     <h2 className='font-bold text-2xl'>{faq.question}</h2>
                                     {isOpen ? 
-                                    (<img src={faqOpen} alt="open faq" />) : 
-                                    (<span>-</span>)}
+                                    (<img src={faqClose} alt="open faq" />) : 
+                                    (<img src={faqOpen} alt="open faq" />)}
                                 </div>
                                 <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-40 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'}`}>
                                     <p className='text-[var(--description-color)]'>{faq.answer}</p>

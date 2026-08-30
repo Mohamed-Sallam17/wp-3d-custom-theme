@@ -9,6 +9,8 @@
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
     --color-red-500: oklch(63.7% 0.237 25.331);
+    --color-cyan-500: oklch(71.5% 0.143 215.221);
+    --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-purple-300: oklch(82.7% 0.119 306.383);
     --color-purple-400: oklch(71.4% 0.203 305.504);
     --color-purple-500: oklch(62.7% 0.265 303.9);
@@ -492,6 +494,9 @@
   .w-10 {
     width: calc(var(--spacing) * 10);
   }
+  .w-14 {
+    width: calc(var(--spacing) * 14);
+  }
   .w-23 {
     width: calc(var(--spacing) * 23);
   }
@@ -768,6 +773,9 @@
   .bg-\[var\(--second-bg-color\)\] {
     background-color: var(--second-bg-color);
   }
+  .bg-\[var\(--second-bg-color\)\]\! {
+    background-color: var(--second-bg-color) !important;
+  }
   .bg-gray-800 {
     background-color: var(--color-gray-800);
   }
@@ -808,8 +816,19 @@
     }
     background-image: linear-gradient(var(--tw-gradient-stops));
   }
+  .bg-linear-to-r {
+    --tw-gradient-position: to right;
+    @supports (background-image: linear-gradient(in lab, red, red)) {
+      --tw-gradient-position: to right in oklab;
+    }
+    background-image: linear-gradient(var(--tw-gradient-stops));
+  }
   .from-\[\#5999FF\] {
     --tw-gradient-from: #5999FF;
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .from-cyan-500 {
+    --tw-gradient-from: var(--color-cyan-500);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .via-\[\#A55CFF\] {
@@ -819,6 +838,10 @@
   }
   .to-\[\#F25DEA\] {
     --tw-gradient-to: #F25DEA;
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .to-blue-500 {
+    --tw-gradient-to: var(--color-blue-500);
     --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
   }
   .object-contain {

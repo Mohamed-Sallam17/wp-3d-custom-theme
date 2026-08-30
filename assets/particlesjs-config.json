@@ -10,8 +10,10 @@
         "area": 800
       }
     },
-    "color": {
+    "fill":{
+      "color": {
       "value": "#8B5CF6"
+    }
     },
     "shape": {
       "type": "circle"
