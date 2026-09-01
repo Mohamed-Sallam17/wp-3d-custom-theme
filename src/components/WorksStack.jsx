@@ -3,43 +3,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import "../../styles/css/worksStack.css";
+import { worksData } from "../data/worksStack";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const cardsData = [
-  {
-    number: "01",
-    title: "تصميمات واجهات المستخدم",
-    description:
-      "تصميم واجهات المستخدم (UI Design) هو بناء الموقع أو تطبيق بشكل احترافي يركز على تجربة المستخدم.",
-    cta: "ابدأ الآن",
-    icon: "▣",
-  },
-  {
-    number: "02",
-    title: "نتائج محركات البحث",
-    description:
-      "تصميمات إبداعية تعكس هوية علامتك وتلفت انتباه جمهورك عبر مختلف منصات التواصل الاجتماعي.",
-    cta: "ابدأ الآن",
-    icon: "⌘",
-  },
-  {
-    number: "03",
-    title: "تصميمات السوشيال ميديا",
-    description:
-      "منشورات احترافية بتصميمات متنوعة وألوان متناسقة تعبر عن علامتك وتتكامل لكافة المنصات.",
-    cta: "ابدأ الآن",
-    icon: "◉",
-  },
-  {
-    number: "04",
-    title: "إدارة الحملات الإعلانية",
-    description:
-      "خبرة متكاملة تدير عن جمهور علامتك، اختيار الأدوات، التخطيط والنشاط بأسلوب فريد ومناسب.",
-    cta: "ابدأ الآن",
-    icon: "▣",
-  },
-];
 
 function WorksStack() {
   const sectionRef = useRef(null);
@@ -106,48 +73,41 @@ function WorksStack() {
       ref={sectionRef}
     >
       <div className="works-stack__container container">
+        <div className="block__title">
+          <h2 className="text-3xl lg:text-5xl font-bold mb-8">
+            أعمالنا
+          </h2>
+        </div>
+        <div className="works-stack__cards flex items-center justify-center">
+          <div className="work-stacks__wrapper w-full sm:max-w-[85%] md:max-w-full lg:max-w-5xl space-y-5 flex flex-col gap-8">
 
-        <h2 className="block__title text-3xl lg:text-5xl font-bold mb-8">
-          أعمالنا
-        </h2>
-
-        <div className="works-stack__cards">
-          <div className="work-stacks__wrapper flex flex-col gap-8">
-
-            {cardsData.map((card) => (
+            {worksData.map((card) => (
               <article
                 key={card.number}
-                className="works-card px-4 lg:px-12 py-4 bg-[#1B1428] rounded-2xl flex justify-between items-start lg:items-center flex-col lg:flex-row gap-4 lg:h-[200px]"
+                className="works-card gradient-bg relative flex flex-col md:flex-row items-start md:items-center justify-between gap-2 md:gap-4 p-6 md:p-8 bg-[var(--second-bg-color)] border rounded-3xl"
               >
 
-                <div className="works-card__right flex justify-center items-center gap-4">
-
-                  <div className="works-card__icon w-[56px] h-[56px] bg-linear-to-br from-[#5999FF] via-[#A55CFF] to-[#F25DEA] rounded-full flex justify-center items-center text-3xl">
-                    {card.icon}
-                  </div>
-
-                  <span className="works-card__number gradient-text text-6xl font-bold">
-                    {card.number}
-                  </span>
-
+                <div className="works-card__right flex items-center gap-3 z-10">
+                    <div className="hidden md:inline-flex md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-linear-to-br from-[#5999FF] via-[#A55CFF] to-[#F25DEA] flex items-center justify-center text-purple-300">
+                        <img src={card.icon} alt="icon" width={24} height={24}  />
+                    </div>
+                    <span className="gradient-text text-4xl md:text-5xl lg:text-5xl font-bold">
+                        0{card.number}
+                    </span>
                 </div>
-
-                <div className="works-card__content space-y-4">
-
-                  <h3 className="text-3xl font-bold">
-                    {card.title}
-                  </h3>
-
-                  <p className="text-xl text-(--description-color)">
-                    {card.description}
-                  </p>
-
+                <div className="works-card__content flex-1">
+                    <h3 className="text-xl md:text-2xl font-bold mb-2">
+                        {card.title}
+                    </h3>
+                    <p className="text-gray-400 text-base md:text-sm mb-3 max-w-lg">
+                        {card.description}
+                    </p>
                 </div>
-
-                <div className="works-card__cta w-[100px] h-[40px] lg:w-[96px] lg:h-[96px] rounded-full flex justify-center items-center border-1 border-[#A55CFF66] hover:bg-[#7C3AED]">
-                  {card.cta}
+                <div className="works-card__cta w-full md:w-auto flex-none">
+                    <button className="w-full h-[48px] md:w-[96px] md:h-[96px] rounded-full font-bold bg-[var(--dark-btn-color)] border-[var(--border-color)] md:bg-transparent flex justify-center items-center border-1 border-[#A55CFF66] hover:bg-[#7C3AED]">
+                       {card.cta}
+                    </button>
                 </div>
-
               </article>
             ))}
 

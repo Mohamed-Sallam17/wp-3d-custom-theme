@@ -17,9 +17,22 @@ body{
     height: 100dvh;
     overflow-x: hidden;
 }
-/* main{
-  height: 10000vh;
-} */
+
+::-webkit-scrollbar {
+  width: 4px;          
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);       
+  border-radius: 8px;       
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#5999FF, #A55CFF, #F25DEA);      
+  border-radius: 8px;       
+}
+
+
 .container{
   padding: 0 1rem;
   margin: auto;
@@ -34,7 +47,6 @@ ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
     color: transparent;
 }
 .gradient-bg{
-    background: linear-gradient(0deg, #0C0816BF, #301A46B2);
     backdrop-filter: blur(24px);
     border: 1px solid #7652D6B2;
     box-shadow: 0 -1px 0 0px #ffffff8c, 0 2px 8px -2px #00A5DA1F inset, 0 8px 32px -8px #5E47E126 inset;

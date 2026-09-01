@@ -9,6 +9,7 @@ import ServicePage from './components/service/ServicePage.jsx';
 import MovingStar from './components/MovingStar.jsx';
 
 import '../styles/css/index.css';
+import Platforms from './components/Platforms.jsx';
 
 
 // =====================================================
@@ -21,6 +22,7 @@ const componentsRegistry = {
   'faq': lazyComponent('Faq'),
   'moving-star': MovingStar,
   'countries-list': lazyComponent('CountriesList'),
+  'platforms': lazyComponent('Platforms'),
   'service-page': ServicePage,
   // 'hero-particles': lazyComponent('HeroParticles'),
 };

@@ -38,19 +38,24 @@ function CountriesList() {
 
   return (
     <div className="container">
-        <div className="relative min-h-screen text-white p-6 md:p-12 flex flex-col items-center justify-center">
-            <div className="w-full max-w-4xl space-y-5">
+        <div className="block__title">
+          <h2 className="text-3xl lg:text-5xl font-bold mb-8">
+            نصل إليك أينما كنت
+          </h2>
+        </div>
+        <div className="relative min-h-screen text-white flex flex-col items-center justify-center">
+            <div className="w-full sm:max-w-[85%] md:max-w-full lg:max-w-5xl space-y-5">
                 {countriesData.map((country) => (
                 <div
                     key={country.id}
                     onMouseEnter={() => handleMouseEnterCard(country.id)}
                     onMouseLeave={() => handleMouseLeaveCard(country.id)}
-                    className="gradient-bg group relative flex items-center justify-between p-6 md:p-8 bg-[var(--second-bg-color)]! border rounded-3xl"
+                    className="gradient-bg relative flex flex-col md:flex-row items-start md:items-center justify-between gap-2 md:gap-4 p-6 md:p-8 bg-[var(--second-bg-color)] border rounded-3xl"
                 >
                     {/* الصورة الثابتة على الشمال والمُمالة بزاوية */}
                     <div
                     ref={(el) => (imageRefs.current[country.id] = el)}
-                    className="pointer-events-none absolute left-0 md:left-0 top-1/2 -translate-y-1/2 -translate-x-full z-30 w-44 h-56 md:w-52 md:h-64 rounded-2xl overflow-hidden shadow-2xl border border-white/20 opacity-0 scale-75"
+                    className="hidden xl:block pointer-events-none absolute left-0 md:left-0 top-1/2 -translate-y-1/2 -translate-x-full z-30 w-44 h-56 md:w-52 md:h-64 rounded-2xl overflow-hidden shadow-2xl border border-white/20 opacity-0 scale-75"
                     >
                         <img
                             src={country.image}
@@ -60,20 +65,20 @@ function CountriesList() {
                     </div>
 
                     <div className="flex items-center gap-3 z-10">
-                        <div className=" w-14 h-14 rounded-full bg-linear-to-br from-[#5999FF] via-[#A55CFF] to-[#F25DEA] flex items-center justify-center text-purple-300 group-hover:scale-110 transition-transform">
-                            <img src={country.icon} alt="icon" width={28} height={28}  />
+                        <div className="hidden md:inline-flex md:w-12 md:h-12 lg:w-14 lg:h-14 rounded-full bg-linear-to-br from-[#5999FF] via-[#A55CFF] to-[#F25DEA] flex items-center justify-center text-purple-300">
+                            <img src={country.icon} alt="icon" width={24} height={24}  />
                         </div>
-                        <span className="gradient-text text-6xl font-bold">
+                        <span className="gradient-text text-4xl md:text-5xl lg:text-5xl font-bold">
                             0{country.id}
                         </span>
                     </div>
 
                     {/* تفاصيل الدولة */}
-                    <div className="flex-1 text-right px-6 z-10">
-                        <h3 className="text-xl md:text-2xl font-bold mb-2 group-hover:text-purple-300 transition-colors">
+                    <div className="flex-1">
+                        <h3 className="text-xl md:text-2xl font-bold mb-2">
                             {country.title}
                         </h3>
-                        <p className="text-gray-400 text-xs md:text-sm mb-3 max-w-lg">
+                        <p className="text-gray-400 text-base md:text-sm mb-3 max-w-lg">
                             {country.desc}
                         </p>
 
@@ -82,17 +87,17 @@ function CountriesList() {
                                 {country.tags.map((tag, idx) => (
                                     <span
                                     key={idx}
-                                    className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-[10px] text-gray-400"
+                                    className="px-3 py-1 bg-transparent border border-[#F8F7FF1F] rounded-full text-[12px] text-gray-400 lg:mt-2"
                                     >
                                     {tag}
                                     </span>
                                 ))}
                             </div>
                         )}
-                        </div>
+                    </div>
 
-                    <div className="flex items-center gap-4 z-10">
-                        <button className="w-[100px] h-[40px] lg:w-[96px] lg:h-[96px] rounded-full flex justify-center items-center border-1 border-[#A55CFF66] hover:bg-[#7C3AED]">
+                    <div className="w-full md:w-auto flex-none">
+                        <button className="w-full h-[48px] md:w-[96px] md:h-[96px] rounded-full font-bold flex justify-center items-center border-1 border-[#A55CFF66] hover:bg-[#7C3AED]">
                             ابدأ الآن
                         </button>
                     </div>
