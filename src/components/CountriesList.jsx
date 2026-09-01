@@ -53,7 +53,7 @@ function CountriesList() {
                         key={country.id}
                         onMouseEnter={() => handleMouseEnterCard(country.id)}
                         onMouseLeave={() => handleMouseLeaveCard(country.id)}
-                        className="sticky gradient-bg relative flex flex-col md:flex-row items-start md:items-center justify-between gap-2 md:gap-4 p-6 md:p-8 bg-[var(--second-bg-color)] border rounded-3xl"
+                        className="sticky gradient-bg relative flex flex-col md:flex-row items-start md:items-center justify-between gap-2 md:gap-4 py-6 px-6 lg:px-10 md:p-8 bg-[var(--second-bg-color)] border rounded-3xl"
                         style={{
                           top: `${topOffset}px`,
                         }}
@@ -61,12 +61,12 @@ function CountriesList() {
                         {/* الصورة الثابتة على الشمال والمُمالة بزاوية */}
                         <div
                         ref={(el) => (imageRefs.current[country.id] = el)}
-                        className="hidden xl:block pointer-events-none absolute left-0 md:left-0 top-1/2 -translate-y-1/2 -translate-x-full z-30 w-44 h-56 md:w-52 md:h-64 rounded-2xl overflow-hidden shadow-2xl border border-white/20 opacity-0 scale-75"
+                        className="hidden xl:block pointer-events-none absolute left-0 md:left-0 top-1/2 -translate-y-1/2 -translate-x-3/5 z-30 md:w-52 md:h-64 rounded-2xl overflow-hidden shadow-2xl border border-white/20 opacity-0 scale-75 lg:max-w-4/5 z-30"
                         >
                             <img
                                 src={country.image}
                                 alt={country.title}
-                                className="w-full h-full object-cover"
+                                className="w-full h-full object-cover "
                             />
                         </div>
 

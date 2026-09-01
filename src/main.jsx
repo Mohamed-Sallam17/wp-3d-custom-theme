@@ -9,7 +9,7 @@ import ServicePage from './components/service/ServicePage.jsx';
 import MovingStar from './components/MovingStar.jsx';
 
 import '../styles/css/index.css';
-import Platforms from './components/Platforms.jsx';
+import HeroParticles from './components/HeroParticles.jsx';
 
 
 // =====================================================
@@ -23,7 +23,9 @@ const componentsRegistry = {
   'moving-star': MovingStar,
   'countries-list': lazyComponent('CountriesList'),
   'platforms': lazyComponent('Platforms'),
+  'global-particles': HeroParticles,
   'service-page': ServicePage,
+  // 'contact-us': lazyComponent('ContactUs'),
   // 'hero-particles': lazyComponent('HeroParticles'),
 };
 
@@ -67,7 +69,9 @@ const mountComponents = (root = document) => {
 
     console.log(`🚀 MOUNTING ${id}`, props);
 
-    ReactDOM.createRoot(container).render(
+
+
+ReactDOM.createRoot(container).render(
       <React.StrictMode>
         <Suspense fallback={null}>
           <Component {...props} />

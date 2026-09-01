@@ -42,6 +42,7 @@ if ( ! function_exists( 'wameed_enqueue_assets' ) ) {
 }
 add_action( 'wp_enqueue_scripts', 'wameed_enqueue_assets' );
 
+
 /**
  * إضافة خاصية type="module" لسكريبتات Vite لتعمل تقنيات ES Modules المباشرة في المتصفح
  */

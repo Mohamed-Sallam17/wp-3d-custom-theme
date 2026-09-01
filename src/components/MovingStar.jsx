@@ -2,7 +2,7 @@ import themeUrl from '../utils/themeUrl';
 import { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import HeroParticles from './HeroParticles';
+// import HeroParticles from './HeroParticles';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -62,7 +62,7 @@ function MovingStar() {
     <div ref={mainRef} className="container">
       <div className="flex justify-center items-center md:flex-col">
         {/* Section 1 */}
-          <HeroParticles />
+          {/* <HeroParticles /> */}
         <div className="relative lg:min-h-screen w-full sm:max-w-[85%] md:max-w-full flex items-center justify-center flex-col md:flex-row gap-8">
           {/* الحاوية (Wrapper) المعزولة لمنع ثقل الفيديو */}
           <div className="relative flex flex-2 justify-center items-center">

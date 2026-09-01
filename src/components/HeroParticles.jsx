@@ -3,7 +3,7 @@ import { tsParticles } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 import particlesConfig from "../../assets/particlesjs-config.json";
 
-export default function HeroParticles() {
+function HeroParticles() {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -40,7 +40,8 @@ export default function HeroParticles() {
   return (
     <div 
       id="hero-particles-canvas" 
-      className="absolute inset-0 z-0 w-full  pointer-events-none"
+      className="fixed inset-0 z-0 w-full h-full pointer-events-none"
     />
   );
 }
+export default HeroParticles;

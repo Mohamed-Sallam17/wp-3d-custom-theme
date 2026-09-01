@@ -13,6 +13,8 @@
 </script>
 <body <?php body_class(); ?> data-barba="wrapper">
 
+<div id="global-particles"></div>
+
 <header class="fixed w-full top-0 px-4 z-20">
   <nav aria-label="Global" class="mx-auto flex max-w-6xl items-center justify-between py-2 px-4 lg:px-8 bg-gray-900 rounded-[40rem] h-20">
     <div class="flex">
@@ -77,3 +79,5 @@
     </dialog>
   </el-dialog>
 </header>
+
+

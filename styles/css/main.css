@@ -64,7 +64,10 @@ header nav{
     backdrop-filter: blur(24px);
 }
 
-
+/* Form */
+.forminator-custom-wrapper form{
+    display: block !important;
+}
 /* Footer */
 footer{
     position: relative;
