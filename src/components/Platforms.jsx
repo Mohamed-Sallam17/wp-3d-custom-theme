@@ -4,8 +4,8 @@ function Platforms() {
       <div className="container">
         <div className="block__title text-center mb-8">
             <h2 className="font-bold text-2xl md:text-4xl lg:text-6xl leading-normal">
-                <span className="gradient-text  text-3xl lg:text-5xl xl:text-6xl">الأسئلة</span>
-                <span className="text-3xl lg:text-5xl xl:text-6xl">الشائعة</span>
+                <span className="gradient-text  text-3xl lg:text-5xl xl:text-6xl">شركاء </span>
+                <span className="text-3xl lg:text-5xl xl:text-6xl">نجاحنا</span>
             </h2>
         </div>
         <div className="flex">
