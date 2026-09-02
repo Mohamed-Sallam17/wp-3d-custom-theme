@@ -1,6 +1,20 @@
+/* =========================================
+   Transition Lock
+========================================= */
+
+body.is-transitioning {
+    pointer-events: none;
+}
+
+/* =========================================
+   Loader
+========================================= */
+
 .loader {
     position: fixed;
+
     inset: 0;
+
     width: 100vw;
     height: 100vh;
 
@@ -10,6 +24,10 @@
 
     overflow: hidden;
 }
+
+/* =========================================
+   Page Transition Layer
+========================================= */
 
 .page-transition {
     position: absolute;
@@ -28,9 +46,14 @@
     pointer-events: none;
 }
 
+/* =========================================
+   Barba Wrapper
+========================================= */
+
 [data-barba="wrapper"] {
     position: relative;
+
     width: 100%;
+
     min-height: 100vh;
-    /* overflow-x: hidden; */
 }

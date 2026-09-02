@@ -19,11 +19,11 @@ body{
 }
 
 ::-webkit-scrollbar {
-  width: 4px;          
+  width: 6px;          
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-color);       
+  background: transparent;       
   border-radius: 8px;       
 }
 

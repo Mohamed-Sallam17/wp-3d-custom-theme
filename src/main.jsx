@@ -7,14 +7,19 @@ import { initPageTransitions } from './utils/pageTransitions.js';
 
 import ServicePage from './components/service/ServicePage.jsx';
 import MovingStar from './components/MovingStar.jsx';
-
-import '../styles/css/index.css';
 import HeroParticles from './components/HeroParticles.jsx';
 
+import '../styles/css/index.css';
+import '../styles/css/tailwind.css';
+import '../styles/css/fixed.css';
+import '../styles/css/HorizontalSlider.css';
+import '../styles/css/main.css';
+import '../styles/css/pageTransition.css';
+import '../styles/css/servicePage.css';
+import '../styles/css/worksStack.css';
 
-// =====================================================
-// Lazy Components Registry
-// =====================================================
+// خريطة لتخزين الـ Roots المفعلة لتنظيفها لاحقاً
+const activeRoots = new Map();
 
 const componentsRegistry = {
   'horizontal-slider': lazyComponent('HorizintalSlider'),
@@ -25,53 +30,50 @@ const componentsRegistry = {
   'platforms': lazyComponent('Platforms'),
   'global-particles': HeroParticles,
   'service-page': ServicePage,
-  // 'contact-us': lazyComponent('ContactUs'),
-  // 'hero-particles': lazyComponent('HeroParticles'),
 };
 
+// =====================================================
+// Unmount Old Components
+// =====================================================
+export const unmountComponents = (container = document) => {
+  activeRoots.forEach((root, el) => {
+    if (container.contains(el) || container === el) {
+      root.unmount();
+      activeRoots.delete(el);
+      delete el.dataset.reactMounted;
+      console.log(`🧹 UNMOUNTED REACT COMPONENT`);
+    }
+  });
+};
 
 // =====================================================
 // Mount React Components
 // =====================================================
-
 const mountComponents = (root = document) => {
-
   console.log('=================================');
-  console.log('MOUNT COMPONENTS');
-  console.log('ROOT:', root);
+  console.log('MOUNT COMPONENTS | ROOT:', root);
 
   Object.entries(componentsRegistry).forEach(([id, Component]) => {
-
     const container =
       root?.querySelector?.(`#${id}`) ||
       (root?.id === id ? root : null);
 
-    if (!container) {
-      console.log(`❌ ${id} NOT FOUND`);
-      return;
-    }
+    if (!container) return;
 
-    console.log(`✅ ${id} FOUND`);
-
-    // Prevent mounting the same element twice
     if (container.dataset.reactMounted === 'true') {
       console.log(`⚠️ ${id} ALREADY MOUNTED`);
       return;
     }
 
-    // Mark as mounted
     container.dataset.reactMounted = 'true';
-
-    // Convert data-* attributes to props
     const props = { ...container.dataset };
-
     delete props.reactMounted;
 
     console.log(`🚀 MOUNTING ${id}`, props);
 
-
-
-ReactDOM.createRoot(container).render(
+    // إنشاء الـ Root وحفظه في الـ Map
+    const reactRoot = ReactDOM.createRoot(container);
+    reactRoot.render(
       <React.StrictMode>
         <Suspense fallback={null}>
           <Component {...props} />
@@ -79,36 +81,22 @@ ReactDOM.createRoot(container).render(
       </React.StrictMode>
     );
 
+    activeRoots.set(container, reactRoot);
   });
 };
-
 
 // =====================================================
 // DOM Ready
 // =====================================================
-
 document.addEventListener('DOMContentLoaded', () => {
-
   console.log('DOM READY');
-
-
-  // ---------------------------------------------------
-  // Initial React Components
-  // ---------------------------------------------------
 
   mountComponents(document);
 
-
-  // ---------------------------------------------------
-  // Global Custom Cursor
-  // ---------------------------------------------------
-
+  // Cursor Root (بيفضل شغال مستمر ومش بيتأثر بـ Barba)
   if (!document.getElementById('react-cursor-root')) {
-
     const cursorContainer = document.createElement('div');
-
     cursorContainer.id = 'react-cursor-root';
-
     document.body.appendChild(cursorContainer);
 
     ReactDOM.createRoot(cursorContainer).render(
@@ -118,11 +106,6 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
-
-  // ---------------------------------------------------
-  // Page Transitions
-  // ---------------------------------------------------
-
-  initPageTransitions(mountComponents);
-
+  // التمرير لدالة Mount و Unmount لـ Barba
+  initPageTransitions(mountComponents, unmountComponents);
 });
