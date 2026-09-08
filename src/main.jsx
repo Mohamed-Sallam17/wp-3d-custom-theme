@@ -28,6 +28,7 @@ const componentsRegistry = {
   'moving-star': MovingStar,
   'countries-list': lazyComponent('CountriesList'),
   'platforms': lazyComponent('Platforms'),
+  'vision': lazyComponent('Vision'),
   'global-particles': HeroParticles,
   'service-page': ServicePage,
 };
