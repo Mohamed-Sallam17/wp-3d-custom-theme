@@ -27,8 +27,9 @@ const componentsRegistry = {
   'faq': lazyComponent('Faq'),
   'moving-star': MovingStar,
   'countries-list': lazyComponent('CountriesList'),
-  'platforms': lazyComponent('Platforms'),
   'vision': lazyComponent('Vision'),
+  'platforms': lazyComponent('Platforms'),
+  'Testimonials': lazyComponent('Testimonials'),
   'global-particles': HeroParticles,
   'service-page': ServicePage,
 };

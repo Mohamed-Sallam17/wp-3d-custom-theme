@@ -15,6 +15,7 @@
 <section id="works-stack" class="py-8"></section>
 <section id="vision" class="py-8"></section>
 <section id="platforms" class="py-8"></section>
+<section id="Testimonials" class="py-8"></section>
 <section id="faq" class="py-8"></section>
 <section id="countries-list" class="py-8"></section>
 
