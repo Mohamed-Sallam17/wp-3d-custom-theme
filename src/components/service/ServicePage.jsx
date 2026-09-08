@@ -2,7 +2,7 @@ import ServiceHero from "./ServiceHero";
 import ServiceIntro from "./ServiceIntro";
 import ServiceFeatures from "./ServiceFeatures";
 import ServiceShowcase from "./ServiceShowcase";
-
+import Platforms from "../Platforms";
 
 import { services } from "../../data/services";
 
@@ -22,6 +22,7 @@ const ServicePage = ({ serviceSlug }) => {
       <ServiceIntro data={data.intro}/>
       <ServiceFeatures data={data.features}/>
       <ServiceShowcase data={data.showcase}/>
+      <Platforms />
     </main>
   );
 };
