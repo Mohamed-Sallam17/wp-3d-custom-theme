@@ -7,6 +7,7 @@ import { initPageTransitions } from './utils/pageTransitions.js';
 
 import ServicePage from './components/service/ServicePage.jsx';
 import MovingStar from './components/MovingStar.jsx';
+import AboutHero from './components/AboutHero.jsx';
 import HeroParticles from './components/HeroParticles.jsx';
 
 import '../styles/css/index.css';
@@ -30,6 +31,7 @@ const componentsRegistry = {
   'vision': lazyComponent('Vision'),
   'platforms': lazyComponent('Platforms'),
   'Testimonials': lazyComponent('Testimonials'),
+  'about-hero': AboutHero,
   'global-particles': HeroParticles,
   'service-page': ServicePage,
 };
@@ -108,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
+
   // التمرير لدالة Mount و Unmount لـ Barba
-  initPageTransitions(mountComponents, unmountComponents);
+  // initPageTransitions(mountComponents, unmountComponents);
 });

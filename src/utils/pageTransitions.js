@@ -9,13 +9,14 @@ import '../../styles/css/pageTransition.css';
 // =====================================================
 
 let currentAbortController = null;
+let coverPromise = null;
+
 
 // =====================================================
 // Update Active Menu
 // =====================================================
 
 const updateActiveMenu = (nextPath) => {
-
     const rawPath = nextPath || window.location.pathname;
 
     const currentPath = decodeURIComponent(rawPath)
@@ -27,7 +28,6 @@ const updateActiveMenu = (nextPath) => {
     );
 
     menuItems.forEach((item) => {
-
         const link = item.querySelector('a');
 
         if (!link) return;
@@ -53,7 +53,6 @@ const updateActiveMenu = (nextPath) => {
             linkPath === currentPath &&
             linkPath !== ''
         ) {
-
             item.classList.add(
                 'current-menu-item',
                 'current_page_item',
@@ -64,22 +63,24 @@ const updateActiveMenu = (nextPath) => {
                 item.closest('.sub-menu')?.parentElement;
 
             if (parentLi) {
-
                 parentLi.classList.add(
                     'current-menu-ancestor',
                     'active'
                 );
-
             }
         }
     });
 };
 
+
 // =====================================================
 // Page Transitions
 // =====================================================
 
-export const initPageTransitions = (onPageChanged) => {
+export const initPageTransitions = (
+    mountComponents,
+    unmountComponents
+) => {
 
     const wrapper = document.querySelector(
         '[data-barba="wrapper"]'
@@ -87,17 +88,23 @@ export const initPageTransitions = (onPageChanged) => {
 
     if (!wrapper) return;
 
+
     // =================================================
-    // Barba Init
+    // Barba
     // =================================================
 
     barba.init({
 
-        sync: false,
+        /*
+         * نخلي leave و enter يشتغلوا مع بعض
+         * عشان نقدر نجهز الصفحة الجديدة والـ overlay مغطي الشاشة.
+         */
+        sync: true,
 
-        // ---------------------------------------------
-        // Prevent same URL
-        // ---------------------------------------------
+
+        // =============================================
+        // Prevent
+        // =============================================
 
         prevent: ({ el }) => {
 
@@ -110,9 +117,10 @@ export const initPageTransitions = (onPageChanged) => {
             );
         },
 
-        // ---------------------------------------------
-        // 500 / 502 fallback
-        // ---------------------------------------------
+
+        // =============================================
+        // Request Error
+        // =============================================
 
         requestError: (
             trigger,
@@ -128,24 +136,19 @@ export const initPageTransitions = (onPageChanged) => {
                     response.status === 502
                 )
             ) {
-
                 window.location.href = url;
-
                 return;
             }
 
-            // لو حصل request error لأي سبب
-            // نقدر نرجع للـ browser navigation
             if (!response) {
-
                 window.location.href = url;
-
             }
         },
 
-        // =================================================
+
+        // =============================================
         // Transitions
-        // =================================================
+        // =============================================
 
         transitions: [
 
@@ -153,9 +156,10 @@ export const initPageTransitions = (onPageChanged) => {
 
                 name: 'clean-transition',
 
-                // =============================================
+
+                // =====================================
                 // LEAVE
-                // =============================================
+                // =====================================
 
                 async leave(data) {
 
@@ -163,9 +167,10 @@ export const initPageTransitions = (onPageChanged) => {
                         'is-transitioning'
                     );
 
-                    // -----------------------------------------
+
+                    // ---------------------------------
                     // Abort previous controller
-                    // -----------------------------------------
+                    // ---------------------------------
 
                     if (currentAbortController) {
                         currentAbortController.abort();
@@ -173,6 +178,11 @@ export const initPageTransitions = (onPageChanged) => {
 
                     currentAbortController =
                         new AbortController();
+
+
+                    // ---------------------------------
+                    // Get transition element
+                    // ---------------------------------
 
                     const transition =
                         document.querySelector(
@@ -183,83 +193,133 @@ export const initPageTransitions = (onPageChanged) => {
                         return;
                     }
 
-                    // -----------------------------------------
-                    // Kill any previous animation
-                    // -----------------------------------------
 
-                    gsap.killTweensOf(transition);
+                    // ---------------------------------
+                    // Kill previous animation
+                    // ---------------------------------
 
-                    // -----------------------------------------
-                    // Make sure layer starts below viewport
-                    // -----------------------------------------
+                    gsap.killTweensOf(
+                        transition
+                    );
+
+
+                    // ---------------------------------
+                    // Reset position
+                    // ---------------------------------
 
                     gsap.set(transition, {
                         yPercent: 100
                     });
 
-                    // -----------------------------------------
-                    // Cover current page
-                    // -----------------------------------------
 
-                    await gsap.to(transition, {
+                    // ---------------------------------
+                    // Cover animation
+                    // ---------------------------------
 
-                        duration: 0.6,
+                    coverPromise = gsap.to(
+                        transition,
+                        {
+                            duration: 0.6,
 
-                        yPercent: 0,
+                            yPercent: 0,
 
-                        ease: 'power3.inOut'
+                            ease: 'power3.inOut'
+                        }
+                    );
 
-                    });
+
+                    // ---------------------------------
+                    // Wait until screen is covered
+                    // ---------------------------------
+
+                    await coverPromise;
+
+
+                    // ---------------------------------
+                    // Unmount OLD React components
+                    //
+                    // مهم:
+                    // ده يحصل بعد ما الـ overlay
+                    // يغطي الشاشة بالكامل.
+                    // ---------------------------------
+
+                    if (
+                        typeof unmountComponents ===
+                        'function'
+                    ) {
+
+                        unmountComponents(
+                            data.current.container
+                        );
+                    }
                 },
 
-                // =============================================
+
+                // =====================================
                 // ENTER
-                // =============================================
+                // =====================================
 
                 async enter(data) {
 
-                    // -----------------------------------------
-                    // Update menu using NEXT URL
-                    // -----------------------------------------
+                    // ---------------------------------
+                    // Update menu immediately
+                    // ---------------------------------
 
                     updateActiveMenu(
                         data.next.url.path
                     );
 
-                    // -----------------------------------------
-                    // Mount React
-                    // -----------------------------------------
 
-                    if (
-                        typeof onPageChanged === 'function'
-                    ) {
+                    // ---------------------------------
+                    // Make sure cover is complete
+                    // ---------------------------------
 
-                        onPageChanged(
-                            data.next.container
-                        );
-
+                    if (coverPromise) {
+                        await coverPromise;
                     }
 
-                    // -----------------------------------------
-                    // Wait for React mount
-                    // -----------------------------------------
+
+                    // ---------------------------------
+                    // Mount NEW React components
+                    //
+                    // الـ overlay بالفعل مغطي الشاشة
+                    // هنا، لذلك المستخدم مش هيشوف
+                    // عملية الـ mount.
+                    // ---------------------------------
+
+                    if (
+                        typeof mountComponents ===
+                        'function'
+                    ) {
+
+                        mountComponents(
+                            data.next.container
+                        );
+                    }
+
+
+                    // ---------------------------------
+                    // Give React / DOM two frames
+                    // ---------------------------------
 
                     await new Promise(
                         requestAnimationFrame
                     );
 
-                    // -----------------------------------------
-                    // Give browser one frame to paint
-                    // -----------------------------------------
-
                     await new Promise(
                         requestAnimationFrame
                     );
+
+
+                    // ---------------------------------
+                    // Get transition element
+                    // ---------------------------------
 
                     const transition =
                         document.querySelector(
                             '.page-transition'
                         );
+
 
                     if (!transition) {
 
@@ -270,45 +330,66 @@ export const initPageTransitions = (onPageChanged) => {
                         return;
                     }
 
-                    // -----------------------------------------
-                    // Reveal new page
-                    // -----------------------------------------
 
-                    await gsap.to(transition, {
+                    // ---------------------------------
+                    // Reveal NEW page
+                    // ---------------------------------
 
-                        duration: 0.6,
+                    await gsap.to(
+                        transition,
+                        {
+                            duration: 0.6,
 
-                        yPercent: -100,
+                            yPercent: -100,
 
-                        ease: 'power3.inOut'
+                            ease: 'power3.inOut'
+                        }
+                    );
 
-                    });
 
-                    // -----------------------------------------
-                    // Reset layer for next navigation
-                    // -----------------------------------------
+                    // ---------------------------------
+                    // Reset transition
+                    // ---------------------------------
 
-                    gsap.set(transition, {
-                        yPercent: 100
-                    });
+                    gsap.set(
+                        transition,
+                        {
+                            yPercent: 100
+                        }
+                    );
 
-                    // -----------------------------------------
-                    // End transition
-                    // -----------------------------------------
+
+                    // ---------------------------------
+                    // Unlock page
+                    // ---------------------------------
 
                     document.body.classList.remove(
                         'is-transitioning'
                     );
+
+
+                    // ---------------------------------
+                    // Clear promise
+                    // ---------------------------------
+
+                    coverPromise = null;
                 },
 
-                // =============================================
-                // CANCEL
-                // =============================================
+
+                // =====================================
+                // AFTER LEAVE
+                // =====================================
 
                 async afterLeave() {
 
-                    // Nothing here intentionally.
-                    // Barba handles the container swap.
+                    /*
+                     * Nothing here intentionally.
+                     *
+                     * Barba handles the container swap.
+                     *
+                     * الـ unmount حصل بالفعل بعد
+                     * اكتمال الـ cover.
+                     */
                 }
             }
         ]

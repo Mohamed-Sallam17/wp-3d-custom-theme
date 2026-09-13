@@ -1,281 +1,96 @@
-import React, { useState, useRef, useEffect } from "react";
-import gsap from "gsap";
-import themeUrl from "../utils/themeUrl";
+import React, { useState } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Controller, EffectCards } from 'swiper/modules';
 
-const cards = [
+import 'swiper/css';
+import 'swiper/css/effect-cards';
+
+// بيانات الكاردات والصور المقابلة لها
+const valuesData = [
   {
     id: 1,
-    title: "قيمنا",
-    description:
-      "نلتزم بتقديم أعلى مستويات الجودة والابتكار في تقديم جميع الخدمات، من التخطيط المبدئي حتى التنفيذ الكامل.",
-    image: `${themeUrl}/assets/home/cards/justice-scale.webp`,
+    title: 'قيمنا',
+    description: 'في عالم تتسابق فيه العلامات التجارية على الظهور، نحن من يمهد لك الطريق - من تصميم الهوية إلى بناء المتاجر وإطلاق حملاتك التسويقية.',
+    image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?q=80&w=1000&auto=format&fit=crop', // صورة الميزان / العدل
   },
   {
     id: 2,
-    title: "رؤيتنا",
-    description:
-      "أن نكون الشريك الأكثر موثوقية في التحول الرقمي وتمكين الشركات من النمو والانتشار بشكل مستدام.",
-    image: `${themeUrl}/assets/home/cards/vision.webp`,
+    title: 'رؤيتنا',
+    description: 'أن نكون الشريك التكنولوجي والإبداعي الأول للشركات والمتاجر الإلكترونية في المنطقة العربية، ونقود التحول الرقمي بأعلى معايير الجودة.',
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop', // صورة الرؤية والتكنولوجيا
   },
   {
     id: 3,
-    title: "أهدافنا",
-    description:
-      "بناء تجارب مستخدم ممتازة وتوفير حلول برمجية مبتكرة تتناسب مع تطلعات كل مشروع وتلبي احتياجات السوق.",
-    image: `${themeUrl}/assets/home/cards/goals.webp`,
+    title: 'أهدافنا',
+    description: 'مساعدة عملائنا على تحقيق أقصى معدلات النمو والتوسع من خلال حلول برمجة وتسويق مبتكرة ومخصصة لاهتمامات جمهورهم.',
+    image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=1000&auto=format&fit=crop', // صورة الأهداف والنمو
   },
 ];
 
-export default function StackedCards() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const imageRef = useRef(null);
-  const topCardRef = useRef(null);
-
-  const isAnimating = useRef(false);
-
-  const startY = useRef(0);
-  const dragDistance = useRef(0);
-
-  const [isDragging, setIsDragging] = useState(false);
-
-  const activeCard = cards[activeIndex];
-
-  // ---------------------------------------------
-  // Image animation
-  // ---------------------------------------------
-
-useEffect(() => {
-  if (!topCardRef.current) return;
-
-  // الكارد الجديد يبدأ مخفي
-  gsap.set(topCardRef.current, {
-    y: 10,
-    opacity: 0,
-  });
-
-  // يظهر تدريجيًا
-  gsap.to(topCardRef.current, {
-    y: 0,
-    opacity: 1,
-    duration: 0.35,
-    ease: "power2.out",
-
-    onComplete: () => {
-      isAnimating.current = false;
-    },
-  });
-}, [activeIndex]);
-
-  // ---------------------------------------------
-  // Next card
-  // ---------------------------------------------
-
-const nextCard = () => {
-  if (isAnimating.current) return;
-
-  isAnimating.current = true;
-
-  const currentCard = topCardRef.current;
-
-  if (!currentCard) return;
-
-  // خروج الكارد الحالي
-  gsap.to(currentCard, {
-    y: -60,
-    opacity: 0,
-    duration: 0.35,
-    ease: "power2.inOut",
-
-    onComplete: () => {
-      // نغير الكارد النشط
-      setActiveIndex((prev) => (prev + 1) % cards.length);
-    },
-  });
-};
-
-  // ---------------------------------------------
-  // Drag start
-  // ---------------------------------------------
-
-  const handleStart = (e) => {
-    if (isAnimating.current) return;
-
-    const clientY =
-      e.clientY ?? e.touches?.[0]?.clientY ?? 0;
-
-    startY.current = clientY;
-    dragDistance.current = 0;
-
-    setIsDragging(true);
-  };
-
-  // ---------------------------------------------
-  // Drag move / end
-  // ---------------------------------------------
-
-  useEffect(() => {
-    if (!isDragging) return;
-
-    const handleMove = (e) => {
-      const clientY =
-        e.clientY ?? e.touches?.[0]?.clientY ?? 0;
-
-      dragDistance.current = startY.current - clientY;
-    };
-
-    const handleEnd = () => {
-      setIsDragging(false);
-
-      if (dragDistance.current > 40) {
-        nextCard();
-      }
-
-      dragDistance.current = 0;
-    };
-
-    window.addEventListener("mousemove", handleMove);
-    window.addEventListener("mouseup", handleEnd);
-
-    window.addEventListener("touchmove", handleMove, {
-      passive: true,
-    });
-
-    window.addEventListener("touchend", handleEnd);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMove);
-      window.removeEventListener("mouseup", handleEnd);
-
-      window.removeEventListener("touchmove", handleMove);
-      window.removeEventListener("touchend", handleEnd);
-    };
-  }, [isDragging]);
-
-  // ---------------------------------------------
-  // Wheel
-  // ---------------------------------------------
-
-  const handleWheel = (e) => {
-    if (e.deltaY > 30) {
-      nextCard();
-    }
-  };
-
-  // ---------------------------------------------
-  // Render
-  // ---------------------------------------------
+const ValuesSection = () => {
+  const [firstSwiper, setFirstSwiper] = useState(null);
+  const [secondSwiper, setSecondSwiper] = useState(null);
 
   return (
-    <div className="w-full max-w-6xl mx-auto py-12 px-4 select-none">
-      <div
-        onWheel={handleWheel}
-        className="bg-[#0f0a1c] border border-purple-900/30 rounded-3xl p-8 lg:p-12 relative overflow-hidden"
-      >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center min-h-[380px]">
-
-          {/* Cards */}
-          <div className="relative h-[280px] sm:h-[300px] w-full flex items-center justify-center">
-
-            {cards.map((card, index) => {
-              /*
-               * ترتيب الكروت حسب الـ activeIndex
-               */
-
-              const position =
-                (index - activeIndex + cards.length) %
-                cards.length;
-
-              const scale = 1 - position * 0.05;
-              const translateY = position * 18;
-
-              const opacity =
-                position === 0
-                  ? 1
-                  : 0.8 - position * 0.2;
-
-              return (
-                <div
-                  key={card.id}
-                  ref={
-                    position === 0
-                      ? topCardRef
-                      : undefined
-                  }
-                  onMouseDown={
-                    position === 0
-                      ? handleStart
-                      : undefined
-                  }
-                  onTouchStart={
-                    position === 0
-                      ? handleStart
-                      : undefined
-                  }
-                  style={{
-                    zIndex: cards.length - position,
-
-                    transform: `
-                      translateY(${translateY}px)
-                      scale(${scale})
-                    `,
-
-                    opacity,
-
-                    // مهم:
-                    // مفيش transition هنا
-                  }}
-                  className={`
-                    absolute
-                    w-full
-                    max-w-[420px]
-                    p-6
-                    sm:p-8
-                    rounded-2xl
-                    bg-gradient-to-br
-                    from-[#21133b]
-                    to-[#120a22]
-                    border
-                    border-purple-500/20
-                    shadow-2xl
-
-                    ${
-                      position === 0
-                        ? "cursor-grab active:cursor-grabbing"
-                        : "pointer-events-none"
-                    }
-                  `}
-                >
-                  <div className="inline-block px-4 py-1 rounded-full bg-purple-900/50 border border-purple-500/30 text-purple-200 text-sm font-semibold mb-4">
-                    {card.title}
-                  </div>
-
-                  <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
-                    {card.description}
-                  </p>
+    <section className="min-h-screen bg-[#06040F] text-white py-20 px-6 dir-rtl flex items-center justify-center">
+      <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        
+        {/* قسم الكاردات (يمين في RTL - السلايدر الرئيسي) */}
+        <div className="w-full max-w-md mx-auto">
+          <Swiper
+            effect={'cards'}
+            grabCursor={true}
+            modules={[EffectCards, Controller]}
+            onSwiper={setFirstSwiper}
+            controller={{ control: secondSwiper }}
+            className="w-full h-[320px]"
+          >
+            {valuesData.map((item) => (
+              <SwiperSlide 
+                key={item.id} 
+                className="bg-[#140D2B] border border-[#2B1B54] rounded-2xl p-8 flex flex-col justify-center shadow-2xl relative overflow-hidden"
+              >
+                {/* نجمة زينة / أيقونة */}
+                <div className="absolute top-6 right-6 text-[#A855F7] text-xl">✦</div>
+                
+                <div className="inline-block bg-[#241747] border border-[#4C2A96] px-5 py-2 rounded-xl text-lg font-semibold mb-6 w-fit">
+                  {item.title} <span className="text-[#A855F7] mr-2">|</span>
                 </div>
-              );
-            })}
-          </div>
-
-          {/* Image */}
-          <div className="flex justify-center items-center h-[280px] sm:h-[320px]">
-            <img
-              ref={imageRef}
-              src={activeCard.image}
-              alt={activeCard.title}
-              className="
-                max-h-full
-                w-auto
-                object-contain
-                drop-shadow-[0_10px_25px_rgba(168,85,247,0.2)]
-                pointer-events-none
-              "
-            />
-          </div>
-
+                
+                <p className="text-gray-300 text-base leading-relaxed">
+                  {item.description}
+                </p>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
+
+        {/* قسم الصور التوضيحية (شمال في RTL - السلايدر المرتبط) */}
+        <div className="w-full flex justify-center items-center">
+          <Swiper
+            modules={[Controller]}
+            onSwiper={setSecondSwiper}
+            controller={{ control: firstSwiper }}
+            allowTouchMove={false} // منع السحب اليدوي من جهة الصورة ليكون الاعتماد على الكاردات
+            className="w-full max-w-md h-[380px] rounded-3xl"
+          >
+            {valuesData.map((item) => (
+              <SwiperSlide key={item.id} className="w-full h-full flex items-center justify-center">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden flex items-center justify-center bg-[#0D081F]/50 border border-[#1F143D]">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-contain p-4 drop-shadow-[0_0_35px_rgba(168,85,247,0.3)] transition-all duration-500"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+
       </div>
-    </div>
+    </section>
   );
-}
+};
+
+export default ValuesSection;
