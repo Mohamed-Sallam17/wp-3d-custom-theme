@@ -31,6 +31,8 @@ const componentsRegistry = {
   'vision': lazyComponent('Vision'),
   'platforms': lazyComponent('Platforms'),
   'Testimonials': lazyComponent('Testimonials'),
+  'gallery-services': lazyComponent('ServicesGallery'),
+  'why-us': lazyComponent('WhyUs'),
   'about-hero': AboutHero,
   'global-particles': HeroParticles,
   'service-page': ServicePage,

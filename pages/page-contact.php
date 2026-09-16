@@ -8,9 +8,8 @@
 <main data-barba="container" data-barba-namespace="<?php echo sanitize_title(get_post_field('post_name')); ?>">
 
 
-<section id="about-hero" data-page="servicesPage" class="mt-30 xl:mt-0 xl:min-h-dvh xl:flex xl:justify-center lg:items-center"></section>
-<section id="gallery-services" class="py-8 mt-8"></section>
-<section id="why-us" class="py-8 mt-8"></section>
+<section id="about-hero" data-page="contactUs" class="mt-30 xl:mt-0 xl:min-h-dvh xl:flex xl:justify-center lg:items-center"></section>
+
 
 
 </main>

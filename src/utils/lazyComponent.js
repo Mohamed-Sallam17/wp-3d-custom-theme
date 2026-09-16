@@ -1,22 +1,23 @@
 import { lazy } from 'react';
 
-const components = import.meta.glob(
-    '../components/*.jsx'
-);
+// 1. استخدام ** لتضمين كافة المجلدات الفرعية
+const components = import.meta.glob('../components/**/*.jsx');
 
 const lazyComponent = (componentName) => {
+  // 2. البحث عن الملف الذي ينتهي باسم المكون المطلوب
+  const pathKey = Object.keys(components).find((path) =>
+    path.endsWith(`/${componentName}.jsx`)
+  );
 
-    const path = `../components/${componentName}.jsx`;
+  const importer = components[pathKey];
 
-    const importer = components[path];
+  if (!importer) {
+    throw new Error(
+      `Lazy component "${componentName}" not found in components folder or subfolders.`
+    );
+  }
 
-    if (!importer) {
-        throw new Error(
-            `Lazy component "${componentName}" not found.`
-        );
-    }
-
-    return lazy(importer);
+  return lazy(importer);
 };
 
 export default lazyComponent;
