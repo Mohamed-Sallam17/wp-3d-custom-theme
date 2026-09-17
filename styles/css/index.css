@@ -1610,15 +1610,6 @@
     .md\:my-4 {
       margin-block: calc(var(--spacing) * 4);
     }
-    .md\:ms-4 {
-      margin-inline-start: calc(var(--spacing) * 4);
-    }
-    .md\:ms-15 {
-      margin-inline-start: calc(var(--spacing) * 15);
-    }
-    .md\:ms-\[35\%\] {
-      margin-inline-start: 35%;
-    }
     .md\:me-6 {
       margin-inline-end: calc(var(--spacing) * 6);
     }
@@ -1673,9 +1664,6 @@
     .md\:max-w-\[85\%\] {
       max-width: 85%;
     }
-    .md\:max-w-\[90\%\] {
-      max-width: 90%;
-    }
     .md\:max-w-\[350px\] {
       max-width: 350px;
     }
@@ -1711,9 +1699,6 @@
     }
     .md\:p-2 {
       padding: calc(var(--spacing) * 2);
-    }
-    .md\:p-4 {
-      padding: calc(var(--spacing) * 4);
     }
     .md\:p-8 {
       padding: calc(var(--spacing) * 8);
@@ -1811,9 +1796,6 @@
     .lg\:max-w-\[65\%\] {
       max-width: 65%;
     }
-    .lg\:max-w-\[85\%\] {
-      max-width: 85%;
-    }
     .lg\:grid-cols-3 {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
@@ -1889,9 +1871,6 @@
     }
     .xl\:max-w-\[85\%\] {
       max-width: 85%;
-    }
-    .xl\:max-w-\[90\%\] {
-      max-width: 90%;
     }
     .xl\:justify-center {
       justify-content: center;
