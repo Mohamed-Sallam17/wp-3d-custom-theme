@@ -32,7 +32,7 @@ const ValuesSection = () => {
   const [secondSwiper, setSecondSwiper] = useState(null);
 
   return (
-    <section className="min-h-screen bg-[#06040F] text-white py-20 px-6 dir-rtl flex items-center justify-center">
+    <section className="min-h-screen py-20 px-6 flex items-center justify-center">
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         
         {/* قسم الكاردات (يمين في RTL - السلايدر الرئيسي) */}
@@ -48,7 +48,7 @@ const ValuesSection = () => {
             {valuesData.map((item) => (
               <SwiperSlide 
                 key={item.id} 
-                className="bg-[#140D2B] border border-[#2B1B54] rounded-2xl p-8 flex flex-col justify-center shadow-2xl relative overflow-hidden"
+                className="bg-linear-to-bl from-[#050308] to-[#45296E] rounded-2xl p-8 flex flex-col justify-center shadow-2xl relative overflow-hidden"
               >
                 {/* نجمة زينة / أيقونة */}
                 <div className="absolute top-6 right-6 text-[#A855F7] text-xl">✦</div>
@@ -76,11 +76,11 @@ const ValuesSection = () => {
           >
             {valuesData.map((item) => (
               <SwiperSlide key={item.id} className="w-full h-full flex items-center justify-center">
-                <div className="relative w-full h-full rounded-2xl overflow-hidden flex items-center justify-center bg-[#0D081F]/50 border border-[#1F143D]">
+                <div className="relative w-full h-full rounded-2xl overflow-hidden flex items-center justify-center">
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full object-contain p-4 drop-shadow-[0_0_35px_rgba(168,85,247,0.3)] transition-all duration-500"
+                    className="w-full h-full object-contain p-4 transition-all duration-500"
                   />
                 </div>
               </SwiperSlide>
