@@ -7,7 +7,7 @@ import { initPageTransitions } from './utils/pageTransitions.js';
 
 import ServicePage from './components/service/ServicePage.jsx';
 import MovingStar from './components/MovingStar.jsx';
-import AboutHero from './components/AboutHero.jsx';
+import AboutHero from './components/innerPages/AboutHero.jsx';
 import HeroParticles from './components/HeroParticles.jsx';
 
 import '../styles/css/index.css';
@@ -33,6 +33,7 @@ const componentsRegistry = {
   'Testimonials': lazyComponent('Testimonials'),
   'gallery-services': lazyComponent('ServicesGallery'),
   'why-us': lazyComponent('WhyUs'),
+  'support-notice': lazyComponent('SupportNotice'),
   'about-hero': AboutHero,
   'global-particles': HeroParticles,
   'service-page': ServicePage,

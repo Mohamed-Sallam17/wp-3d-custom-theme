@@ -9,8 +9,8 @@
 
 
 <section id="about-hero" data-page="servicesPage" class="mt-30 xl:mt-0 xl:min-h-dvh xl:flex xl:justify-center lg:items-center"></section>
-<section id="gallery-services" class="py-8 mt-8"></section>
-<section id="why-us" class="py-8 mt-8"></section>
+<section id="gallery-services" class="py-8 mt-20"></section>
+<section id="why-us" class="py-8 mt-20"></section>
 
 
 </main>

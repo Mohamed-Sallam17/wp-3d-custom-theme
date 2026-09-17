@@ -49,7 +49,8 @@
     }
 }
 @media(min-width:768px){
-    .service-intro .container{
+    .service-intro .container,
+    #support-notice .container{
         max-width: 100% !important;
         padding: 0 !important;
     }

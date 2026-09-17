@@ -1,0 +1,1 @@
+var e=window.wameedTheme?.themeUrl||``;export{e as t};

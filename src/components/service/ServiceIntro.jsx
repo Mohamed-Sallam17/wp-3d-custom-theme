@@ -15,8 +15,8 @@ const ServiceIntro = ({ data }) => {
           <div className="service-intro_content flex justify-center items-center flex-col flex-3 text-center lg:pl-4">
             <div className="space-y-6 md:max-w-[85%] relative">
               <h2 className="service-intro__title font-bold flex flex-col md:block justify-center space-y-2">
-                <span className="text-2xl md:text-3xl lg:text-5xl xl:text-6xl">نبذة عن  </span>
-                <span className="gradient-text text-3xl lg:text-5xl xl:text-6xl">{data.title}</span>
+                <span className="text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">نبذة عن  </span>
+                <span className="gradient-text text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">{data.title}</span>
               </h2>
               <p className="p-5 md:p-2 leading-normal lg:text-2xl">{data.description}</p>
               <img src={`${themeUrl}/assets/star.webp`} alt="star icon" width="40" height="40" decoding="async" loading="lazy" className='star-icon absolute left-0 top-[-10%]'/>
@@ -24,7 +24,6 @@ const ServiceIntro = ({ data }) => {
           </div>
         </div>
       </div>
-
     </section>
   );
 };
