@@ -56,7 +56,9 @@ header nav{
 }
 
 /* Vision */
-
+@media(max-width:1023px){
+    
+}
 
 /* Faq */
 .faq__item{
@@ -71,11 +73,19 @@ header nav{
 
 
 
+
 /* Footer */
 footer{
     position: relative;
-    /* background-image: url(../../assets/gemini-svg.svg); */
     background-repeat: no-repeat;
-    background-position: center bottom;
-    background-size: cover;
+    background-size: 100% 100% ;
+    background-position: center;
+}
+
+/* إتاحة الخروج للصورة من حدود الفوتر */
+
+.footer-logo img {
+  will-change: transform;
+  transition: none !important; /* إلغاء أي Transition قديم يتعارض مع GSAP */
+  display: block;
 }

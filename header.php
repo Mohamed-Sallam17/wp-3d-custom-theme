@@ -15,7 +15,7 @@
 
 <div id="global-particles"></div>
 
-<header class="fixed w-full top-0 px-4 z-20">
+<header class="w-full top-0 px-4 z-20">
   <nav aria-label="Global" class="mx-auto flex max-w-6xl items-center justify-between py-2 px-4 lg:px-8 bg-gray-900 rounded-[40rem] h-20">
     <div class="flex">
       <a href="/" class="-m-1.5 p-1.5">
@@ -50,7 +50,7 @@
         <el-dialog-panel class="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-[var(--bg-color)] p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-100/10">
           <div class="flex items-center justify-between">
             <a href="#" class="-m-1.5 p-1.5">
-              <span class="sr-only">Your Company</span>
+              <span class="sr-only">WameedAgency</span>
               <img src="<?php echo get_theme_file_uri("./assets/logo.png") ?>" alt="" class="h-14 w-auto" />
             </a>
             <button type="button" command="close" commandfor="mobile-menu" class="-m-2.5 rounded-md p-2.5 text-gray-400">
@@ -63,7 +63,7 @@
           <div class="mt-6 flow-root">
             <div class="-my-6 divide-y divide-white/10">
               <div class="space-y-2 py-6">
-                <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">الرئيسية</a>
+                <a href="/" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">الرئيسية</a>
                 <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">خدماتنا</a>
                 <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">من نحن</a>
                 <a href="#" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-white/5">المدونة</a>

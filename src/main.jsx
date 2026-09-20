@@ -1,5 +1,7 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import CustomCursor from './components/CustomCursor.jsx';
 import lazyComponent from './utils/lazyComponent.js';
@@ -38,6 +40,154 @@ const componentsRegistry = {
   'global-particles': HeroParticles,
   'service-page': ServicePage,
 };
+
+
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Footer Logo Animation & Mouse Tilt Effect
+const initFooterLogoAnimation = () => {
+  const footerLogoImg = document.querySelector('.footer-logo img');
+  const footer = document.querySelector('footer');
+
+  if (!footerLogoImg || !footer) return;
+
+  const mm = gsap.matchMedia();
+
+  mm.add("(min-width: 1280px)", () => {
+    gsap.set(footerLogoImg, {
+      transformOrigin: "center center",
+    });
+
+    // Scroll Animation
+    const scrollTween = gsap.to(footerLogoImg, {
+      yPercent: -130,
+      ease: "none",
+      scrollTrigger: {
+        trigger: footer,
+        start: "top bottom",
+        end: "bottom bottom",
+        scrub: 0.5,
+        invalidateOnRefresh: true,
+        refreshPriority: -1,
+      },
+    });
+
+    // Mouse Tilt
+    const skewXTo = gsap.quickTo(footerLogoImg, "skewX", {
+      duration: 0.4,
+      ease: "power2.out",
+    });
+
+    const skewYTo = gsap.quickTo(footerLogoImg, "skewY", {
+      duration: 0.4,
+      ease: "power2.out",
+    });
+
+    const rotateTo = gsap.quickTo(footerLogoImg, "rotateY", {
+      duration: 0.4,
+      ease: "power2.out",
+    });
+
+    const rotateXTo = gsap.quickTo(footerLogoImg, "rotateX", {
+      duration: 0.4,
+      ease: "power2.out",
+    });
+
+    const handleMouseMove = (e) => {
+      const rect = footer.getBoundingClientRect();
+
+      const mouseX = (e.clientX - rect.left) / rect.width - 0.5;
+      const mouseY = (e.clientY - rect.top) / rect.height - 0.5;
+
+      skewXTo(mouseX * 15);
+      skewYTo(mouseY * -10);
+
+      rotateTo(mouseX * 20);
+      rotateXTo(mouseY * -20);
+    };
+
+    const handleMouseLeave = () => {
+      skewXTo(0);
+      skewYTo(0);
+      rotateTo(0);
+      rotateXTo(0);
+    };
+
+    footer.addEventListener("mousemove", handleMouseMove);
+    footer.addEventListener("mouseleave", handleMouseLeave);
+
+    // -----------------------------------------
+    // Refresh ScrollTrigger after layout settles
+    // -----------------------------------------
+
+    const refreshScrollTrigger = () => {
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+    };
+
+    // Browser may restore the previous scroll position
+    window.addEventListener("load", refreshScrollTrigger);
+
+    // Important when refreshing while already at the footer
+    const refreshTimeout = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 300);
+
+    // -----------------------------------------
+    // Cleanup
+    // -----------------------------------------
+
+    return () => {
+      footer.removeEventListener("mousemove", handleMouseMove);
+      footer.removeEventListener("mouseleave", handleMouseLeave);
+
+      window.removeEventListener("load", refreshScrollTrigger);
+
+      clearTimeout(refreshTimeout);
+
+      scrollTween.scrollTrigger?.kill();
+      scrollTween.kill();
+    };
+  });
+
+  return () => {
+    mm.revert();
+  };
+};
+
+// ----------------------------------------------------
+// الحلول الأساسية لتضمين الاستقرار المريح (Troubleshooting)
+// ----------------------------------------------------
+
+// أ. التأكد من اكتمال تحميل الصورة المحددة نفسها قبل البدء
+const logoImg = document.querySelector('.footer-logo img');
+if (logoImg) {
+  if (logoImg.complete) {
+    initFooterLogoAnimation();
+  } else {
+    logoImg.addEventListener('load', () => {
+      initFooterLogoAnimation();
+      ScrollTrigger.refresh();
+    });
+  }
+} else {
+  document.addEventListener('DOMContentLoaded', initFooterLogoAnimation);
+}
+
+// ب. تحديث مجدد عند اكتمال تحميل الصفحة بالكامل
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    ScrollTrigger.refresh();
+  }, 200);
+});
+
+// ⚠️ السطرين الأهم لضمان استقرار العمل دائماً ⚠️
+window.addEventListener('load', () => {
+  ScrollTrigger.refresh();
+});
+
 
 // =====================================================
 // Unmount Old Components
@@ -90,6 +240,7 @@ const mountComponents = (root = document) => {
 
     activeRoots.set(container, reactRoot);
   });
+
 };
 
 // =====================================================
@@ -99,6 +250,10 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM READY');
 
   mountComponents(document);
+
+
+  // 2. تشغيل انيميشن الفوتر مرة واحدة فقط
+  initFooterLogoAnimation();
 
   // Cursor Root (بيفضل شغال مستمر ومش بيتأثر بـ Barba)
   if (!document.getElementById('react-cursor-root')) {

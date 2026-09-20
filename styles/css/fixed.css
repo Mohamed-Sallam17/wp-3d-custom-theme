@@ -13,10 +13,15 @@
     --second-border-color: #7652D6B2;
     --dark-btn-color: #0D08238C;
 }
+/* html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+} */
 body{
     height: 100dvh;
     overflow-x: hidden;
 }
+
 
 ::-webkit-scrollbar {
   width: 6px;          
