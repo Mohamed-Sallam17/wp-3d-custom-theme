@@ -61,7 +61,7 @@ const initFooterLogoAnimation = () => {
 
     // Scroll Animation
     const scrollTween = gsap.to(footerLogoImg, {
-      yPercent: -130,
+      yPercent: -140,
       ease: "none",
       scrollTrigger: {
         trigger: footer,

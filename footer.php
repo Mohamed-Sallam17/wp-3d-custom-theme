@@ -14,7 +14,7 @@
       <img src="<?php echo get_theme_file_uri("/assets/footer/footer-logo.png") ?>" alt="footer logo" class="w-full h-full max-w-[25%] m-auto" />
   </div>
     <div class="container">
-        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-10 pt-10 xl:pt-60 mt-16 sm:mt-0">
+        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 py-10 xl:pt-60 mt-16 sm:mt-0">
             <div class="flex flex-1 gap-4 w-full lg:flex-row justify-evenly">
                 <div class="font-bold text-center lg:text-center">
                     <h4 class="gradient-text text-2xl xl:text-3xl mb-6">الصفحات</h4>

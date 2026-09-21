@@ -1,117 +1,382 @@
 import themeUrl from "../utils/themeUrl";
-import { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Controller, EffectCards, EffectFade } from 'swiper/modules';
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { Draggable } from "gsap/Draggable";
 
-import 'swiper/css';
-import 'swiper/css/effect-cards';
-import 'swiper/css/effect-fade'; // استيراد تنسيقات الـ fade
+gsap.registerPlugin(Draggable);
 
-// بيانات الكاردات والصور المقابلة لها
 const valuesData = [
   {
     id: 1,
-    title: 'قيمنا',
-    description: 'في عالم تتسابق فيه العلامات التجارية على الظهور، نحن من يضيء لك الطريق - من تصميم الهوية إلى بناء المتجر وإطلاق حملاتك التسويقية.',
-    image: `${themeUrl}/assets/home/vision/values.webp`, 
+    title: "قيمنا",
+    description:
+      "نؤمن بالابتكار والجودة والشفافية والالتزام ونعمل بروح الشراكة مع عملائنا لنقدم حلولا تسويقية احترافية مبنية على الثقة والتطوير المستمر وتحقيق أفضل النتائج",
+    image: `${themeUrl}/assets/home/vision/values.webp`,
   },
   {
     id: 2,
-    title: 'رؤيتنا',
-    description: 'أن نكون الشريك التكنولوجي والإبداعي الأول للشركات والمتاجر الإلكترونية في المنطقة العربية، ونقود التحول الرقمي بأعلى معايير الجودة.',
-    image: `${themeUrl}/assets/home/vision/visions.webp`, 
+    title: "رؤيتنا",
+    description:
+      "أن نكون شريكا تسويقيا موثوقا للعلامات التجارية في المملكة والخليج ونساهم في تحويل الأفكار والمشاريع إلى علامات قوية ومؤثرة من خلال حلول مبتكرة واستراتيجيات تحقق نموا حقيقيا ومستداما",
+    image: `${themeUrl}/assets/home/vision/visions.webp`,
   },
   {
     id: 3,
-    title: 'أهدافنا',
-    description: 'مساعدة عملائنا على تحقيق أقصى معدلات النمو والتوسع من خلال حلول برمجة وتسويق مبتكرة ومخصصة لاهتمامات جمهورهم.',
-    image: `${themeUrl}/assets/home/vision/goals.webp`, 
+    title: "أهدافنا",
+    description:
+      "نساعد العلامات التجارية على بناء حضور رقمي قوي ومميز نرفع مستوى الوعي بالعلامة التجارية ونوصلها إلى الجمهور المناسب نطور تجربة العميل ونحول المتابعين والزوار إلى عملاء فعليين",
+    image: `${themeUrl}/assets/home/vision/goals.webp`,
   },
 ];
 
 const ValuesSection = () => {
-  const [firstSwiper, setFirstSwiper] = useState(null);
-  const [secondSwiper, setSecondSwiper] = useState(null);
+  const containerRef = useRef(null);
+  const autoplayTimerRef = useRef(null);
+  const currentIndexRef = useRef(0);
+  const isAnimatingRef = useRef(false);
+
+  useEffect(() => {
+    const mm = gsap.matchMedia();
+
+    mm.add(
+      {
+        isDesktop: "(min-width: 1024px)",
+        isMobile: "(max-width: 1023px)",
+      },
+      (context) => {
+        const { isDesktop } = context.conditions;
+
+        const cards = gsap.utils.toArray(".gsap-card", containerRef.current);
+        const images = gsap.utils.toArray(
+          ".gsap-image",
+          containerRef.current
+        );
+
+        if (!cards.length) return;
+
+        currentIndexRef.current = 0;
+        isAnimatingRef.current = false;
+
+        // =====================================================
+        // Stack Positions
+        // =====================================================
+
+        const updateStackPositions = (activeIndex, animate = true) => {
+          cards.forEach((card, index) => {
+            const relativeIndex =
+              (index - activeIndex + cards.length) % cards.length;
+
+            const zIndex = cards.length - relativeIndex;
+
+            let x;
+            let y;
+            let scale;
+            let opacity;
+
+            if (isDesktop) {
+              x = relativeIndex * -20;
+              y = relativeIndex * -14;
+              scale = 1 - relativeIndex * 0.05;
+              opacity = relativeIndex > 2 ? 0 : 1;
+            } else {
+              const offsets = [0, 20, -20];
+
+              x =
+                relativeIndex < offsets.length
+                  ? offsets[relativeIndex]
+                  : 0;
+
+              y = relativeIndex * -4;
+              scale = 1 - relativeIndex * 0.02;
+              opacity = relativeIndex > 2 ? 0 : 1;
+            }
+
+            card.style.zIndex = zIndex;
+
+            gsap.killTweensOf(card);
+
+            if (animate) {
+              gsap.to(card, {
+                x,
+                y,
+                scale,
+                opacity,
+                duration: 0.3,
+                ease: "power2.out",
+                overwrite: true,
+              });
+            } else {
+              gsap.set(card, {
+                x,
+                y,
+                scale,
+                opacity,
+              });
+            }
+          });
+        };
+
+        // =====================================================
+        // Enable / Disable Drag
+        // =====================================================
+
+        const updateDraggableState = (activeIndex) => {
+          cards.forEach((card, index) => {
+            const draggable = Draggable.get(card);
+
+            if (!draggable) return;
+
+            if (index === activeIndex) {
+              draggable.enable();
+            } else {
+              draggable.disable();
+            }
+          });
+        };
+
+        // =====================================================
+        // Go To Next Slide
+        // =====================================================
+
+        const goToNextSlide = (dragDirection = -1) => {
+          if (isAnimatingRef.current) return;
+
+          isAnimatingRef.current = true;
+
+          const currentIndex = currentIndexRef.current;
+          const nextIndex = (currentIndex + 1) % cards.length;
+          const currentCard = cards[currentIndex];
+
+          const flyX = dragDirection * (isDesktop ? 300 : 260);
+
+          // إيقاف أي حركة قديمة على الكارت
+          gsap.killTweensOf(currentCard);
+
+          // تغيير الصورة الحالية والقادمة
+          images.forEach((image, index) => {
+            if (index !== currentIndex && index !== nextIndex) return;
+
+            gsap.killTweensOf(image);
+
+            gsap.to(image, {
+              opacity: index === nextIndex ? 1 : 0,
+              duration: 0.25,
+              ease: "power1.inOut",
+              overwrite: true,
+            });
+          });
+
+          // إخراج الكارت الحالي
+          gsap.to(currentCard, {
+            x: flyX,
+            opacity: 0,
+            duration: 0.3,
+            ease: "power2.in",
+            overwrite: true,
+
+            onComplete: () => {
+              currentIndexRef.current = nextIndex;
+
+              updateStackPositions(nextIndex, true);
+              updateDraggableState(nextIndex);
+
+              isAnimatingRef.current = false;
+            },
+          });
+        };
+
+        // =====================================================
+        // Autoplay
+        // =====================================================
+
+        const stopAutoplay = () => {
+          if (autoplayTimerRef.current) {
+            autoplayTimerRef.current.kill();
+            autoplayTimerRef.current = null;
+          }
+        };
+
+        const startAutoplay = () => {
+          stopAutoplay();
+
+          autoplayTimerRef.current = gsap.delayedCall(3.5, () => {
+            goToNextSlide(-1);
+
+            if (!isAnimatingRef.current) {
+              startAutoplay();
+            } else {
+              gsap.delayedCall(0.4, startAutoplay);
+            }
+          });
+        };
+
+        // =====================================================
+        // Initial Setup
+        // =====================================================
+
+        updateStackPositions(0, false);
+        updateDraggableState(0);
+
+        // =====================================================
+        // Draggable
+        // =====================================================
+
+        cards.forEach((card, index) => {
+          const draggable = Draggable.create(card, {
+            type: "x",
+            edgeResistance: 0.65,
+            cursor: "grab",
+            activeCursor: "grabbing",
+
+            onPress: () => {
+              stopAutoplay();
+            },
+
+            onDrag: function () {
+              gsap.set(card, {
+                rotation: 0,
+              });
+            },
+
+            onDragEnd: function () {
+              const threshold = 50;
+
+              if (Math.abs(this.x) > threshold) {
+                const direction = this.x > 0 ? 1 : -1;
+
+                goToNextSlide(direction);
+              } else {
+                updateStackPositions(
+                  currentIndexRef.current,
+                  true
+                );
+              }
+
+              startAutoplay();
+            },
+          })[0];
+
+          if (index !== 0) {
+            draggable.disable();
+          }
+        });
+
+        // =====================================================
+        // Start Autoplay
+        // =====================================================
+
+        startAutoplay();
+
+        // =====================================================
+        // Cleanup
+        // =====================================================
+
+        return () => {
+          stopAutoplay();
+
+          cards.forEach((card) => {
+            const draggable = Draggable.get(card);
+
+            if (draggable) {
+              draggable.kill();
+            }
+
+            gsap.killTweensOf(card);
+          });
+
+          images.forEach((image) => {
+            gsap.killTweensOf(image);
+          });
+        };
+      },
+      containerRef
+    );
+
+    return () => {
+      mm.revert();
+    };
+  }, []);
 
   return (
-    <div className="container flex items-center justify-center px-4">
-      <div className="max-w-6xl w-full flex flex-col-reverse lg:flex-row gap-12 items-center justify-between py-8">
-        
-        {/* قسم الصور التوضيحية (شمال في RTL) - يظهر فقط في الشاشات الكبيرة LG */}
-        <div className="hidden lg:flex w-full lg:w-1/2 justify-center items-center">
-          <Swiper
-            effect={'fade'} // تفعيل تأثير Fade
-            fadeEffect={{ crossFade: true }} // لضمان التلاشي المزدوج السلس بين الصور
-            speed={600} // سرعة التحول والتلاشي (بالميلي ثانية)
-            modules={[Controller, EffectFade]}
-            onSwiper={setSecondSwiper}
-            controller={{ control: firstSwiper }}
-            allowTouchMove={false}
-            className="w-full max-w-md rounded-3xl"
-          >
-            {valuesData.map((item) => (
-              <SwiperSlide key={item.id} className="w-full h-full flex items-center justify-center bg-transparent">
-                <div className="relative w-full h-[380px] rounded-2xl overflow-hidden flex items-center justify-center">
+    <div
+      ref={containerRef}
+      className="w-full flex items-center justify-center relative z-10 overflow-hidden select-none py-6"
+    >
+      <div className="container mx-auto px-4">
+        <div className="max-w-6xl w-full flex flex-col-reverse lg:flex-row gap-12 items-center justify-between mx-auto">
+          {/* Images - Desktop */}
+          <div className="hidden lg:flex w-full lg:w-1/2 justify-center items-center h-[380px] relative">
+            {valuesData.map((item, index) => (
+              <div
+                key={item.id}
+                className={`gsap-image absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none ${
+                  index === 0 ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                <div className="relative w-full h-full max-w-md rounded-2xl overflow-hidden flex items-center justify-center">
                   <img
                     src={item.image}
                     alt={item.title}
-                    className="w-full h-full max-w-full object-contain p-4 rounded-2xl transition-all duration-500"
+                    width="500"
+                    height="380"
+                    decoding="async"
+                    className="w-full h-full max-w-full object-contain p-4 rounded-2xl"
                   />
                 </div>
-              </SwiperSlide>
+              </div>
             ))}
-          </Swiper>
-        </div>
-        
-        {/* قسم الكاردات الرئيسية */}
-        <div className="w-full lg:w-1/2 flex justify-center">
-          <Swiper
-            effect={'cards'}
-            grabCursor={true}
-            cardsEffect={{
-              slideShadows: false,
-              perSlideRotate: 0,
-              perSlideOffset: 14,
-            }}
-            modules={[EffectCards, Controller]}
-            onSwiper={setFirstSwiper}
-            controller={{ control: secondSwiper }}
-            className="w-full max-w-[340px] sm:max-w-md md:max-w-lg"
-          >
+          </div>
+
+          {/* Cards */}
+          <div className="w-full lg:w-1/2 grid grid-cols-1 justify-items-center items-center relative px-4 sm:px-0">
             {valuesData.map((item) => (
-              <SwiperSlide 
-                key={item.id} 
-                className="lg:gradient-bg bg-linear-to-bl from-[#050308] to-[#45296E] rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-2xl relative border border-white/10"
+              <div
+                key={item.id}
+                style={{ gridArea: "1 / 1" }}
+                className="gsap-card w-full max-w-[310px] sm:max-w-[380px] md:max-w-lg gradient-bg bg-gradient-to-bl from-[#050308] to-[#45296E] rounded-3xl p-4 md:p-8 flex flex-col justify-between shadow-2xl border border-white/10 touch-none cursor-grab active:cursor-grabbing h-auto"
               >
-                {/* الجزء العلوي: العنوان والنجمة */}
+                {/* Header */}
                 <div className="flex justify-between items-start mb-4">
-                  <span className="text-purple-300 text-xl">✦</span>
-                  <h2 className="bg-[var(--second-bg-color)] text-[#F5F4FC] px-6 py-2 rounded-xl text-lg md:text-3xl font-bold w-fit">
+                  <h2 className="gradient-bg bg-[var(--second-bg-color)] text-[#F5F4FC] px-6 sm:px-8 py-3 sm:py-4 rounded-3xl text-lg md:text-3xl font-bold w-fit">
                     {item.title}
                   </h2>
+
+                  <img
+                    src={`${themeUrl}/assets/star.webp`}
+                    alt="star icon"
+                    width="40"
+                    height="40"
+                    decoding="async"
+                    loading="lazy"
+                  />
                 </div>
 
-                {/* الوصف */}
-                <p className="text-gray-300 text-sm md:text-base leading-relaxed mb-6">
+                {/* Description */}
+                <p className="text-gray-300 text-sm md:text-base lg:text-xl leading-relaxed mb-6">
                   {item.description}
                 </p>
 
-                {/* الصورة داخل الكارت - تظهر فقط على الموبايل والتابلت */}
-                <div className="block lg:hidden w-full h-48 sm:h-56 rounded-2xl overflow-hidden bg-black/30 p-2">
+                {/* Mobile Image */}
+                <div className="block lg:hidden w-full h-52 sm:h-72 rounded-2xl overflow-hidden p-2 mt-auto">
                   <img
                     src={item.image}
                     alt={item.title}
+                    width="500"
+                    height="380"
+                    decoding="async"
+                    loading="lazy"
                     className="w-full h-full object-contain rounded-xl"
                   />
                 </div>
-              </SwiperSlide>
+              </div>
             ))}
-          </Swiper>
+          </div>
         </div>
-
       </div>
     </div>
   );
 };
 
 export default ValuesSection;
+
+
