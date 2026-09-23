@@ -43,13 +43,24 @@ body{
   margin: auto;
 }
 .gradient-text, 
-ul#menu-header-menu .current_page_item, 
+ul#menu-header-menu .current_page_item,
+ul#mb-menu-links .current_page_item,
 ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
     background: linear-gradient(45deg, #2D75E6,#6A75DA,#F25DEA,#FFA0D0);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
+}
+#menu-header-menu .current_page_item .sub-menu li,
+ul#mb-menu-links .current_page_item .sub-menu li {
+  color: #fff;
+  -webkit-text-fill-color: #fff;
+
+}
+.sub-menu.mobile-sub-menu li{
+  border-bottom: 1px solid #ffffff8c;
+  padding: 8px 0;
 }
 .gradient-bg{
     backdrop-filter: blur(24px);
@@ -119,12 +130,9 @@ ul#menu-header-menu .menu-item:not(.menu-item-has-children):hover{
 
 .cursor-inner-dot {
   position: absolute;
-
   width: 8px;
   height: 8px;
-
   border-radius: 50%;
-
   background: linear-gradient(
     45deg,
     #5999FF,

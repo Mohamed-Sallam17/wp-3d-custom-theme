@@ -15,7 +15,7 @@
 
 <div id="global-particles"></div>
 
-<header class="w-full top-0 px-4 z-20">
+<header class="w-full relative top-0 px-4 z-20">
   <nav aria-label="Global" class="mx-auto flex max-w-6xl items-center justify-between py-2 px-4 lg:px-8 bg-gray-900 rounded-[40rem] h-20">
     <div class="flex">
       <a href="/" class="-m-1.5 p-1.5">
@@ -70,6 +70,7 @@
                   wp_nav_menu(array(
                       'theme_location' => 'mobileLocation',
                       'container'      => false, 
+                      'menu_id'        => 'mb-menu-links', // كتابة الاسم الخاص بك
                       'menu_class'     => 'flex flex-col gap-3 list-none m-0 p-0 w-full', 
                       'fallback_cb'    => false,
                   ));

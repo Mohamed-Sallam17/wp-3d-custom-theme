@@ -16,6 +16,8 @@ body{
     font-weight: 500;
     padding: 10px 0;
 }
+
+
 #menu-header-menu li.menu-item.current_page_item{
     font-weight: bold;
 }
@@ -61,10 +63,10 @@ header nav{
     .menu-item-has-children > .sub-menu::before {
         content: "";
         position: absolute;
-        top: -15px; /* يمتد لأعلى ليلمس رابط القائمة الرئيسي */
+        top: -20px; /* يمتد لأعلى ليلمس رابط القائمة الرئيسي */
         right: 0;
         width: 100%;
-        height: 15px;
+        height: 20px;
         background: transparent;
     }
     

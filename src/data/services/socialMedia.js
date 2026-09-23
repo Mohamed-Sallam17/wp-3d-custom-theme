@@ -48,25 +48,12 @@ const socialMedia = {
       normal: "الـممـيـزة"
     },
     images: [
-      "${themeUrl}/assets/servicePage/socialmedia/showcase/showcase-1.webp",
-      "${themeUrl}/assets/servicePage/socialmedia/showcase/showcase-2.webp",
-      "${themeUrl}/assets/servicePage/socialmedia/showcase/showcase-3.webp",
+      `${themeUrl}/assets/servicePage/socialmedia/showcase/showcase-1.webp`,
+      `${themeUrl}/assets/servicePage/socialmedia/showcase/showcase-2.webp`,
+      `${themeUrl}/assets/servicePage/socialmedia/showcase/showcase-3.webp`,
     ],
   },
 
-  partners: {
-    title: "شركاؤنا",
-    logos: [
-      "/assets/images/services/mobile-apps/partner-1.webp",
-      "/assets/images/services/mobile-apps/partner-2.webp",
-      "/assets/images/services/mobile-apps/partner-3.webp",
-    ],
-  },
-
-  contact: {
-    title: "تواصل معنا",
-    description: "لديك مشروع؟ دعنا نساعدك في تنفيذه.",
-  },
 };
 
 export default socialMedia;

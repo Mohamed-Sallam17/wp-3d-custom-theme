@@ -4,7 +4,7 @@ import themeUrl from '../../utils/themeUrl';
 const ServiceIntro = ({ data }) => {
 
   return (
-    <section className="service-intro py-8 mt-8 lg:mt-16">
+    <section className="service-intro py-8 mt-20 ">
       <div className="container md:pl-2">
         <div className="flex flex-col-reverse gap-6 md:flex-row md:gap-4">
           <div className="service-intro__media flex justify-center items-center flex-2">

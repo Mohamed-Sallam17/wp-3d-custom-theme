@@ -1,6 +1,6 @@
 const ServiceShowcase = ({data})=>{
     return(
-        <section className="service-showcase py-8 mt-8 lg:mt-16">
+        <section className="service-showcase py-8 mt-20 ">
             <div className="container">
                 <div className="service-feature__title text-center mb-[80px]">
                     <h2 className="font-bold text-2xl md:text-4xl lg:text-6xl leading-normal">

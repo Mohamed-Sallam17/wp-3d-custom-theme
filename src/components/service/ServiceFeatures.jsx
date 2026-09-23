@@ -1,6 +1,6 @@
 const ServiceFeatures = ({data})=>{
     return(
-        <section className="service-features py-8 mt-8 lg:mt-16">
+        <section className="service-features py-8 mt-20 ">
             <div className="container">
                 <div className="flex flex-col gap-6">
                     <div className="service-feature__title gradient-text text-center">

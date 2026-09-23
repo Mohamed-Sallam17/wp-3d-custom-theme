@@ -1,6 +1,6 @@
 const ServiceHero = ({ data }) => {
   return (
-    <section className="service-hero py-8 mt-8 lg:mt-16">
+    <section className="service-hero py-8 mt-20 ">
       <div className="container">
         <div className="flex gap-8">
           <div className="flex flex-1 justify-center items-center">

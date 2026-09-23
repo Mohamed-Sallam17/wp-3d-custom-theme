@@ -3,76 +3,75 @@ import themeUrl from "../utils/themeUrl"
 function Platforms() {
 
   return (
-    <div className="platforms">
+    <>
+      <style>{`
+      @media(min-width:1024px){        
+      .platform-track::before {
+        content: "";
+        background-image: url('${themeUrl}/assets/home/platforms/star-bg.webp');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 95%;
+        height: 95%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+      .platform-track--center::before,
+      .platform-track--center::after{
+        content: "";
+        background-image: url(http://wameed.local/wp-content/themes/wameedcustomtheme/assets/home/platforms/line.webp);
+        width: 10px;
+        height: 75%;
+        background-size: contain;
+        position: absolute;
+        background-repeat: no-repeat;
+        display: inline-block;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .platform-track--center::before{
+        right: 0;
+      }
+      .platform-track--center::after{
+        left: 0;
+      }
+      .platform-track--right::before,
+      .platform-track--left::before
+      {
+        content: "";
+        width: 95%;
+        height: 70%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-size: cover;
+        background-repeat: no-repeat;
+        z-index: -1;
+      }
+      .platform-track--right::before{
+        background-image: url(http://wameed.local/wp-content/themes/wameedcustomtheme/assets/home/platforms/overlay-right.webp);
+        left: -5px;
+      }
+      .platform-track--left::before{
+        background-image: url(http://wameed.local/wp-content/themes/wameedcustomtheme/assets/home/platforms/overlay-left.webp);
+        right: -5px;
+      }
+      }
 
-        <style>{`
-        @media(min-width:1024px){        
-        .platform-track::before {
-          content: "";
-          background-image: url('${themeUrl}/assets/home/platforms/star-bg.webp');
-          background-size: cover;
-          background-repeat: no-repeat;
-          background-position: center;
-          width: 95%;
-          height: 95%;
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          pointer-events: none;
-        }
-        .platform-track--center::before,
-        .platform-track--center::after{
-          content: "";
-          background-image: url(http://wameed.local/wp-content/themes/wameedcustomtheme/assets/home/platforms/line.webp);
-          width: 10px;
-          height: 75%;
-          background-size: contain;
-          position: absolute;
-          background-repeat: no-repeat;
-          display: inline-block;
-          top: 50%;
-          transform: translateY(-50%);
-        }
-        .platform-track--center::before{
-          right: 0;
-        }
-        .platform-track--center::after{
-          left: 0;
-        }
-        .platform-track--right::before,
-        .platform-track--left::before
-        {
-          content: "";
-          width: 95%;
-          height: 70%;
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          background-size: cover;
-          background-repeat: no-repeat;
-          z-index: -1;
-        }
-        .platform-track--right::before{
-          background-image: url(http://wameed.local/wp-content/themes/wameedcustomtheme/assets/home/platforms/overlay-right.webp);
-          left: -5px;
-        }
-        .platform-track--left::before{
-          background-image: url(http://wameed.local/wp-content/themes/wameedcustomtheme/assets/home/platforms/overlay-left.webp);
-          right: -5px;
-        }
-        }
-
-        @media(max-width:1023px){
-        .platform-track{
-          background-color: #110A2480;
-          border: 1px solid #7652D633;
-          padding:40px 20px;
-          border-radius: 24px;
-        }
-        }
-      `}
-  </style>
+      @media(max-width:1023px){
+      .platform-track{
+        background-color: #110A2480;
+        border: 1px solid #7652D633;
+        padding:40px 20px;
+        border-radius: 24px;
+      }
+      }
+    `}
+      </style>
 
       <div className="container">
         <div className="block__title text-center mb-8">
@@ -100,7 +99,7 @@ function Platforms() {
                     />
                 </div>
                 <div className="platform-track--left relative flex flex-2 justify-center" >
-                  <div className="flex items-center justify-center w-full space-x-6 ">
+                  <div className="flex items-center justify-center w-full space-x-2 sm:space-x-6 ">
                     <img src={`${themeUrl}/assets/home/platforms/wordpress2-icon.webp`} alt="" width={120} height={120} className="w-[65px] lg:w-[75px] xl:w-[120px]"/>
                     <img src={`${themeUrl}/assets/home/platforms/salla2-icon.webp`} alt="" width={95} height={95} className="w-[65px] lg:w-[70px] xl:w-[95px]"/>
                     <img src={`${themeUrl}/assets/home/platforms/shopify-icon.webp`} alt="" width={75} height={75} className="w-[65px] lg:w-[60px] xl:w-[75px]"/>
@@ -110,7 +109,8 @@ function Platforms() {
             </div>
         </div>
       </div>
-    </div>
+    </>
+
   )
 }
 

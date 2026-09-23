@@ -417,6 +417,10 @@ const HorizintalSlider = () => {
   ========================================================= */
 
   return (
+    <>
+    <div class="block__title container mb-4">
+      <h2 class="text-3xl lg:text-5xl font-bold mb-8">خدمات تسويقية ذكية</h2>
+    </div>
     <div
       ref={sliderRef}
       className="horizontal-slider"
@@ -442,17 +446,9 @@ const HorizintalSlider = () => {
       }
     >
 
-
-      <div className="horizontal-slider__header container mb-4">
-        <h2 className="block__title text-3xl lg:text-5xl font-bold mb-8 text-end">
-          خدمات تسويقية ذكية
-        </h2>
-      </div>
-
-
       <div
         ref={trackRef}
-        className="horizontal-slider__track py-6" 
+        className="horizontal-slider__track" 
       >
 
         {/*
@@ -512,6 +508,7 @@ const HorizintalSlider = () => {
       </div>
 
     </div>
+    </>
   );
 };
 
