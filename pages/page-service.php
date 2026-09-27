@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Template Name: Single Service Page
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }

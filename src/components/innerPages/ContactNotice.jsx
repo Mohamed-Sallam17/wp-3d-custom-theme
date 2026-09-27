@@ -1,6 +1,6 @@
 import themeUrl from "../../utils/themeUrl"
 
-function SupportNotice() {
+function ContactNotice() {
   return (
     <div className="container md:pl-2">
         <div className="flex flex-col gap-6 md:flex-row md:gap-4">
@@ -27,4 +27,4 @@ function SupportNotice() {
   )
 }
 
-export default SupportNotice
+export default ContactNotice

@@ -14,6 +14,7 @@ require_once WAMEED_DIR . '/inc/setup.php';
 require_once WAMEED_DIR . '/inc/menus.php';
 require_once WAMEED_DIR . '/inc/enqueue.php';
 require_once WAMEED_DIR . '/inc/customizer.php';
+require_once WAMEED_DIR . '/inc/endpoints.php';
 // require_once WAMEED_DIR . '/inc/routing.php';
 // require_once WAMEED_DIR . '/inc/react-shortcodes.php';
 

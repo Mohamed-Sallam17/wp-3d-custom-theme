@@ -4,52 +4,52 @@ export const horizontalSliderData = [
     {
         image: `${themeUrl}/assets/cards-slider/branding.webp`,
         title: 'التسويق الرقمي',
-        link: ''
+        link: '/services/branding'
     },
     {
         image: `${themeUrl}/assets/cards-slider/build-website.webp`,
         title: ' إنشاء المتاجر الإلكترونية ',
-        link: ''
+        link: '/services/building-websites'
     },
     {
         image: `${themeUrl}/assets/cards-slider/content-writing.webp`,
         title: ' كتابة المحتوي ',
-        link: ''
+        link: '/services/content-writing'
     },
     {
         image: `${themeUrl}/assets/cards-slider/cro.webp`,
         title: ' تحسين معدلات التحويل ',
-        link: ''
+        link: '/services/cro'
     },
     {
         image: `${themeUrl}/assets/cards-slider/media-baying.webp`,
         title: ' إدارة الحملات الإعلانية ',
-        link: ''
+        link: '/services/media-buying'
     },
     {
         image: `${themeUrl}/assets/cards-slider/mobile-app.webp`,
         title: ' تطبيقات الجوال ',
-        link: ''
+        link: '/services/mobile-apps'
     },
     {
         image: `${themeUrl}/assets/cards-slider/motion.webp`,
         title: ' الموشن جرافيك ',
-        link: ''
+        link: '/services/motion-graphic'
     },
     {
         image: `${themeUrl}/assets/cards-slider/seo.webp`,
         title: ' تحسين محركات البحث ',
-        link: ''
+        link: '/services/seo'
     },
     {
         image: `${themeUrl}/assets/cards-slider/social-media.webp`,
         title: ' السوشيال ميديا ',
-        link: ''
+        link: '/services/social-media'
     },
     {
         image: `${themeUrl}/assets/cards-slider/ui-ux.webp`,
         title: ' تصميم واجهة المستخدم ',
-        link: ''
+        link: '/services/ui-ux'
     },
     
 ];

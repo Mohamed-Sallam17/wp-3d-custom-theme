@@ -1,4 +1,5 @@
 import themeUrl from '../utils/themeUrl';
+import Button from "./common/Button";
 import { useRef, useLayoutEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -89,10 +90,7 @@ function MovingStar() {
                 في عالم تتسابق فيه العلامات التجارية على الظهور، نحن من يُضيء لك الطريق من تصميم الهوية إلى بناء المتجر وإطلاق حملاتك التسويقية.
               </p>
             </div>
-            <div className="flex justify-center items-center flex-col md:flex-row gap-4 w-full lg:mt-8">
-              <button className="dark-btn w-full md:w-auto">اكتشف خدماتنا</button>
-              <button className="gradient-btn w-full md:w-auto">ابدأ مشروعك بوميض</button>
-            </div>
+            <Button/>
           </div>
         </div>
 
@@ -108,10 +106,7 @@ function MovingStar() {
                 في وميض نحول رؤيتك إلى علامة تجارية مؤثرة من خلال هوية مميزة ومحتوى إبداعي واستراتيجيات مدروسة تساعد مشروعك على الوصول للجمهور المناسب وتحقيق نتائج حقيقية 
               </p>
             </div>
-            <div className="flex justify-center items-center flex-col md:flex-row gap-4 w-full lg:mt-8">
-              <button className="dark-btn w-full md:w-auto">اكتشف خدماتنا</button>
-              <button className="gradient-btn w-full md:w-auto">ابدأ مشروعك بوميض</button>
-            </div>
+            <Button/>
           </div>
           <div className="relative flex flex-2 justify-center items-center">
             <img

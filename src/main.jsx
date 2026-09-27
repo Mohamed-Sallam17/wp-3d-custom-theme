@@ -11,6 +11,9 @@ import ServicePage from './components/service/ServicePage.jsx';
 import MovingStar from './components/MovingStar.jsx';
 import AboutHero from './components/innerPages/AboutHero.jsx';
 import HeroParticles from './components/HeroParticles.jsx';
+import ScrollToTop from './components/common/ScrollToTop.jsx';
+import ServicePortfolio from './components/service/ServicePortfolio.jsx';
+import NotFound from './components/NotFound.jsx'
 
 import '../styles/css/index.css';
 import '../styles/css/tailwind.css';
@@ -36,11 +39,14 @@ const componentsRegistry = {
   'gallery-services': lazyComponent('ServicesGallery'),
   'company-values':lazyComponent('CompanyValues'),
   'why-us': lazyComponent('WhyUs'),
-  'support-notice': lazyComponent('SupportNotice'),
+  'contact-notice': lazyComponent('ContactNotice'),
+  'about-notice': lazyComponent('AboutNotice'),
   'contact-us': lazyComponent('ContactUs'),
+  'scroll-to-top': lazyComponent('ScrollToTop'),
   'about-hero': AboutHero,
   'global-particles': HeroParticles,
   'service-page': ServicePage,
+  'not-found-page': NotFound,
 };
 
 
@@ -266,6 +272,30 @@ document.addEventListener('DOMContentLoaded', () => {
     ReactDOM.createRoot(cursorContainer).render(
       <React.StrictMode>
         <CustomCursor />
+      </React.StrictMode>
+    );
+  }
+
+  // 🔴 3. Scroll To Top Root (بيفضل شغال مستمر في كل الصفحات) 🔴
+  if (!document.getElementById('scroll-to-top')) {
+    const scrollTopContainer = document.createElement('div');
+    scrollTopContainer.id = 'scroll-to-top';
+    document.body.appendChild(scrollTopContainer);
+
+    ReactDOM.createRoot(scrollTopContainer).render(
+      <React.StrictMode>
+        <ScrollToTop />
+      </React.StrictMode>
+    );
+  }
+    if (!document.getElementById('service-gallery')) {
+    const servicePortfolioContainer = document.createElement('div');
+    servicePortfolioContainer.id = 'service-gallery';
+    document.body.appendChild(servicePortfolioContainer);
+
+    ReactDOM.createRoot(servicePortfolioContainer).render(
+      <React.StrictMode>
+        <ServicePortfolio />
       </React.StrictMode>
     );
   }

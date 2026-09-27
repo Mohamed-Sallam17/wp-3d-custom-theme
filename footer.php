@@ -25,12 +25,12 @@
                             </a>
                         </li>
                         <li class="text-lg xl:text-xl">
-                            <a href="/">
+                            <a href="/about">
                                 <span>من نحن</span>
                             </a>
                         </li>
                         <li class="text-lg xl:text-xl">
-                            <a href="/">
+                            <a href="/contact">
                                 <span>تواصل معنا</span>
                             </a>
                         </li>
@@ -65,7 +65,7 @@
                 <div class="action-links">
                     <div class="flex w-full gap-4 justify-center">
                         <a href="#"  class="inline-block max-w-[120px]">
-                            <img src="<?php echo get_theme_file_uri("/assets/footer/footer-1.png") ?>" width="99" height="100" alt="" class="w-full lg:max-w-full object-contain" />
+                            <img src="<?php echo get_theme_file_uri("/assets/footer/cr-license.png") ?>" width="99" height="100" alt="" class="w-full lg:max-w-full object-contain" />
                         </a>
                         <a href="#" class="inline-block max-w-[120px] lg:max-w">
                             <img src="<?php echo get_theme_file_uri("/assets/footer/footer-2.png") ?>" width="99" height="100" alt="" class="w-full lg:max-w-full object-contain" />

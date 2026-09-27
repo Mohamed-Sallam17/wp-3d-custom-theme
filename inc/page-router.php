@@ -4,61 +4,59 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
+/**
+ * 1. تسجيل قوالب الصفحات الموجودة داخل مجلد /pages في لوحة تحكم ووردبريس
+ */
+add_filter( 'theme_page_templates', 'wameed_register_custom_pages_templates', 10, 4 );
+function wameed_register_custom_pages_templates( $post_templates, $wp_theme, $post, $post_type ) {
+    $pages_dir = get_template_directory() . '/pages/';
 
-function wameed_route_pages_from_pages_folder( $template ) {
+    if ( is_dir( $pages_dir ) ) {
+        $files = glob( $pages_dir . '*.php' );
 
+        foreach ( $files as $file ) {
+            $data = get_file_data( $file, array(
+                'name' => 'Template Name',
+            ) );
+
+            if ( ! empty( $data['name'] ) ) {
+                $filename = 'pages/' . basename( $file );
+                $post_templates[ $filename ] = $data['name'];
+            }
+        }
+    }
+
+    return $post_templates;
+}
+
+/**
+ * 2. توجيه ووردبريس لتحميل القالب (يدوياً من Dashboard أو تلقائياً لصفحات الخدمات)
+ */
+add_filter( 'page_template', 'wameed_load_custom_pages_templates' );
+function wameed_load_custom_pages_templates( $template ) {
     if ( is_page() ) {
-
         global $post;
 
+        // أولاً: التحقق إذا كانت الصفحة تم اختيار لها Template يدوياً من Dashboard
+        $custom_template = get_page_template_slug();
 
-        /*
-         * =========================
-         * Service Pages
-         * =========================
-         */
+        if ( $custom_template && file_exists( get_template_directory() . '/' . $custom_template ) ) {
+            return get_template_directory() . '/' . $custom_template;
+        }
 
-        if ( $post->post_parent ) {
+        // ثانياً: التوجيه التلقائي لصفحات الخدمات الفرعية (Child Pages of /services)
+        if ( isset( $post->post_parent ) && $post->post_parent ) {
+            $parent_slug = get_post_field( 'post_name', $post->post_parent );
 
-            $parent_slug = get_post_field(
-                'post_name',
-                $post->post_parent
-            );
-
-            if ( $parent_slug === 'services' ) {
-
-                $service_template =
-                    get_template_directory() . '/pages/page-service.php';
+            if ( 'services' === $parent_slug ) {
+                $service_template = get_template_directory() . '/pages/page-service.php';
 
                 if ( file_exists( $service_template ) ) {
                     return $service_template;
                 }
             }
         }
-
-
-        /*
-         * =========================
-         * Normal Pages
-         * =========================
-         */
-
-        $slug = $post->post_name;
-
-        $custom_page_template =
-            get_template_directory() . "/pages/page-{$slug}.php";
-
-        if ( file_exists( $custom_page_template ) ) {
-            return $custom_page_template;
-        }
     }
-
 
     return $template;
 }
-
-
-add_filter(
-    'page_template',
-    'wameed_route_pages_from_pages_folder'
-);

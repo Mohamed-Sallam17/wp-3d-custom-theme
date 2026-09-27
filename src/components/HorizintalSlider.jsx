@@ -482,20 +482,18 @@ const HorizintalSlider = () => {
                           alt={item.title}
                           draggable="false"
                         />
+
                       </a>
-
                     </div>
 
+                      <div
+                        className="horizontal-slider__overlay"
+                      >
+                        <h3>
+                          {item.title}
+                        </h3>
 
-                    <div
-                      className="horizontal-slider__overlay"
-                    >
-
-                      <h3>
-                        {item.title}
-                      </h3>
-
-                    </div>
+                      </div>
 
                   </article>
                 )

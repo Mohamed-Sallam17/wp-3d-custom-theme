@@ -88,6 +88,13 @@ ul#mb-menu-links .current_page_item .sub-menu li {
   font-weight: bold;
 }
 
+@media(min-width:768px) and (max-width:1023px){
+  .dark-btn,
+  .gradient-btn{
+    padding: 14px 24px;
+  }
+}
+
 
 
 /*

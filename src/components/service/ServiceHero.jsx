@@ -1,3 +1,5 @@
+import Button from "../common/Button";
+
 const ServiceHero = ({ data }) => {
   return (
     <section className="service-hero py-8 mt-20 ">
@@ -12,10 +14,7 @@ const ServiceHero = ({ data }) => {
               <div className="w-full overflow-hidden flex md:hidden ">
                 <img src={data.image} alt={data.title} width="600px" height="500px" decoding="async" className="object-contain w-full h-full block m-auto"/>
               </div>
-              <div className="service-hero__action flex justify-center items-center flex-col md:flex-row gap-4 w-full lg:mt-8">
-                <button className="dark-btn w-full md:w-auto">اكتشف خدماتنا</button>
-                <button className="gradient-btn w-full md:w-auto">ابدأ مشروعك بوميض</button>
-              </div>
+              <Button/>
             </div>
           </div>
           <div className="service-hero__media flex-1 hidden md:flex">
