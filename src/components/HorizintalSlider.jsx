@@ -467,7 +467,7 @@ const HorizintalSlider = () => {
               {horizontalSliderData.map(
                 (item, index) => (
 
-                  <article
+                  <div
                     className="horizontal-slider__card"
                     key={`${setIndex}-${index}`}
                   >
@@ -495,7 +495,7 @@ const HorizintalSlider = () => {
 
                       </div>
 
-                  </article>
+                  </div>
                 )
               )}
 

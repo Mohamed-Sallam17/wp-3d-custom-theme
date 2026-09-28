@@ -7,7 +7,7 @@ function Platforms() {
       <style>{`
       @media(min-width:1024px){        
       .platform-track::before {
-        content: "";
+        /* content: ""; */
         background-image: url('${themeUrl}/assets/home/platforms/star-bg.webp');
         background-size: cover;
         background-repeat: no-repeat;
@@ -64,7 +64,6 @@ function Platforms() {
 
       @media(max-width:1023px){
       .platform-track{
-        background-color: #110A2480;
         border: 1px solid #7652D633;
         padding:40px 20px;
         border-radius: 24px;
@@ -90,12 +89,22 @@ function Platforms() {
                   </div>
                 </div>
                 <div className="platform-track--center relative flex flex-1 justify-center">
-                    <img 
+                    {/* <img 
                     src={`${themeUrl}/assets/home/platforms/center-star-icon.png`} 
                     alt="" 
                     width={150} 
                     height={150}
                     className="w-full h-full object-cover max-w-[30%] lg:max-w-[65%]"
+                    /> */}
+                    <video
+                      src={`${themeUrl}/assets/Hero-star.webm`}
+                      height={250}
+                      width={200}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="pointer-events-none"
                     />
                 </div>
                 <div className="platform-track--left relative flex flex-2 justify-center" >
