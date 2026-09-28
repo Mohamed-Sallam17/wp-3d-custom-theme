@@ -92,8 +92,8 @@ header nav{
     display: block;
 }
 /* Vision */
-@media(max-width:1023px){
-    
+#vision .vision-card h2::before{
+    content: "";
 }
 
 /* Faq */

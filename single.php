@@ -2,12 +2,6 @@
 get_header(); // يستدعي header.php وبداية data-barba="container"
 ?>
 
-<div class="loader">
-    <div class="page-transition"></div>
-</div>
-
-<div data-barba="wrapper">
-<main data-barba="container" data-barba-namespace="single-post">
 
 <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
@@ -156,7 +150,7 @@ get_header(); // يستدعي header.php وبداية data-barba="container"
 
 <?php endwhile; endif; ?>
 
-</main>
+
 </div>
 
 <?php get_footer(); ?>

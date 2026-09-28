@@ -14,12 +14,6 @@ if (is_home()) {
 }
 ?>
 
-<div class="loader">
-    <div class="page-transition"></div>
-</div>
-
-<div data-barba="wrapper">
-<main data-barba="container" data-barba-namespace="<?php echo is_home() ? 'blog' : 'archive'; ?>">
 
 <div class="blog-page-wrapper py-12 px-4 max-w-7xl mx-auto">
 
@@ -155,7 +149,7 @@ if (is_home()) {
 
 </div>
 
-</main>
+
 </div>
 
 <?php get_footer(); ?>

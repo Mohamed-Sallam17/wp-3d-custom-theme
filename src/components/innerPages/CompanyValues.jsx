@@ -29,10 +29,11 @@ const CompanyValues = () => {
     <div className="w-full flex items-center justify-center">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl w-full flex flex-col gap-16 lg:gap-24 mx-auto">
-          {valuesData.map((item) => (
+          {valuesData.map((item,index) => (
             <div
               key={item.id}
-              className="w-full flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12"
+              className={`w-full flex flex-col items-center justify-between gap-8 lg:gap-12 ${
+                index % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row"}`}
             >
               <div className="w-full lg:w-1/2 flex justify-center items-center h-[260px] sm:h-[320px] md:h-[380px]">
                 <div className="relative w-full h-full max-w-md rounded-2xl overflow-hidden flex items-center justify-center p-4">
@@ -53,6 +54,7 @@ const CompanyValues = () => {
                   <div className="flex justify-between items-center mb-6">
                     <h2 className="gradient-bg bg-[var(--second-bg-color)] text-[#F5F4FC] px-6 sm:px-8 py-2.5 sm:py-3.5 rounded-3xl text-lg md:text-2xl font-bold w-fit">
                       {item.title}
+                    <img src={`${themeUrl}/assets/home/vision/shadow-spot.png`} alt="" className="absolute top-1/2 right-0 -translate-y-1/2 max-w-[95%] mr-1"/>
                     </h2>
 
                     <img

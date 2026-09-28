@@ -328,7 +328,7 @@ const ValuesSection = () => {
           </div>
 
           {/* Cards */}
-          <div className="w-full lg:w-1/2 grid grid-cols-1 justify-items-center items-center relative px-4 sm:px-0">
+          <div className="vision-card w-full lg:w-1/2 grid grid-cols-1 justify-items-center items-center relative px-4 sm:px-0">
             {valuesData.map((item) => (
               <div
                 key={item.id}
@@ -337,8 +337,11 @@ const ValuesSection = () => {
               >
                 {/* Header */}
                 <div className="flex justify-between items-start mb-4">
-                  <h2 className="gradient-bg bg-[var(--second-bg-color)] text-[#F5F4FC] px-6 sm:px-8 py-3 sm:py-4 rounded-3xl text-lg md:text-3xl font-bold w-fit">
+                  <h2 
+                  className="gradient-bg relative bg-[var(--second-bg-color)] text-[#F5F4FC] px-6 sm:px-8 py-3 sm:py-4 rounded-3xl text-lg md:text-3xl font-bold w-fit"
+                  >
                     {item.title}
+                    <img src={`${themeUrl}/assets/home/vision/shadow-spot.png`} alt="" className="absolute top-1/2 right-0 -translate-y-1/2 max-w-[95%] mr-1"/>
                   </h2>
 
                   <img

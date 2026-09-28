@@ -58,17 +58,14 @@
                 </div>
             </div>
             <div class="footer-logo flex-2 hidden xl:flex!">
-                <img src="<?php echo get_theme_file_uri("/assets/footer/footer-logo.png") ?>" alt="footer logo" class="w-full h-full max-w-1/2 m-auto" />
+                <img src="<?php echo get_theme_file_uri("/assets/footer/footer-logo.png") ?>" alt="footer logo" width="200" height="200" class="w-full h-full max-w-1/2 m-auto" />
             </div>
             <div class="flex flex-1 flex-col lg:flex-row w-full justify-center">
                 <div class="newsletter"></div>
                 <div class="action-links">
                     <div class="flex w-full gap-4 justify-center">
                         <a href="#"  class="inline-block max-w-[120px]">
-                            <img src="<?php echo get_theme_file_uri("/assets/footer/cr-license.png") ?>" width="99" height="100" alt="" class="w-full lg:max-w-full object-contain" />
-                        </a>
-                        <a href="#" class="inline-block max-w-[120px] lg:max-w">
-                            <img src="<?php echo get_theme_file_uri("/assets/footer/footer-2.png") ?>" width="99" height="100" alt="" class="w-full lg:max-w-full object-contain" />
+                            <img src="<?php echo get_theme_file_uri("/assets/footer/cr-license.png") ?>" width="99" height="100" alt="cr-license-QR" class="w-full lg:max-w-full object-contain" />
                         </a>
                     </div>
                 </div>
