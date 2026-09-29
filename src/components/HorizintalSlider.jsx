@@ -6,28 +6,10 @@ const HorizintalSlider = () => {
   const sliderRef = useRef(null);
   const trackRef = useRef(null);
 
-  /*
-  |--------------------------------------------------------------------------
-  | Slider Position
-  |--------------------------------------------------------------------------
-  */
-
   const currentX = useRef(0);
   const targetX = useRef(0);
 
-  /*
-  |--------------------------------------------------------------------------
-  | Width of one complete set
-  |--------------------------------------------------------------------------
-  */
-
   const setWidth = useRef(0);
-
-  /*
-  |--------------------------------------------------------------------------
-  | Drag
-  |--------------------------------------------------------------------------
-  */
 
   const isDragging = useRef(false);
   const isHorizontalDrag = useRef(false);
@@ -37,18 +19,9 @@ const HorizintalSlider = () => {
 
   const dragStartX = useRef(0);
 
-  /*
-  |--------------------------------------------------------------------------
-  | Animation
-  |--------------------------------------------------------------------------
-  */
-
   const animationFrame = useRef(null);
 
 
-  /* =========================================================
-     Measure Slider
-  ========================================================= */
 
   const measureSlider = () => {
     if (!trackRef.current) return;
@@ -63,12 +36,6 @@ const HorizintalSlider = () => {
     setWidth.current =
       firstSet.offsetWidth;
 
-    /*
-     * Start from the middle copy.
-     *
-     * [ SET 1 ][ SET 2 ][ SET 3 ]
-     */
-
     if (
       currentX.current === 0 &&
       targetX.current === 0
@@ -82,24 +49,12 @@ const HorizintalSlider = () => {
   };
 
 
-  /* =========================================================
-     Convert unlimited position
-     to visual position
-  ========================================================= */
-
   const getVisualPosition = (position) => {
     const width = setWidth.current;
 
     if (!width) {
       return position;
     }
-
-    /*
-     * Keep the visual position inside
-     * the middle copy range.
-     *
-     * The actual position is never reset.
-     */
 
     const normalized =
       ((position + width) % width + width) %
@@ -109,44 +64,21 @@ const HorizintalSlider = () => {
   };
 
 
-  /* =========================================================
-     Smooth Animation
-  ========================================================= */
-
   const animate = () => {
     if (!trackRef.current) return;
 
-    /*
-     * Smooth movement
-     */
 
     currentX.current +=
       (targetX.current - currentX.current) * 0.12;
-
-
-    /*
-     * Calculate only the visual position.
-     *
-     * We NEVER reset currentX or targetX.
-     */
 
     const visualX =
       getVisualPosition(
         currentX.current
       );
 
-
-    /*
-     * Apply transform
-     */
-
     trackRef.current.style.transform =
       `translate3d(${visualX}px, 0, 0)`;
 
-
-    /*
-     * Continue animation
-     */
 
     animationFrame.current =
       requestAnimationFrame(
@@ -155,9 +87,6 @@ const HorizintalSlider = () => {
   };
 
 
-  /* =========================================================
-     Pointer Down
-  ========================================================= */
 
   const handlePointerDown = (event) => {
 
@@ -171,18 +100,10 @@ const HorizintalSlider = () => {
     startY.current =
       event.clientY;
 
-
-    /*
-     * Start dragging from current position
-     */
-
     dragStartX.current =
       targetX.current;
 
 
-    /*
-     * Capture pointer
-     */
 
     sliderRef.current?.setPointerCapture?.(
       event.pointerId
@@ -194,10 +115,6 @@ const HorizintalSlider = () => {
     );
   };
 
-
-  /* =========================================================
-     Pointer Move
-  ========================================================= */
 
   const handlePointerMove = (event) => {
 
@@ -215,16 +132,7 @@ const HorizintalSlider = () => {
       event.clientY -
       startY.current;
 
-
-    /*
-     * Determine horizontal / vertical gesture
-     */
-
     if (!isHorizontalDrag.current) {
-
-      /*
-       * Ignore tiny movement
-       */
 
       if (
         Math.abs(deltaX) < 8 &&
@@ -232,13 +140,6 @@ const HorizintalSlider = () => {
       ) {
         return;
       }
-
-
-      /*
-       * Vertical movement
-       *
-       * Let the page scroll normally.
-       */
 
       if (
         Math.abs(deltaY) >
@@ -261,46 +162,17 @@ const HorizintalSlider = () => {
         return;
       }
 
-
-      /*
-       * Horizontal movement
-       */
-
       isHorizontalDrag.current = true;
     }
 
-
-    /*
-     * Prevent browser behavior
-     * during horizontal dragging.
-     */
-
     event.preventDefault();
 
-
-    /*
-     * IMPORTANT:
-     *
-     * No normalize.
-     * No reset.
-     *
-     * Drag direction:
-     *
-     * Mouse → Right
-     * Cards → Right
-     *
-     * Mouse ← Left
-     * Cards ← Left
-     */
 
     const DRAG_SPEED = 2.5;
     targetX.current = dragStartX.current - deltaX * DRAG_SPEED;
   };
 
 
-  /* =========================================================
-     Pointer Up
-  ========================================================= */
 
   const handlePointerUp = (event) => {
 
@@ -313,10 +185,6 @@ const HorizintalSlider = () => {
     isHorizontalDrag.current = false;
 
 
-    /*
-     * Release pointer
-     */
-
     sliderRef.current?.releasePointerCapture?.(
       event.pointerId
     );
@@ -327,10 +195,6 @@ const HorizintalSlider = () => {
     );
   };
 
-
-  /* =========================================================
-     Resize
-  ========================================================= */
 
   useEffect(() => {
 
@@ -348,12 +212,6 @@ const HorizintalSlider = () => {
 
       const newWidth =
         setWidth.current;
-
-
-      /*
-       * Keep position proportional
-       * after resize.
-       */
 
       if (
         oldWidth &&
@@ -379,11 +237,6 @@ const HorizintalSlider = () => {
       'resize',
       handleResize
     );
-
-
-    /*
-     * Start animation
-     */
 
     animationFrame.current =
       requestAnimationFrame(
@@ -412,22 +265,16 @@ const HorizintalSlider = () => {
   }, []);
 
 
-  /* =========================================================
-     Render
-  ========================================================= */
 
   return (
     <>
-    <div class="block__title container mb-4">
-      <h2 class="text-3xl lg:text-5xl font-bold mb-8">خدمات تسويقية ذكية</h2>
+    <div className="block__title container mb-4">
+      <h2 className="text-3xl lg:text-5xl font-bold mb-8">خدمات تسويقية ذكية</h2>
     </div>
     <div
       ref={sliderRef}
       className="horizontal-slider"
 
-      /*
-       * Wheel intentionally disabled.
-       */
 
       onPointerDown={
         handlePointerDown
@@ -451,10 +298,7 @@ const HorizintalSlider = () => {
         className="horizontal-slider__track" 
       >
 
-        {/*
-         * Three copies for
-         * infinite visual loop.
-         */}
+
 
         {[0, 1, 2].map(
           (setIndex) => (

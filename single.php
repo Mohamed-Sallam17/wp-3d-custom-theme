@@ -1,5 +1,5 @@
 <?php
-get_header(); // يستدعي header.php وبداية data-barba="container"
+get_header(); 
 ?>
 
 
@@ -7,9 +7,7 @@ get_header(); // يستدعي header.php وبداية data-barba="container"
 
     <article class="single-post-wrapper py-12 px-4 max-w-5xl mx-auto">
         
-        <!-- 1. الهيدر والمسار (Header & Meta) -->
         <header class="text-center mb-10">
-            <!-- التصنيف -->
             <div class="flex items-center justify-center gap-2 mb-4">
                 <?php 
                 $categories = get_the_category();
@@ -24,12 +22,10 @@ get_header(); // يستدعي header.php وبداية data-barba="container"
                 ?>
             </div>
 
-            <!-- عنوان المقال -->
             <h1 class="gradient-text text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
                 <?php the_title(); ?>
             </h1>
 
-            <!-- بيانات المقال (تاريخ - كاتب) -->
             <div class="flex items-center justify-center gap-6 text-sm text-gray-400 border-y border-gray-800/80 py-4 max-w-xl mx-auto">
                 <div class="flex items-center gap-2">
                     <?php echo get_avatar(get_the_author_meta('ID'), 32, '', '', array('class' => 'rounded-full border border-gray-700')); ?>
@@ -43,7 +39,6 @@ get_header(); // يستدعي header.php وبداية data-barba="container"
             </div>
         </header>
 
-        <!-- 2. صورة المقال الرئيسية (Featured Image) -->
         <?php if (has_post_thumbnail()) : ?>
             <div class="relative w-full h-[300px] md:h-[500px] rounded-3xl overflow-hidden mb-12 border border-gray-800 shadow-2xl">
                 <?php the_post_thumbnail('full', [
@@ -52,12 +47,10 @@ get_header(); // يستدعي header.php وبداية data-barba="container"
             </div>
         <?php endif; ?>
 
-        <!-- 3. محتوى المقال (Post Content) -->
         <div class="post-content text-gray-300 text-base md:text-lg leading-relaxed max-w-3xl mx-auto mb-16 space-y-6">
             <?php the_content(); ?>
         </div>
 
-        <!-- 4. أزرار التنقل بين المقالات (Next / Prev Navigation) -->
         <div class="border-t border-gray-800 pt-8 mb-16">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <?php
@@ -65,7 +58,6 @@ get_header(); // يستدعي header.php وبداية data-barba="container"
                 $next_post = get_next_post();
                 ?>
 
-                <!-- المقال السابق -->
                 <div>
                     <?php if (!empty($prev_post)) : ?>
                         <a href="<?php echo esc_url(get_permalink($prev_post->ID)); ?>" 
@@ -81,7 +73,6 @@ get_header(); // يستدعي header.php وبداية data-barba="container"
                     <?php endif; ?>
                 </div>
 
-                <!-- المقال التالي -->
                 <div class="text-left">
                     <?php if (!empty($next_post)) : ?>
                         <a href="<?php echo esc_url(get_permalink($next_post->ID)); ?>" 
@@ -99,7 +90,6 @@ get_header(); // يستدعي header.php وبداية data-barba="container"
             </div>
         </div>
 
-        <!-- 5. قسم المقالات ذات الصلة (Related Posts) -->
         <?php
         $orig_post = $post;
         global $post;

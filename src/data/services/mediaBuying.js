@@ -43,7 +43,7 @@ const mediaBuying ={
 
   showcase: {
     title: {
-      highlighted: "أرقام",
+      highlighted: "أرقام ",
       normal: "تتحدث عنا"
     },
     images: [

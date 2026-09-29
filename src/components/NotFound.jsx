@@ -1,3 +1,4 @@
+import { SITE_CONFIG } from "../utils/siteConfig";
 import Button from "./common/Button";
 
 
@@ -19,7 +20,8 @@ const NotFound = () => {
         primaryText="العودة للرئيسية" 
         primaryHref="/" 
         secondaryText="اكتشف خدماتنا" 
-        secondaryHref="/services" 
+        secondaryHref={`/${SITE_CONFIG.servicesSlug}`} 
+        target="_self"
         />
 
     </section>

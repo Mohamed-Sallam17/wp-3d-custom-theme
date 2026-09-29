@@ -38,14 +38,11 @@ export const unmountComponents = (container = document) => {
       root.unmount();
       activeRoots.delete(el);
       delete el.dataset.reactMounted;
-      console.log(`🧹 UNMOUNTED REACT COMPONENT`);
     }
   });
 };
 
 export const mountComponents = (root = document) => {
-  console.log('=================================');
-  console.log('MOUNT COMPONENTS | ROOT:', root);
 
   Object.entries(componentsRegistry).forEach(([id, Component]) => {
     const container =
@@ -55,7 +52,6 @@ export const mountComponents = (root = document) => {
     if (!container) return;
 
     if (container.dataset.reactMounted === 'true') {
-      console.log(`⚠️ ${id} ALREADY MOUNTED`);
       return;
     }
 
@@ -63,7 +59,6 @@ export const mountComponents = (root = document) => {
     const props = { ...container.dataset };
     delete props.reactMounted;
 
-    console.log(`🚀 MOUNTING ${id}`, props);
 
     const reactRoot = ReactDOM.createRoot(container);
     reactRoot.render(

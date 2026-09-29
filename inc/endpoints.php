@@ -26,7 +26,7 @@ function wameed_handle_forminator_submit( $request ) {
         ), 400 );
     }
 
-    // التأكد من وجود إضافة Forminator مفعلة
+ 
     if ( ! class_exists( 'Forminator' ) && ! class_exists( 'Forminator_API' ) ) {
         return new WP_REST_Response( array(
             'success' => false,
@@ -34,7 +34,7 @@ function wameed_handle_forminator_submit( $request ) {
         ), 400 );
     }
 
-    // تجهيز الحقول المنسقة لـ Forminator
+
     $entry_data = array();
     foreach ( $params as $key => $value ) {
         if ( 'form_id' !== $key ) {
@@ -45,7 +45,6 @@ function wameed_handle_forminator_submit( $request ) {
         }
     }
 
-    // استخدام Forminator_API::add_form_entry لإدخال البيانات وتفعيل الإشعارات/الإيميلات
     if ( class_exists( 'Forminator_API' ) && method_exists( 'Forminator_API', 'add_form_entry' ) ) {
         $entry_id = Forminator_API::add_form_entry( $form_id, $entry_data );
 
@@ -63,10 +62,9 @@ function wameed_handle_forminator_submit( $request ) {
         ), 200 );
     }
 
-    // Fallback في حال كانت نسخة Forminator تستخدم الـ Custom Form Response المباشر
     if ( class_exists( 'Forminator_CForm_Front_Action' ) ) {
         $form_action = new Forminator_CForm_Front_Action();
-        // محاكاة إرسال الفورم برمجياً
+        
         $_POST = $params;
         $response = $form_action->handle_form( $form_id );
 

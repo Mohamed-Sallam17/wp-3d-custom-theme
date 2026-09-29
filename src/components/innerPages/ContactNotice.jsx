@@ -13,7 +13,6 @@ function ContactNotice() {
                 <p className="p-5 md:p-2 leading-normal lg:text-2xl hidden md:inline-block text-[#ffffffb0]">
                     سواء كنت صاحب مشروع ناشئ، أو علامة تجارية تبحث عن هوية رقمية متألقة، نحن مستعدون لصنع الفرق
                 </p>
-                {/* <img src={`${themeUrl}/assets/star.webp`} alt="star icon" width="40" height="40" decoding="async" loading="lazy" className='star-icon absolute left-0 top-[-10%]'/> */}
                 </div>
             </div>
             <div className="service-intro__media flex justify-center items-center flex-2">

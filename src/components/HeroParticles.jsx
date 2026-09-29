@@ -10,17 +10,14 @@ function HeroParticles() {
     let isMounted = true;
 
     async function initParticles() {
-      // تحميل المحرك الخفيف
       await loadSlim(tsParticles);
 
       if (!isMounted) return;
 
-      // تنظيف أي Instance قديمة
       if (containerRef.current) {
         containerRef.current.destroy();
       }
 
-      // تشغيل الجزيئات مباشرة داخل الـ ID المحدد
       containerRef.current = await tsParticles.load({
         id: "hero-particles-canvas",
         options: particlesConfig

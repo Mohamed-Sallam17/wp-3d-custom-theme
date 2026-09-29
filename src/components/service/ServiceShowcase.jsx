@@ -10,8 +10,8 @@ const ServiceShowcase = ({data})=>{
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-15">
                     {
-                        data.images.map((img)=>(
-                            <div className="service-showcase__item relative rounded-4xl mx-4 md:my-4">
+                        data.images.map((img, index)=>(
+                            <div key={index} className="service-showcase__item relative rounded-4xl mx-4 md:my-4">
                                 <img src={img} alt="icon" width={500} height={400} className="w-full h-full relative z-10" />
                             </div>
                         ))

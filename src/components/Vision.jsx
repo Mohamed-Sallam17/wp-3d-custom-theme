@@ -57,9 +57,6 @@ const ValuesSection = () => {
         currentIndexRef.current = 0;
         isAnimatingRef.current = false;
 
-        // =====================================================
-        // Stack Positions
-        // =====================================================
 
         const updateStackPositions = (activeIndex, animate = true) => {
           cards.forEach((card, index) => {
@@ -116,9 +113,6 @@ const ValuesSection = () => {
           });
         };
 
-        // =====================================================
-        // Enable / Disable Drag
-        // =====================================================
 
         const updateDraggableState = (activeIndex) => {
           cards.forEach((card, index) => {
@@ -134,9 +128,6 @@ const ValuesSection = () => {
           });
         };
 
-        // =====================================================
-        // Go To Next Slide
-        // =====================================================
 
         const goToNextSlide = (dragDirection = -1) => {
           if (isAnimatingRef.current) return;
@@ -149,10 +140,8 @@ const ValuesSection = () => {
 
           const flyX = dragDirection * (isDesktop ? 300 : 260);
 
-          // إيقاف أي حركة قديمة على الكارت
           gsap.killTweensOf(currentCard);
 
-          // تغيير الصورة الحالية والقادمة
           images.forEach((image, index) => {
             if (index !== currentIndex && index !== nextIndex) return;
 
@@ -166,7 +155,6 @@ const ValuesSection = () => {
             });
           });
 
-          // إخراج الكارت الحالي
           gsap.to(currentCard, {
             x: flyX,
             opacity: 0,
@@ -185,9 +173,6 @@ const ValuesSection = () => {
           });
         };
 
-        // =====================================================
-        // Autoplay
-        // =====================================================
 
         const stopAutoplay = () => {
           if (autoplayTimerRef.current) {
@@ -210,16 +195,10 @@ const ValuesSection = () => {
           });
         };
 
-        // =====================================================
-        // Initial Setup
-        // =====================================================
 
         updateStackPositions(0, false);
         updateDraggableState(0);
 
-        // =====================================================
-        // Draggable
-        // =====================================================
 
         cards.forEach((card, index) => {
           const draggable = Draggable.create(card, {
@@ -261,15 +240,9 @@ const ValuesSection = () => {
           }
         });
 
-        // =====================================================
-        // Start Autoplay
-        // =====================================================
 
         startAutoplay();
 
-        // =====================================================
-        // Cleanup
-        // =====================================================
 
         return () => {
           stopAutoplay();
@@ -304,7 +277,6 @@ const ValuesSection = () => {
     >
       <div className="container mx-auto px-4">
         <div className="max-w-6xl w-full flex flex-col-reverse lg:flex-row gap-12 items-center justify-between mx-auto">
-          {/* Images - Desktop */}
           <div className="hidden lg:flex w-full lg:w-1/2 justify-center items-center h-[380px] relative">
             {valuesData.map((item, index) => (
               <div
@@ -327,7 +299,6 @@ const ValuesSection = () => {
             ))}
           </div>
 
-          {/* Cards */}
           <div className="vision-card w-full lg:w-1/2 grid grid-cols-1 justify-items-center items-center relative px-4 sm:px-0">
             {valuesData.map((item) => (
               <div
@@ -335,7 +306,6 @@ const ValuesSection = () => {
                 style={{ gridArea: "1 / 1" }}
                 className="gsap-card w-full max-w-[310px] sm:max-w-[380px] md:max-w-lg gradient-bg bg-gradient-to-bl from-[#050308] to-[#45296E] rounded-3xl p-4 md:p-8 flex flex-col justify-between shadow-2xl border border-white/10 touch-none cursor-grab active:cursor-grabbing h-auto"
               >
-                {/* Header */}
                 <div className="flex justify-between items-start mb-4">
                   <h2 
                   className="gradient-bg relative bg-[var(--second-bg-color)] text-[#F5F4FC] px-6 sm:px-8 py-3 sm:py-4 rounded-3xl text-lg md:text-3xl font-bold w-fit"
@@ -354,12 +324,10 @@ const ValuesSection = () => {
                   />
                 </div>
 
-                {/* Description */}
                 <p className="text-gray-300 text-sm md:text-base lg:text-xl leading-relaxed mb-6">
                   {item.description}
                 </p>
 
-                {/* Mobile Image */}
                 <div className="block lg:hidden w-full h-52 sm:h-72 rounded-2xl overflow-hidden p-2 mt-auto">
                   <img
                     src={item.image}

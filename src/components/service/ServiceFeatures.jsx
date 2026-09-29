@@ -8,8 +8,8 @@ const ServiceFeatures = ({data})=>{
                     </div>
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
                         {
-                            data.items.map((item)=>(
-                                <div className="service-feature__item flex flex-col gap-6 px-4 md:px-3 py-10 rounded-4xl">
+                            data.items.map((item, index)=>(
+                                <div key={index} className="service-feature__item flex flex-col gap-6 px-4 md:px-3 py-10 rounded-4xl">
                                     <div className="service-feature__icon">
                                         <img src={item.icon} alt="icon" width={172} height={172} className="m-auto max-w-[80%] sm:max-w-full" />
                                     </div>

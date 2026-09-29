@@ -1,4 +1,13 @@
-<? get_header(); ?>
+<?php 
+
+/**
+ * Template Name: Home
+ */
+
+
+get_header(); 
+
+?>
 
 
 <section id="moving-star" class="md:mt-20 lg:mt-0"></section>

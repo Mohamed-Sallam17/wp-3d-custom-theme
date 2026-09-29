@@ -17,7 +17,6 @@ if (is_home()) {
 
 <div class="blog-page-wrapper py-12 px-4 max-w-7xl mx-auto">
 
-    <!-- 1. العنوان والوصف الرئيسي -->
     <div class="text-center mb-10">
         <h1 class="gradient-text text-3xl md:text-5xl leading-normal font-bold mb-4">
             <?php echo esc_html($page_title); ?>
@@ -36,7 +35,6 @@ if (is_home()) {
         <?php endif; ?>
     </div>
 
-    <!-- 2. فلتر التصنيفات الديناميكي (Dynamic Categories Filter) -->
     <div class="categories-filter flex flex-wrap justify-center gap-3 mb-12">
         <?php
         $categories = get_categories(array(
@@ -46,17 +44,14 @@ if (is_home()) {
         ));
         $blog_page_url = get_permalink($blog_page_id);
         
-        // التحقق مما إذا كنا في الصفحة الرئيسية للمدونة
         $is_all_active = is_home();
         ?>
         
-        <!-- زر الكل -->
         <a href="<?php echo esc_url($blog_page_url); ?>" 
            class="px-5 py-2 rounded-full text-sm font-medium border transition-all <?php echo $is_all_active ? 'bg-primary border-primary text-white' : 'border-gray-700 text-gray-300 hover:border-primary hover:text-white'; ?>">
            الكل
         </a>
 
-        <!-- أزرار التصنيفات -->
         <?php foreach ($categories as $category) : 
             $is_cat_active = is_category($category->term_id);
         ?>
@@ -67,13 +62,11 @@ if (is_home()) {
         <?php endforeach; ?>
     </div>
 
-    <!-- 3. شبكة المقالات (Post Cards) -->
     <?php if (have_posts()) : ?>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <?php while (have_posts()) : the_post(); ?>
                 <article class=" gradient-bg rounded-2xl overflow-hidden flex flex-col group">
                     
-                    <!-- صورة المقال -->
                     <a href="<?php the_permalink(); ?>" class="relative h-52 overflow-hidden block">
                         <?php if (has_post_thumbnail()) : ?>
                             <?php the_post_thumbnail('medium_large', [
@@ -86,7 +79,6 @@ if (is_home()) {
                         <?php endif; ?>
                     </a>
 
-                    <!-- تفاصيل المقال -->
                     <div class="p-6 flex flex-col flex-grow">
                         <div class="flex items-center gap-3 text-xs text-gray-400 mb-3">
                             <?php 
@@ -120,7 +112,6 @@ if (is_home()) {
             <?php endwhile; ?>
         </div>
 
-        <!-- 4. الباجينيشن (Pagination) مع أزرار التالي والسابق والأرقام -->
         <div class="pagination-wrapper mt-16 flex justify-center">
             <?php
             $pagination_links = paginate_links(array(
@@ -132,7 +123,6 @@ if (is_home()) {
             if (!empty($pagination_links)) : ?>
                 <nav class="flex flex-wrap items-center gap-2" aria-label="Pagination">
                     <?php foreach ($pagination_links as $link) : 
-                        // تحسين تنسيقات Tailwind للروابط
                         $link = str_replace('page-numbers', 'px-4 py-2 rounded-lg text-sm font-medium border border-gray-800 bg-gray-900/60 text-gray-300 hover:border-primary hover:text-white transition-all', $link);
                         $link = str_replace('current', 'bg-primary border-primary text-white font-bold', $link);
                         echo $link;

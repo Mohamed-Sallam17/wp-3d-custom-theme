@@ -5,7 +5,6 @@ export default defineConfig({
   plugins: [react()],
   base: './', 
   css: {
-    // إجبار Vite على دمج جميع ملفات الـ CSS في ملف واحد فقط
     codeSplit: false,
   },
   server: {
@@ -20,13 +19,12 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
     manifest: true,
-    cssCodeSplit: false, // إلغاء تقسيم الـ CSS لأجزاء منفصلة
+    cssCodeSplit: false, 
     rollupOptions: {
       input: 'src/main.jsx',
       output: {
         entryFileNames: 'assets/main.js',
         chunkFileNames: 'assets/[name]-[hash].js',
-        // توحيد اسم ملف الـ CSS المخرج إلى main.css دائماً
         assetFileNames: (assetInfo) => {
           if (assetInfo.name && assetInfo.name.endsWith('.css')) {
             return 'assets/main.css';

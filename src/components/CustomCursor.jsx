@@ -46,7 +46,6 @@ const CustomCursor = () => {
     };
 
     const handleWindowFocus = () => {
-      // نستنى أول حركة ماوس قبل ما نظهره تاني
       cursor.classList.remove('active');
     };
 

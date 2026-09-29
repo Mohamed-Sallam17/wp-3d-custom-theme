@@ -4,6 +4,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import "../../styles/css/worksStack.css";
 import { worksData } from "../data/worksStack";
+import { SITE_CONFIG } from "../utils/siteConfig";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,7 +30,7 @@ function WorksStack() {
               const topOffset = 100 + index * 30;
 
               return (
-                <article
+                <div
                   key={card.number}
                   className="works-card sticky gradient-bg relative flex flex-col md:flex-row items-start md:items-center justify-between gap-2 md:gap-4 p-6 md:p-8 bg-[var(--second-bg-color)] border rounded-3xl"
                   style={{
@@ -52,11 +54,11 @@ function WorksStack() {
                       </p>
                   </div>
                   <div className="works-card__cta w-full md:w-auto flex-none">
-                      <button className="w-full h-[48px] md:w-[96px] md:h-[96px] rounded-full font-bold bg-[var(--dark-btn-color)] border-[var(--border-color)] md:bg-transparent flex justify-center items-center border-1 border-[#A55CFF66] hover:bg-[#7C3AED]">
+                      <a href={`https://wa.me/${SITE_CONFIG.whatsappNumber}`} className="w-full h-[48px] md:w-[96px] md:h-[96px] rounded-full font-bold bg-[var(--dark-btn-color)] border-[var(--border-color)] md:bg-transparent flex justify-center items-center border-1 border-[#A55CFF66] hover:bg-[#7C3AED]">
                          {card.cta}
-                      </button>
+                      </a>
                   </div>
-                </article>
+                </div>
               );
             })}
 

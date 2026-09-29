@@ -5,7 +5,6 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     const toggleVisibility = () => {
-      // استخدام window.pageYOffset كـ Fallback للتوافق مع المتصفحات القديمة
       if (window.scrollY > 300 || document.documentElement.scrollTop > 300) {
         setIsVisible(true);
       } else {

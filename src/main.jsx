@@ -8,7 +8,7 @@ import ScrollToTop from './components/common/ScrollToTop.jsx';
 import ServicePortfolio from './components/service/ServicePortfolio.jsx';
 
 import { initFooterLogoAnimation } from './utils/footerAnimation.js';
-import { mountComponents, unmountComponents } from './utils/componentsMount.jsx';
+import { mountComponents } from './utils/componentsMount.jsx';
 
 import '../styles/css/index.css';
 import '../styles/css/tailwind.css';
@@ -19,41 +19,99 @@ import '../styles/css/pageTransition.css';
 import '../styles/css/servicePage.css';
 import '../styles/css/worksStack.css';
 
-// إيقاف إرجاع موضع السكرول
-if ('scrollRestoration' in history) {
-  history.scrollRestoration = 'manual';
+if ("scrollRestoration" in history) {
+history.scrollRestoration = "manual";
 }
 
 gsap.registerPlugin(ScrollTrigger);
 
-// دالة مساعدة لإنشاء الـ Permanent Roots (الcursor والـ scroll-to-top)
-const mountGlobalRoot = (id, Component) => {
-  if (!document.getElementById(id)) {
-    const container = document.createElement('div');
-    container.id = id;
-    document.body.appendChild(container);
+let resizeObserver = null;
+let refreshTimeout = null;
 
-    ReactDOM.createRoot(container).render(
-      <React.StrictMode>
-        <Component />
-      </React.StrictMode>
-    );
-  }
+const mountGlobalRoot = (id, Component) => {
+if (!document.getElementById(id)) {
+const container = document.createElement('div');
+
+container.id = id;
+
+document.body.appendChild(container);
+
+ReactDOM.createRoot(container).render(
+  <React.StrictMode>
+    <Component />
+  </React.StrictMode>
+);
+
+}
 };
 
-document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM READY');
+const waitForImages = () => {
+const images = Array.from(document.images);
 
-  mountComponents(document);
-  initFooterLogoAnimation();
+if (!images.length) {
+return Promise.resolve();
+}
 
-  mountGlobalRoot('cursor-root', CustomCursor);
-  mountGlobalRoot('scroll-to-top', ScrollToTop);
-  mountGlobalRoot('service-gallery', ServicePortfolio);
+return Promise.all(
+images.map((img) => {
+if (img.complete) {
+return Promise.resolve();
+}
+
+  return new Promise((resolve) => {
+    img.addEventListener("load", resolve, { once: true });
+    img.addEventListener("error", resolve, { once: true });
+  });
+})
+
+);
+};
+
+const refreshScrollTrigger = () => {
+clearTimeout(refreshTimeout);
+
+refreshTimeout = setTimeout(() => {
+requestAnimationFrame(() => {
+ScrollTrigger.refresh();
+});
+}, 100);
+};
+
+const observePageResize = () => {
+if (resizeObserver) {
+resizeObserver.disconnect();
+}
+
+resizeObserver = new ResizeObserver(() => {
+refreshScrollTrigger();
 });
 
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    ScrollTrigger.refresh();
-  }, 100);
+resizeObserver.observe(document.documentElement);
+resizeObserver.observe(document.body);
+};
+
+const initPage = async () => {
+mountComponents(document);
+
+mountGlobalRoot('cursor-root', CustomCursor);
+mountGlobalRoot('scroll-to-top', ScrollToTop);
+mountGlobalRoot('service-gallery', ServicePortfolio);
+
+await waitForImages();
+
+requestAnimationFrame(() => {
+requestAnimationFrame(() => {
+initFooterLogoAnimation();
+});
+});
+};
+
+document.addEventListener("DOMContentLoaded", initPage);
+
+window.addEventListener("load", () => {
+refreshScrollTrigger();
+});
+
+window.addEventListener("resize", () => {
+refreshScrollTrigger();
 });

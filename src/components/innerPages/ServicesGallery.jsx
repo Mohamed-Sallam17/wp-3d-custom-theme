@@ -1,57 +1,57 @@
+import { SITE_CONFIG } from "../../utils/siteConfig"
 import themeUrl from "../../utils/themeUrl"
 
 function ServicesGallery() {
     
-    const servicesSlug = "services"
     const serviceImages = [
         {
             image: `${themeUrl}/assets/servicespage/gallery/mediabuying.webp`,
-            link: `/${servicesSlug}/media-buying`,
+            link: `/${SITE_CONFIG.servicesSlug}/media-buying`,
             alt: "mediabuying"
         },
         {
             image: `${themeUrl}/assets/servicespage/gallery/motion.webp`,
-            link:`/${servicesSlug}/motion-graphic`,
+            link:`/${SITE_CONFIG.servicesSlug}/motion-graphic`,
             alt: "motion"
         },
         {
             image: `${themeUrl}/assets/servicespage/gallery/graphic.webp`,
-            link:`/${servicesSlug}/branding`,
+            link:`/${SITE_CONFIG.servicesSlug}/branding`,
             alt: "graphic-design"
         },
         {
             image: `${themeUrl}/assets/servicespage/gallery/content.webp`,
-            link:`/${servicesSlug}/content-writing`,
+            link:`/${SITE_CONFIG.servicesSlug}/content-writing`,
             alt: "content"
         },
         {
             image: `${themeUrl}/assets/servicespage/gallery/mobileapp.webp`,
-            link:`/${servicesSlug}/mobile-apps`,
+            link:`/${SITE_CONFIG.servicesSlug}/mobile-apps`,
             alt: "mobileapp"
         },
         {
             image: `${themeUrl}/assets/servicespage/gallery/seo-1.webp`,
-            link:`/${servicesSlug}/seo`,
+            link:`/${SITE_CONFIG.servicesSlug}/seo`,
             alt: "seo"
         },
         {
             image: `${themeUrl}/assets/servicespage/gallery/cro.webp`,
-            link:`/${servicesSlug}/cro`,
+            link:`/${SITE_CONFIG.servicesSlug}/cro`,
             alt: "cro"
         },
         {
             image: `${themeUrl}/assets/servicespage/gallery/uiux.webp`,
-            link:`/${servicesSlug}/ui-ux`,
+            link:`/${SITE_CONFIG.servicesSlug}/ui-ux`,
             alt: "uiux"
         },
         {
             image: `${themeUrl}/assets/servicespage/gallery/buildingwebsite.webp`,
-            link:`/${servicesSlug}/building-websites`,
+            link:`/${SITE_CONFIG.servicesSlug}/building-websites`,
             alt: "buildingwebsite"
         },
         {
             image: `${themeUrl}/assets/servicespage/gallery/socialmedia.webp`,
-            link:`/${servicesSlug}/social-media`,
+            link:`/${SITE_CONFIG.servicesSlug}/social-media`,
             alt: "socialmedia"
         },
 

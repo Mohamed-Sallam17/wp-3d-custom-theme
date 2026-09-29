@@ -1,25 +1,26 @@
 import { useState } from "react"
 import themeUrl from "../utils/themeUrl"
+import { SITE_CONFIG } from "../utils/siteConfig"
 
 function ContactUs() {
     const contactDetails = [
         {
             id:"email",
             icon: `${themeUrl}/assets/home/contact/email.png`,
-            text: "hello@wameed.sa",
-            link: "mailto:hello@wameed.sa"
+            text: SITE_CONFIG.email,
+            link: `mailto:${SITE_CONFIG.email}`
         },
         {
             id:"phone",
             icon: `${themeUrl}/assets/home/contact/phone.png`,
-            text: "+966 50 000 0000",
-            link: "tel:+966500000000"
+            text: SITE_CONFIG.phoneNumber,
+            link: `tel:${SITE_CONFIG.phoneNumber}`
         },
         {
             id:"address",
             icon: `${themeUrl}/assets/home/contact/location.png`,
-            text: "الرياض، المملكة العربية السعودية",
-            link: ""
+            text: SITE_CONFIG.address,
+            link: SITE_CONFIG.addressLink
         }
     ]
 
@@ -43,8 +44,8 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   setStatus({ loading: true, success: false, error: null });
 
-  // ضع هنا ID الفورم الصحيح من داشبورد Forminator
-  const FORM_ID = 111; // كمثال (تأكد من رقم الـ ID الحقيقي عندك)
+  // Forminator ID Form
+  const FORM_ID = 55;   ///111
 
   const bodyFormData = new FormData();
   Object.keys(formData).forEach((key) => {
@@ -75,7 +76,7 @@ try {
       throw new Error(data.message || 'حدث خطأ أثناء الإرسال');
     }
   } else {
-    // لو السيرفر رجع HTML error بدل JSON
+
     const errorText = await response.text();
     console.error("Server PHP Error:", errorText);
     throw new Error('حدث خطأ في السيرفر (PHP Fatal Error)');

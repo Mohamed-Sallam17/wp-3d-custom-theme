@@ -4,17 +4,9 @@ import { gsap } from 'gsap';
 
 import '../../styles/css/pageTransition.css';
 
-// =====================================================
-// State
-// =====================================================
-
 let currentAbortController = null;
 let coverPromise = null;
 
-
-// =====================================================
-// Update Active Menu
-// =====================================================
 
 const updateActiveMenu = (nextPath) => {
     const rawPath = nextPath || window.location.pathname;
@@ -72,11 +64,6 @@ const updateActiveMenu = (nextPath) => {
     });
 };
 
-
-// =====================================================
-// Page Transitions
-// =====================================================
-
 export const initPageTransitions = (
     mountComponents,
     unmountComponents
@@ -88,23 +75,9 @@ export const initPageTransitions = (
 
     if (!wrapper) return;
 
-
-    // =================================================
-    // Barba
-    // =================================================
-
     barba.init({
-
-        /*
-         * نخلي leave و enter يشتغلوا مع بعض
-         * عشان نقدر نجهز الصفحة الجديدة والـ overlay مغطي الشاشة.
-         */
         sync: true,
 
-
-        // =============================================
-        // Prevent
-        // =============================================
 
         prevent: ({ el }) => {
 
@@ -116,11 +89,6 @@ export const initPageTransitions = (
                 el.href === window.location.href
             );
         },
-
-
-        // =============================================
-        // Request Error
-        // =============================================
 
         requestError: (
             trigger,
@@ -145,21 +113,11 @@ export const initPageTransitions = (
             }
         },
 
-
-        // =============================================
-        // Transitions
-        // =============================================
-
         transitions: [
 
             {
 
                 name: 'clean-transition',
-
-
-                // =====================================
-                // LEAVE
-                // =====================================
 
                 async leave(data) {
 
@@ -167,22 +125,12 @@ export const initPageTransitions = (
                         'is-transitioning'
                     );
 
-
-                    // ---------------------------------
-                    // Abort previous controller
-                    // ---------------------------------
-
                     if (currentAbortController) {
                         currentAbortController.abort();
                     }
 
                     currentAbortController =
                         new AbortController();
-
-
-                    // ---------------------------------
-                    // Get transition element
-                    // ---------------------------------
 
                     const transition =
                         document.querySelector(
@@ -193,28 +141,14 @@ export const initPageTransitions = (
                         return;
                     }
 
-
-                    // ---------------------------------
-                    // Kill previous animation
-                    // ---------------------------------
-
                     gsap.killTweensOf(
                         transition
                     );
-
-
-                    // ---------------------------------
-                    // Reset position
-                    // ---------------------------------
 
                     gsap.set(transition, {
                         yPercent: 100
                     });
 
-
-                    // ---------------------------------
-                    // Cover animation
-                    // ---------------------------------
 
                     coverPromise = gsap.to(
                         transition,
@@ -227,21 +161,7 @@ export const initPageTransitions = (
                         }
                     );
 
-
-                    // ---------------------------------
-                    // Wait until screen is covered
-                    // ---------------------------------
-
                     await coverPromise;
-
-
-                    // ---------------------------------
-                    // Unmount OLD React components
-                    //
-                    // مهم:
-                    // ده يحصل بعد ما الـ overlay
-                    // يغطي الشاشة بالكامل.
-                    // ---------------------------------
 
                     if (
                         typeof unmountComponents ===
@@ -254,38 +174,17 @@ export const initPageTransitions = (
                     }
                 },
 
-
-                // =====================================
-                // ENTER
-                // =====================================
-
                 async enter(data) {
-
-                    // ---------------------------------
-                    // Update menu immediately
-                    // ---------------------------------
 
                     updateActiveMenu(
                         data.next.url.path
                     );
 
 
-                    // ---------------------------------
-                    // Make sure cover is complete
-                    // ---------------------------------
 
                     if (coverPromise) {
                         await coverPromise;
                     }
-
-
-                    // ---------------------------------
-                    // Mount NEW React components
-                    //
-                    // الـ overlay بالفعل مغطي الشاشة
-                    // هنا، لذلك المستخدم مش هيشوف
-                    // عملية الـ mount.
-                    // ---------------------------------
 
                     if (
                         typeof mountComponents ===
@@ -297,11 +196,6 @@ export const initPageTransitions = (
                         );
                     }
 
-
-                    // ---------------------------------
-                    // Give React / DOM two frames
-                    // ---------------------------------
-
                     await new Promise(
                         requestAnimationFrame
                     );
@@ -309,11 +203,6 @@ export const initPageTransitions = (
                     await new Promise(
                         requestAnimationFrame
                     );
-
-
-                    // ---------------------------------
-                    // Get transition element
-                    // ---------------------------------
 
                     const transition =
                         document.querySelector(
@@ -330,11 +219,6 @@ export const initPageTransitions = (
                         return;
                     }
 
-
-                    // ---------------------------------
-                    // Reveal NEW page
-                    // ---------------------------------
-
                     await gsap.to(
                         transition,
                         {
@@ -346,11 +230,6 @@ export const initPageTransitions = (
                         }
                     );
 
-
-                    // ---------------------------------
-                    // Reset transition
-                    // ---------------------------------
-
                     gsap.set(
                         transition,
                         {
@@ -358,38 +237,12 @@ export const initPageTransitions = (
                         }
                     );
 
-
-                    // ---------------------------------
-                    // Unlock page
-                    // ---------------------------------
-
                     document.body.classList.remove(
                         'is-transitioning'
                     );
-
-
-                    // ---------------------------------
-                    // Clear promise
-                    // ---------------------------------
-
                     coverPromise = null;
                 },
-
-
-                // =====================================
-                // AFTER LEAVE
-                // =====================================
-
                 async afterLeave() {
-
-                    /*
-                     * Nothing here intentionally.
-                     *
-                     * Barba handles the container swap.
-                     *
-                     * الـ unmount حصل بالفعل بعد
-                     * اكتمال الـ cover.
-                     */
                 }
             }
         ]

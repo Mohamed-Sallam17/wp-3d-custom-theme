@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import gsap from "gsap";
 import { countriesData } from "../data/countriesList";
+import { SITE_CONFIG } from "../utils/siteConfig";
 
 function CountriesList() {
   const [activeCardId, setActiveCardId] = useState(null);
@@ -58,7 +59,6 @@ function CountriesList() {
                           top: `${topOffset}px`,
                         }}
                     >
-                        {/* الصورة الثابتة على الشمال والمُمالة بزاوية */}
                         <div
                         ref={(el) => (imageRefs.current[country.id] = el)}
                         className="hidden xl:block pointer-events-none absolute left-0 md:left-0 top-1/2 -translate-y-1/2 -translate-x-3/5 z-30 md:w-52 md:h-64 rounded-2xl overflow-hidden shadow-2xl border border-white/20 opacity-0 scale-75 lg:max-w-4/5 z-30"
@@ -102,9 +102,9 @@ function CountriesList() {
                         </div>
 
                         <div className="w-full md:w-auto flex-none">
-                            <button className="w-full h-[48px] md:w-[96px] md:h-[96px] rounded-full font-bold flex justify-center items-center border-1 border-[#A55CFF66] hover:bg-[#7C3AED]">
+                            <a href={`https://wa.me/${SITE_CONFIG.whatsappNumber}`} className="w-full h-[48px] md:w-[96px] md:h-[96px] rounded-full font-bold flex justify-center items-center border-1 border-[#A55CFF66] hover:bg-[#7C3AED]">
                                 ابدأ الآن
-                            </button>
+                            </a>
                         </div>
                     </div>
                   );

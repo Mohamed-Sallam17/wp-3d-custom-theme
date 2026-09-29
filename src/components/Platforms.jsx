@@ -23,7 +23,7 @@ function Platforms() {
       .platform-track--center::before,
       .platform-track--center::after{
         content: "";
-        background-image: url(http://wameed.local/wp-content/themes/wameedcustomtheme/assets/home/platforms/line.webp);
+        background-image: url('${themeUrl}/assets/home/platforms/line.webp');
         width: 10px;
         height: 75%;
         background-size: contain;
@@ -53,11 +53,11 @@ function Platforms() {
         z-index: -1;
       }
       .platform-track--right::before{
-        background-image: url(http://wameed.local/wp-content/themes/wameedcustomtheme/assets/home/platforms/overlay-right.webp);
+        background-image: url('${themeUrl}/assets/home/platforms/overlay-right.webp');
         left: -5px;
       }
       .platform-track--left::before{
-        background-image: url(http://wameed.local/wp-content/themes/wameedcustomtheme/assets/home/platforms/overlay-left.webp);
+        background-image: url('${themeUrl}/assets/home/platforms/overlay-left.webp');
         right: -5px;
       }
       }
@@ -89,15 +89,8 @@ function Platforms() {
                   </div>
                 </div>
                 <div className="platform-track--center relative flex flex-1 justify-center">
-                    {/* <img 
-                    src={`${themeUrl}/assets/home/platforms/center-star-icon.png`} 
-                    alt="" 
-                    width={150} 
-                    height={150}
-                    className="w-full h-full object-cover max-w-[30%] lg:max-w-[65%]"
-                    /> */}
                     <video
-                      src={`${themeUrl}/assets/Hero-star.webm`}
+                      src={`${themeUrl}/assets/hero-star.webm`}
                       height={250}
                       width={200}
                       autoPlay

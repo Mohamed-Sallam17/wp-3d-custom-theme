@@ -25,7 +25,7 @@
     </div>
     <div class="flex lg:hidden gap-2">
       <div class="lg:hidden contact-us-btn gradient-cta w-23.75 p-2 rounded-4xl text-center ">
-        <a href="#" class="text-sm font-bold text-white"> تواصل معنا </a>
+        <a href="https://wa.me/+966558001950" class="text-sm font-bold text-white" target="_blank"> تواصل معنا </a>
       </div>
       <button type="button" command="show-modal" commandfor="mobile-menu" class="text-white -m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400 cursor-pointer">
         <span class="sr-only">Open main menu</span>
@@ -44,7 +44,7 @@
         ?>
     </el-popover-group>
     <div class="hidden lg:block contact-us-btn gradient-cta w-23.75 p-2 rounded-4xl text-center ">
-      <a href="#" class="text-sm font-bold text-white"> تواصل معنا </a>
+      <a href="https://wa.me/+966558001950" class="text-sm font-bold text-white" target="_blank"> تواصل معنا </a>
     </div>
   </nav>
   <el-dialog>

@@ -45,8 +45,8 @@
                             </a>
                         </li>
                         <li class="text-lg xl:text-xl">
-                            <a href="https://wa.me/+966530958659">
-                                <span>966530958659+</span>
+                            <a href="https://wa.me/+96877893873">
+                                <span>96877893873+</span>
                             </a>
                         </li>
                         <li class="text-lg xl:text-xl">
@@ -71,8 +71,37 @@
                 </div>
             </div>
         </div>
-        <div class="copyrights py-4 text-center font-bold">
-            <p>© 2026 وميض. جميع الحقوق محفوظة. powered by ART.Ahmed Hamed</p>
+        <div class="social-icons gap-4 flex flex-col gap-4 justify-center items-center">
+            <div>
+                <span class="text-[#9997AC]">تابع وميض على منصات التواصل الاجتماعي</span>
+            </div>
+            <div>
+                <ul class="flex justify-center items-center space-x-4">
+                    <li class="">
+                        <a href="">
+                            <img src="<?php echo get_theme_file_uri("/assets/footer/facebook.svg") ?>" alt="" width="24" height="24" >
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://www.instagram.com/wameedagency.sa/">
+                            <img src="<?php echo get_theme_file_uri("/assets/footer/instagram.svg") ?>" alt="" width="24" height="24" >
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="">
+                            <img src="<?php echo get_theme_file_uri("/assets/footer/twitter.svg") ?>" alt="" width="24" height="24" >
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="">
+                            <img src="<?php echo get_theme_file_uri("/assets/footer/linkedin.svg") ?>" alt="" width="24" height="24" >
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyrights py-4 text-center font-bold border-t-1 border-[#FFFFFF1F] mt-4">
+            <p>© 2026 وميض. جميع الحقوق محفوظة.</p>
         </div>
     </div>
 </footer>
