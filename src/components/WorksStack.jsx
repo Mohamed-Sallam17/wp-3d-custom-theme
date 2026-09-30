@@ -2,7 +2,6 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import "../../styles/css/worksStack.css";
 import { worksData } from "../data/worksStack";
 import { SITE_CONFIG } from "../utils/siteConfig";
 
@@ -23,8 +22,8 @@ function WorksStack() {
             أعمالنا
           </h2>
         </div>
-        <div className="works-stack__cards flex items-center justify-center">
-          <div className="work-stacks__wrapper w-full sm:max-w-[85%] md:max-w-full lg:max-w-5xl space-y-5 flex flex-col gap-8">
+        <div className="works-stack__cards relative flex items-center justify-center">
+          <div className="work-stacks__wrapper relative w-full sm:max-w-[85%] md:max-w-full lg:max-w-5xl space-y-5 flex flex-col gap-8">
 
             {worksData.map((card, index) => {
               const topOffset = 100 + index * 30;
@@ -32,7 +31,7 @@ function WorksStack() {
               return (
                 <div
                   key={card.number}
-                  className="works-card sticky gradient-bg relative flex flex-col md:flex-row items-start md:items-center justify-between gap-2 md:gap-4 p-6 md:p-8 bg-[var(--second-bg-color)] border rounded-3xl"
+                  className="works-card sticky top-[150px] gradient-bg relative flex flex-col md:flex-row items-start md:items-center justify-between gap-2 md:gap-4 p-6 md:p-8 bg-[var(--second-bg-color)] border rounded-3xl"
                   style={{
                     top: `${topOffset}px`,
                   }}

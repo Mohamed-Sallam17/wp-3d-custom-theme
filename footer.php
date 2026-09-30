@@ -10,11 +10,11 @@
     --bg-desktop: url('<?php echo get_theme_file_uri('/assets/footer/footerbg-2xl.png'); ?>');
   "
   class="bg-[image:var(--bg-mobile)] md:bg-[image:var(--bg-tablet)] lg:bg-[image:var(--bg-tablet-lg)] xl:bg-[image:var(--bg-laptob-xl)] 2xl:bg-[image:var(--bg-desktop)] bg-cover bg-center rounded-base mt-50">
-  <div class="footer-logo-mobile xl:hidden! -translate-y-[60%]">
+  <div class="footer-logo-mobile xl:hidden! -translate-y-[60%] md:-translate-y-[10%]">
       <img src="<?php echo get_theme_file_uri("/assets/footer/footer-logo.png") ?>" alt="footer logo" class="w-full h-full max-w-[25%] m-auto" />
   </div>
     <div class="container">
-        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 py-10 xl:pt-60 mt-16 sm:mt-0">
+        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 py-10 xl:pt-60 mt-16 sm:mt-8">
             <div class="flex flex-1 gap-4 w-full lg:flex-row justify-evenly">
                 <div class="font-bold text-center lg:text-center">
                     <h4 class="gradient-text text-2xl xl:text-3xl mb-6">الصفحات</h4>
@@ -65,7 +65,7 @@
                 <div class="action-links">
                     <div class="flex w-full gap-4 justify-center">
                         <a href="#"  class="inline-block max-w-[120px]">
-                            <img src="<?php echo get_theme_file_uri("/assets/footer/cr-license.png") ?>" width="99" height="100" alt="cr-license-QR" class="w-full lg:max-w-full object-contain" />
+                            <img src="<?php echo get_theme_file_uri("/assets/footer/cr-license.webp") ?>" width="99" height="100" alt="cr-license-QR" class="w-full lg:max-w-full object-contain" />
                         </a>
                     </div>
                 </div>

@@ -41,7 +41,6 @@ header nav{
 }
 @media(min-width:1024px){
 
-    /* 1. إظهار القائمة عند الـ Hover مع ربط العنصر الأب */
     .menu-item-has-children {
         position: relative;
     }
@@ -62,24 +61,21 @@ header nav{
         z-index: 50;
     }
     
-    /* 2. الجسر الشفاف: يغطي الفجوة بين الكلمة والمنسدلة تماماً ليعتدر الماوس ما زال داخل القائمة */
     .menu-item-has-children > .sub-menu::before {
         content: "";
         position: absolute;
-        top: -20px; /* يمتد لأعلى ليلمس رابط القائمة الرئيسي */
+        top: -20px; 
         right: 0;
         width: 100%;
         height: 20px;
         background: transparent;
     }
     
-    /* القوائم الفرعية المزدوجة (Sub-menu Level 2) */
     .sub-menu .menu-item-has-children > .sub-menu {
         top: 0;
         right: 100%; 
     }
 
-    /* جسر للقوائم الفرعية الجانبية إن وجدت */
     .sub-menu .menu-item-has-children > .sub-menu::before {
         top: 0;
         right: -15px;
@@ -88,13 +84,7 @@ header nav{
     }
 }
 
-.menu-item-has-children:hover > .sub-menu {
-    display: block;
-}
-/* Vision */
-#vision .vision-card h2::before{
-    content: "";
-}
+
 
 /* Faq */
 .faq__item{
@@ -182,8 +172,6 @@ footer{
     background-size: 100% 100% ;
     background-position: center;
 }
-
-
 
 .footer-logo img {
   will-change: transform;
